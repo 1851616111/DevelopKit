@@ -121,5 +121,24 @@ namespace DevelopKit
         {
 
         }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form4_Merge_Img_Util form4 = new Form4_Merge_Img_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
+
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Form4_Write_Img_Util form4 = new Form4_Write_Img_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
     }
 }
