@@ -26,12 +26,6 @@ namespace DevelopKit
             disableUserOpt(true, true);
         }
 
-
-        private void Label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void PictureBox1_Click(object sender, EventArgs e)
         {
             try
@@ -89,6 +83,7 @@ namespace DevelopKit
         private void disableUserOpt(bool fromBaseImage, bool fromUpImage)
         {
             button1.Enabled = false;
+            button2.Enabled = false;
             textBox1.Enabled = false;
             textBox2.Enabled = false;
             if (fromBaseImage)
@@ -130,6 +125,7 @@ namespace DevelopKit
 
             if (baseImageOK && upImageOK)
             {
+
                 button1.Enabled = true;
                 textBox1.Enabled = true;
                 textBox2.Enabled = true;
@@ -186,6 +182,11 @@ namespace DevelopKit
             {
                 MessageBox.Show("合成失败");
             }
+
+            if (pictureBox3.Image != null)
+            {
+                button2.Enabled = true;
+            }
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -204,11 +205,6 @@ namespace DevelopKit
             {
                 MessageBox.Show("保存失败");
             }
-        }
-
-        private void Form4_Merge_Img_Util_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }

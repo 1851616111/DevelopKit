@@ -263,6 +263,7 @@
             this.Name = "Form4_Write_Img_Util";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "图片写字：";
+            this.Load += new System.EventHandler(this.Form4_Write_Img_Util_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

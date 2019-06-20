@@ -82,7 +82,6 @@
             this.label1.Size = new System.Drawing.Size(53, 12);
             this.label1.TabIndex = 2;
             this.label1.Text = "请添底图";
-            this.label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // label2
             // 
@@ -214,7 +213,6 @@
             this.Name = "Form4_Merge_Img_Util";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "图片叠加";
-            this.Load += new System.EventHandler(this.Form4_Merge_Img_Util_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox1.ResumeLayout(false);

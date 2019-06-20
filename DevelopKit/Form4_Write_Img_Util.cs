@@ -22,6 +22,7 @@ namespace DevelopKit
         {
             InitializeComponent();
             button3.Enabled = false;
+            button4.Enabled = false;
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -112,7 +113,9 @@ namespace DevelopKit
             {
                 PngUtil.writeImage(image, new Rectangle(x, y, w, h), text, font, color);
                 pictureBox1.Image = image;
+                button4.Enabled = true;
                 MessageBox.Show("写入成功");
+                
             }
             catch (Exception ex)
             {
@@ -168,6 +171,11 @@ namespace DevelopKit
                 output = Convert.ToInt32(input);
                 return true;
             }
+        }
+
+        private void Form4_Write_Img_Util_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
