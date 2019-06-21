@@ -90,8 +90,10 @@
             this.textBox1.Location = new System.Drawing.Point(485, 52);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this.textBox1.Size = new System.Drawing.Size(336, 210);
             this.textBox1.TabIndex = 3;
+            this.textBox1.Text = "请输入";
             // 
             // label2
             // 
