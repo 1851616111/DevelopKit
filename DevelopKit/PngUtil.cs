@@ -281,5 +281,32 @@ namespace DevelopKit
 
             return imgPhoto;
         }
+
+        public static Bitmap FilPic(Bitmap mybm, Color targetColor)
+        {
+            int width = ((Image)mybm).Width;
+            int height = ((Image)mybm).Height;
+            Bitmap bm = new Bitmap(width, height);//初始化一个记录滤色效果的图片对象
+            int x, y;
+
+            for (x = 0; x < width; x++)
+            {
+                for (y = 0; y < height; y++)
+                {
+                    Color pixel = mybm.GetPixel(x, y);//获取当前坐标的像素值
+
+                    if (pixel.Equals(Color.FromArgb(0, 0, 0, 0)))
+                    {
+                        continue;
+                    }
+                    if (!pixel.Equals(Color.FromArgb(0, 255, 255, 255)))
+                    {
+                        Color pixelTargetColor = Color.FromArgb(pixel.A, targetColor.R, targetColor.G, targetColor.B); //采用原图的阿尔法通道+用户选中的色值
+                        bm.SetPixel(x, y, pixelTargetColor);//绘图
+                    }
+                }
+            }
+            return bm;
+        }
     }
 }

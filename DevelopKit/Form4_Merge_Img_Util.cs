@@ -206,5 +206,10 @@ namespace DevelopKit
                 MessageBox.Show("保存失败");
             }
         }
+
+        private void Form4_Merge_Img_Util_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

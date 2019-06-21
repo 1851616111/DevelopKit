@@ -43,6 +43,7 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
@@ -110,7 +111,8 @@
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem,
-            this.ToolStripMenuItem2});
+            this.ToolStripMenuItem2,
+            this.ToolStripMenuItem3});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(73, 25);
@@ -131,6 +133,13 @@
             this.ToolStripMenuItem2.Size = new System.Drawing.Size(180, 26);
             this.ToolStripMenuItem2.Text = "图片写字";
             this.ToolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
+            // 
+            // ToolStripMenuItem3
+            // 
+            this.ToolStripMenuItem3.Name = "ToolStripMenuItem3";
+            this.ToolStripMenuItem3.Size = new System.Drawing.Size(180, 26);
+            this.ToolStripMenuItem3.Text = "图片滤色";
+            this.ToolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
             // imageList1
             // 
@@ -389,6 +398,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem3;
     }
 }
 

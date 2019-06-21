@@ -140,5 +140,12 @@ namespace DevelopKit
             form4.BringToFront();
             form4.Show();
         }
+
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Form4_Filter_Color_Util form4 = new Form4_Filter_Color_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
     }
 }
