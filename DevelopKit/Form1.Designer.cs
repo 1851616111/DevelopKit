@@ -63,6 +63,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.ToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -112,7 +113,8 @@
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem,
             this.ToolStripMenuItem2,
-            this.ToolStripMenuItem3});
+            this.ToolStripMenuItem3,
+            this.ToolStripMenuItem4});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.ShortcutKeyDisplayString = "";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(73, 25);
@@ -138,7 +140,7 @@
             // 
             this.ToolStripMenuItem3.Name = "ToolStripMenuItem3";
             this.ToolStripMenuItem3.Size = new System.Drawing.Size(180, 26);
-            this.ToolStripMenuItem3.Text = "图片滤色";
+            this.ToolStripMenuItem3.Text = "图片批量滤色";
             this.ToolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
             // 
             // imageList1
@@ -336,6 +338,13 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Visible = false;
             // 
+            // ToolStripMenuItem4
+            // 
+            this.ToolStripMenuItem4.Name = "ToolStripMenuItem4";
+            this.ToolStripMenuItem4.Size = new System.Drawing.Size(180, 26);
+            this.ToolStripMenuItem4.Text = "图片单张滤色";
+            this.ToolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
+            // 
             // Form1
             // 
             this.AllowDrop = true;
@@ -399,6 +408,7 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem4;
     }
 }
 

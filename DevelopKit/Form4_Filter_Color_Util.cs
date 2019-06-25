@@ -102,5 +102,10 @@ namespace DevelopKit
                 MessageBox.Show("保存失败");
             }
         }
+
+        private void Form4_Filter_Color_Util_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
