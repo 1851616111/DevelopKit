@@ -38,13 +38,13 @@ namespace DevelopKit
             string developor = textBox2.Text;
 
 
-            Project newProject = ProjectUtil.NewProject(vehicleType, projectName, projectPath, developor);
+            Project newProject = new Project(vehicleType, projectName, projectPath, developor);
             string error, errorDetails;
             bool overwrite = false;
 
         recreate:
 
-            if (ProjectUtil.StartCreateProject(newProject, overwrite, out error, out errorDetails))
+            if (newProject.StartCreateProject(overwrite, out error, out errorDetails))
             {
                 newProject.NextStatus();
                 MessageBox.Show("创建项目成功", "", MessageBoxButtons.OK, MessageBoxIcon.Information);

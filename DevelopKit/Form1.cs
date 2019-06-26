@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Collections;
 using System.Windows.Forms;
-
 
 namespace DevelopKit
 {
@@ -14,6 +9,7 @@ namespace DevelopKit
     {
         static private int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
+        const int CLOSE_SIZE = 16; //Tabcontroll 的tagpage 页面 标签关闭按钮区域大小
 
         public Form1()
         {
@@ -46,22 +42,20 @@ namespace DevelopKit
 
         private void showOpenedProject()
         {
-            groupBox3.Enabled = true;
-            groupBox3.Visible = true;
-            groupBox2.Enabled = true;
-            groupBox2.Visible = true;
-            tabControl1.Enabled = true;
+            panel1.Visible = true;
+            panel2.Visible = true;
             tabControl1.Visible = true;
+            splitter1.Visible = true;
+            splitter2.Visible = true;
         }
 
         private void hideOpenedProject()
         {
-            groupBox3.Enabled = false;
-            groupBox3.Visible = false;
-            groupBox2.Enabled = false;
-            groupBox2.Visible = false;
-            tabControl1.Enabled = false;
+            panel1.Visible = false;
+            panel2.Visible = false;
             tabControl1.Visible = false;
+            splitter1.Visible = false;
+            splitter2.Visible = false;
         }
 
 
@@ -82,51 +76,6 @@ namespace DevelopKit
             //this.menuStrip1.Items[0].BackColor = Color.Black;
         }
 
-        private void ToolBar1_ButtonClick_1(object sender, ToolBarButtonClickEventArgs e)
-        {
-            switch (e.Button.ImageIndex)
-            {
-                case 0:
-                    foreach (Form formItem in this.MdiChildren)
-                    {
-                        if (formItem.Name == "Form2" && formItem.Visible)
-                        {
-                            return; //避免重复打开
-                        }
-                    }
-
-                    Form2 form2 = new Form2();
-                    form2.updateGlobalProjectHandler += SetGlobalProject;
-                    //form2.MdiParent = this;
-                    form2.SetDesktopBounds(Form1.displayWidth / 4, 80, Form1.displayWidth / 2, Form1.displayHeight / 2 + 150);
-                    form2.StartPosition = FormStartPosition.Manual;
-                    form2.Show();
-                    form2.Activate();
-
-
-                    break;
-            }
-        }
-
-        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void TabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
-        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -154,6 +103,125 @@ namespace DevelopKit
             Form4_Filter_Color2_Util form4 = new Form4_Filter_Color2_Util();
             form4.BringToFront();
             form4.Show();
+        }
+
+        //创建项目
+        private void ProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.updateGlobalProjectHandler += SetGlobalProject;
+            form2.SetDesktopBounds(Form1.displayWidth / 4, 80, Form1.displayWidth / 2, Form1.displayHeight / 2 + 150);
+            form2.StartPosition = FormStartPosition.Manual;
+            form2.Show();
+            form2.Activate();
+        }
+
+        private void NewImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OpenImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string error;
+                bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out error);
+                if (!ok)
+                {
+
+                    MessageBox.Show(Errors.ProjectFileAlreadyExist, "创建失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+                NewOpenImage_FrontOpt(openFileDialog.FileName);
+            }
+        }
+
+        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        //Form_Image的所有操作请求均通过此函数出发 相应操作
+        public void Form_Image_Handler(Object request)
+        {
+            if (request.GetType() == typeof(SaveImageReuqest))
+            {
+                //设置默认文件类型显示顺序
+                SaveFileDialog fileDialog = new SaveFileDialog();
+                fileDialog.FilterIndex = 1;
+                fileDialog.RestoreDirectory = true;
+                fileDialog.InitialDirectory = GlobalProject.GetUserSpaceDir();
+                if (fileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //TODO 由于该文件已被存储到项目中，用户也可以随意修改这个文件的名称。
+                    MessageBox.Show("文件保存成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void NewOpenImage_FrontOpt(string filepath)
+        {
+            System.Drawing.Image image;
+            try
+            {
+                image = System.Drawing.Image.FromFile(filepath);
+            }
+            catch (OutOfMemoryException)
+            {
+                MessageBox.Show("内存不足", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("该文件已不存在, 请重新选择", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("打开错误", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string filename = StringUtil.GetFileName(filepath);
+            Hashtable ht = new Hashtable();
+            ht.Add("filename", filename);
+            ht.Add("filepath", filepath);
+
+            //创建一个tabpage
+            TabPage tabPage = new TabPage();
+            tabPage.Tag = ht;
+            tabPage.Name = filename;
+            tabPage.Text = StringUtil.GetFileUnsavedTitle(filename);
+            tabPage.Padding = new Padding(3);
+            tabPage.ToolTipText = filepath;
+
+            //将tabpage 添加到 tabcontroll中
+            tabControl1.TabPages.Add(tabPage);
+            tabControl1.SelectTab(tabPage);
+
+            //在tabpage绑定一个form
+            Form1_Image form = new Form1_Image();
+            form.Tag = ht;
+            form.TopLevel = false;     //设置为非顶级控件
+            form.Dock = DockStyle.Fill;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.formDelegateHandler = Form_Image_Handler;
+            tabPage.Controls.Add(form);
+
+            //在form中创建一个picturebox
+
+            PictureBox pictureBox1 = new PictureBox();
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
+            pictureBox1.Name = filename;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.Image = image;
+
+            form.Controls.Add(pictureBox1);
+            pictureBox1.Show();
+            form.Show();
         }
     }
 }
