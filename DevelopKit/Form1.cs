@@ -116,11 +116,6 @@ namespace DevelopKit
             form2.Activate();
         }
 
-        private void NewImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void OpenImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -138,34 +133,14 @@ namespace DevelopKit
             }
         }
 
-        private void MenuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
-        {
-
-        }
-
         //Form_Image的所有操作请求均通过此函数出发 相应操作
         public void Form_Image_Handler(Object requestObj)
         {
             if (requestObj.GetType() == typeof(SaveImageReuqest))
             {
+
                 SaveImageReuqest request = (SaveImageReuqest)requestObj;
-                //设置默认文件类型显示顺序
-                SaveFileDialog fileDialog = new SaveFileDialog();
-                fileDialog.Filter = "PNG|*.png|所有文件|*.*";
-                fileDialog.FilterIndex = 1;
-                fileDialog.RestoreDirectory = true;
-                fileDialog.InitialDirectory = GlobalProject.GetUserSpaceDir();
-                if (fileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    
-                    Image img = Image.FromFile(request.filepath);
-                    img.Save(fileDialog.FileName);
-                    if (!changeFileWindowsTextAsSaved(request.filepath))
-                    {
-                        MessageBox.Show("保存文件内部错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    MessageBox.Show("文件保存成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
+                saveImageByFilePath(request.filepath);
             }
         }
 
@@ -177,7 +152,6 @@ namespace DevelopKit
                 if (tabpage.Name == filePath)
                 {
                     tabpage.Text = StringUtil.markFileAsSaved(tabpage.Text);
-
                     return true;
                 }
             }
@@ -210,8 +184,10 @@ namespace DevelopKit
 
             string filename = StringUtil.GetFileName(filepath);
             Hashtable ht = new Hashtable();
+            ht.Add("filetype", FileType.Image);
             ht.Add("filename", filename);
             ht.Add("filepath", filepath);
+
 
             //创建一个tabpage
             TabPage tabPage = new TabPage();
@@ -227,6 +203,7 @@ namespace DevelopKit
 
             //在tabpage绑定一个form
             Form1_Image form = new Form1_Image();
+            form.Name = filepath;
             form.Tag = ht;
             form.TopLevel = false;     //设置为非顶级控件
             form.Dock = DockStyle.Fill;
@@ -247,5 +224,87 @@ namespace DevelopKit
             pictureBox1.Show();
             form.Show();
         }
+
+        //保存当前Tabpage页的图片 ,由form1 自上而下发起保存图片请求
+        private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+            TabPage selectedTabTage = tabControl1.SelectedTab;
+            if (selectedTabTage == null)
+            {
+                return;
+            }
+            saveImageInTabPage(selectedTabTage);
+        }
+
+        //子Form通过delegate 回调通知的filepath来保存图片， 需要便利所有tabpage
+        private void saveImageByFilePath(string filepath)
+        {
+            foreach (TabPage tabPage in tabControl1.TabPages)
+            {
+                if (tabPage.Name == filepath)
+                {
+                    saveImageInTabPage(tabPage);
+                    return;
+                }
+            }
+        }
+
+        private void saveImageInTabPage(TabPage tabpage)
+        {
+            if (tabpage.Tag == null)
+            {
+                return;
+            }
+
+            Hashtable tag = (Hashtable)(tabpage.Tag);
+
+            if (tag["filetype"].GetType() != typeof(FileType))
+            {
+                return;
+            }
+
+            string filename = (string)tag["filename"];
+            string filepath = (string)tag["filepath"];
+            if (StringUtil.isFileSafed(tabpage.Text))
+            {
+                MessageBox.Show(filename);
+                return; //已保存暂时不做处理
+            }
+
+            foreach (Control control in tabpage.Controls)  //
+            {
+                if (control.GetType() != typeof(Form1_Image))
+                {
+                    continue;
+                }
+
+                foreach (Control childControl in control.Controls)
+                {
+                    if (childControl.GetType() != typeof(PictureBox))
+                    {
+                        continue;
+                    }
+
+                    SaveFileDialog fileDialog = new SaveFileDialog();
+                    fileDialog.Filter = "PNG|*.png|所有文件|*.*";
+                    fileDialog.FilterIndex = 1;
+                    fileDialog.RestoreDirectory = true;
+                    fileDialog.InitialDirectory = GlobalProject.GetUserSpaceDir();
+                    if (fileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ((PictureBox)childControl).Image.Save(fileDialog.FileName);
+                            changeFileWindowsTextAsSaved(filepath);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("保存文件失败");
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+

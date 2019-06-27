@@ -34,6 +34,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,10 +53,6 @@
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton3 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton4 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton5 = new System.Windows.Forms.ToolBarButton();
-            this.toolBarButton6 = new System.Windows.Forms.ToolBarButton();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
@@ -65,6 +62,7 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -147,7 +145,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1924, 37);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.MenuStrip1_ItemClicked);
             // 
             // debugToolStripMenuItem
             // 
@@ -198,51 +195,32 @@
             // 
             // toolBar1
             // 
+            this.toolBar1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.toolBar1.Buttons.AddRange(new System.Windows.Forms.ToolBarButton[] {
             this.toolBarButton1,
-            this.toolBarButton2,
-            this.toolBarButton3,
-            this.toolBarButton4,
-            this.toolBarButton5,
-            this.toolBarButton6});
+            this.toolBarButton2});
             this.toolBar1.DropDownArrows = true;
             this.toolBar1.Font = new System.Drawing.Font("黑体", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.toolBar1.ImageList = this.imageList1;
             this.toolBar1.Location = new System.Drawing.Point(0, 37);
             this.toolBar1.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
             this.toolBar1.Name = "toolBar1";
             this.toolBar1.ShowToolTips = true;
-            this.toolBar1.Size = new System.Drawing.Size(1924, 28);
+            this.toolBar1.Size = new System.Drawing.Size(1924, 45);
             this.toolBar1.TabIndex = 9;
+            this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBar1_ButtonClick);
             // 
             // toolBarButton1
             // 
             this.toolBarButton1.ImageIndex = 0;
             this.toolBarButton1.Name = "toolBarButton1";
+            this.toolBarButton1.ToolTipText = "保存";
             // 
             // toolBarButton2
             // 
             this.toolBarButton2.ImageIndex = 1;
             this.toolBarButton2.Name = "toolBarButton2";
-            // 
-            // toolBarButton3
-            // 
-            this.toolBarButton3.ImageIndex = 2;
-            this.toolBarButton3.Name = "toolBarButton3";
-            // 
-            // toolBarButton4
-            // 
-            this.toolBarButton4.ImageIndex = 3;
-            this.toolBarButton4.Name = "toolBarButton4";
-            // 
-            // toolBarButton5
-            // 
-            this.toolBarButton5.ImageIndex = 4;
-            this.toolBarButton5.Name = "toolBarButton5";
-            // 
-            // toolBarButton6
-            // 
-            this.toolBarButton6.ImageIndex = 5;
-            this.toolBarButton6.Name = "toolBarButton6";
+            this.toolBarButton2.ToolTipText = "全部保存";
             // 
             // statusStrip1
             // 
@@ -272,17 +250,17 @@
             // panel1
             // 
             this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel1.Location = new System.Drawing.Point(0, 65);
+            this.panel1.Location = new System.Drawing.Point(0, 82);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 974);
+            this.panel1.Size = new System.Drawing.Size(200, 957);
             this.panel1.TabIndex = 17;
             // 
             // panel2
             // 
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1554, 65);
+            this.panel2.Location = new System.Drawing.Point(1554, 82);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(370, 974);
+            this.panel2.Size = new System.Drawing.Size(370, 957);
             this.panel2.TabIndex = 18;
             // 
             // splitter1
@@ -290,10 +268,10 @@
             this.splitter1.BackColor = System.Drawing.Color.Gainsboro;
             this.splitter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitter1.Cursor = System.Windows.Forms.Cursors.SizeWE;
-            this.splitter1.Location = new System.Drawing.Point(200, 65);
+            this.splitter1.Location = new System.Drawing.Point(200, 82);
             this.splitter1.Margin = new System.Windows.Forms.Padding(6);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(7, 974);
+            this.splitter1.Size = new System.Drawing.Size(7, 957);
             this.splitter1.TabIndex = 20;
             this.splitter1.TabStop = false;
             // 
@@ -303,10 +281,10 @@
             this.splitter2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitter2.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter2.Location = new System.Drawing.Point(1547, 65);
+            this.splitter2.Location = new System.Drawing.Point(1547, 82);
             this.splitter2.Margin = new System.Windows.Forms.Padding(6);
             this.splitter2.Name = "splitter2";
-            this.splitter2.Size = new System.Drawing.Size(7, 974);
+            this.splitter2.Size = new System.Drawing.Size(7, 957);
             this.splitter2.TabIndex = 21;
             this.splitter2.TabStop = false;
             // 
@@ -314,12 +292,12 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(207, 65);
+            this.tabControl1.Location = new System.Drawing.Point(207, 82);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.ShowToolTips = true;
-            this.tabControl1.Size = new System.Drawing.Size(1340, 974);
+            this.tabControl1.Size = new System.Drawing.Size(1340, 957);
             this.tabControl1.TabIndex = 22;
             // 
             // tabPage1
@@ -327,10 +305,17 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 39);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1332, 931);
+            this.tabPage1.Size = new System.Drawing.Size(1332, 914);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "主面板";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // imageList1
+            // 
+            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
+            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
+            this.imageList1.Images.SetKeyName(0, "save_floppy_32px_1187937_easyicon.net.png");
+            this.imageList1.Images.SetKeyName(1, "save_floppy_32px_1187725_easyicon.net.png");
             // 
             // Form1
             // 
@@ -378,10 +363,6 @@
         private System.Windows.Forms.ToolBar toolBar1;
         private System.Windows.Forms.ToolBarButton toolBarButton1;
         private System.Windows.Forms.ToolBarButton toolBarButton2;
-        private System.Windows.Forms.ToolBarButton toolBarButton3;
-        private System.Windows.Forms.ToolBarButton toolBarButton4;
-        private System.Windows.Forms.ToolBarButton toolBarButton5;
-        private System.Windows.Forms.ToolBarButton toolBarButton6;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private Sunisoft.IrisSkin.SkinEngine skinEngine1;
@@ -400,6 +381,7 @@
         private System.Windows.Forms.ToolStripMenuItem createProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
+        private System.Windows.Forms.ImageList imageList1;
     }
 }
 

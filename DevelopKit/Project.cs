@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,6 +27,8 @@ namespace DevelopKit
 
         public SortedList sl; //车型_场景       vs 组件
         public SortedList s2; //车型_场景_组建  vs 属姓  
+        
+
 
         public Project(string vtype, string name, string path, string dev)
         {
@@ -66,17 +68,18 @@ namespace DevelopKit
             return Status;
         }
 
-        public string ToXml()
+        public XElement ToXElement()
         {
-            System.Xml.Linq.XElement element = new System.Xml.Linq.XElement("Project");
+            XElement element = new XElement("Project");
             element.SetElementValue(nameof(VehicleType), VehicleType);
             element.SetElementValue(nameof(ProjectName), ProjectName);
             element.SetElementValue(nameof(ProjectPath), ProjectPath);
             element.SetElementValue(nameof(Developer), Developer);
             element.SetElementValue(nameof(LastOpenTime), LastOpenTime);
             element.SetElementValue(nameof(LastInternalError), LastInternalError);
+            element.Add(filesEditer.ToXElement());
 
-            return element.ToString();
+            return element;
         }
 
         public string GetUserSpaceDir()
@@ -133,11 +136,15 @@ namespace DevelopKit
                     return false;
                 }
 
-                StreamWriter streamWriter = new StreamWriter(GetConfigXml(), false, Encoding.UTF8);
-                streamWriter.Write(ToXml());
-                streamWriter.Flush();
-                streamWriter.Dispose();
-                streamWriter.Close();
+
+                XElement element = ToXElement();
+
+                element.Save(GetConfigXml());
+               // StreamWriter streamWriter = new StreamWriter(, false, Encoding.UTF8);
+                //streamWriter.Write(ToXml());
+                //streamWriter.Flush();
+                //streamWriter.Dispose();
+                //streamWriter.Close();
             }
             catch (Exception ex)
             {

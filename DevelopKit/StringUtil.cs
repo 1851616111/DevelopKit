@@ -35,7 +35,7 @@ namespace DevelopKit
 
         public static string markFileAsUnsafed(string filename)
         {
-            if (filename.LastIndexOf("＊") == filename.Length - 1)
+            if (isFileUnSafed(filename))
             {
                 return filename;
             }
@@ -54,5 +54,14 @@ namespace DevelopKit
                 return filename;
         }
 
+        public static bool isFileUnSafed(string filename)
+        {
+            return filename.LastIndexOf("＊") == filename.Length - 1;
+        }
+
+        public static bool isFileSafed(string filename)
+        {
+            return filename.LastIndexOf("＊") != filename.Length - 1;
+        }
     }
 }
