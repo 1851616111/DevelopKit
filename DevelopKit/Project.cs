@@ -125,26 +125,20 @@ namespace DevelopKit
                     Directory.CreateDirectory(ProjectPath);
                 }
 
-                if (!Directory.Exists(GetRuntimeConfigDir()))
-                {
-                    Directory.CreateDirectory(GetRuntimeConfigDir());
-                }
-
-                if (!overwrite && File.Exists(GetConfigXml()))
+                if (!overwrite && Directory.Exists(GetUserSpaceDir()))
                 {
                     error = Errors.ProjectAlreadyExist;
                     return false;
                 }
 
+                if (!Directory.Exists(GetRuntimeConfigDir()))
+                {
+                    Directory.CreateDirectory(GetRuntimeConfigDir());
+                }
 
                 XElement element = ToXElement();
 
                 element.Save(GetConfigXml());
-               // StreamWriter streamWriter = new StreamWriter(, false, Encoding.UTF8);
-                //streamWriter.Write(ToXml());
-                //streamWriter.Flush();
-                //streamWriter.Dispose();
-                //streamWriter.Close();
             }
             catch (Exception ex)
             {
@@ -154,7 +148,10 @@ namespace DevelopKit
             }
             return true;
         }
+
     }
+
+        
 
     public enum ProjectStatus : int
     {

@@ -57,6 +57,17 @@ namespace DevelopKit
                 DialogResult dialogResult = MessageBox.Show(error + ", 请选择是否覆盖", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
+
+                    try
+                    {
+                        Directory.Delete(newProject.GetUserSpaceDir(), true);
+                    }
+                    catch (IOException ex)
+                    {
+                        MessageBox.Show("项目正在被打开，请确认后再删除", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                        return;
+                    }
                     overwrite = true;
                     goto recreate;
                 }
