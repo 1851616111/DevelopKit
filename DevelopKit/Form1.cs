@@ -144,21 +144,45 @@ namespace DevelopKit
         }
 
         //Form_Image的所有操作请求均通过此函数出发 相应操作
-        public void Form_Image_Handler(Object request)
+        public void Form_Image_Handler(Object requestObj)
         {
-            if (request.GetType() == typeof(SaveImageReuqest))
+            if (requestObj.GetType() == typeof(SaveImageReuqest))
             {
+                SaveImageReuqest request = (SaveImageReuqest)requestObj;
                 //设置默认文件类型显示顺序
                 SaveFileDialog fileDialog = new SaveFileDialog();
+                fileDialog.Filter = "PNG|*.png|所有文件|*.*";
                 fileDialog.FilterIndex = 1;
                 fileDialog.RestoreDirectory = true;
                 fileDialog.InitialDirectory = GlobalProject.GetUserSpaceDir();
                 if (fileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //TODO 由于该文件已被存储到项目中，用户也可以随意修改这个文件的名称。
+                    
+                    Image img = Image.FromFile(request.filepath);
+                    img.Save(fileDialog.FileName);
+                    if (!changeFileWindowsTextAsSaved(request.filepath))
+                    {
+                        MessageBox.Show("保存文件内部错误", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     MessageBox.Show("文件保存成功", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
+        }
+
+        //文件保存成功后， 需要移除*， 向用户标识该文件已经同步
+        private bool changeFileWindowsTextAsSaved(string filePath)
+        {
+            foreach (TabPage tabpage in tabControl1.TabPages)
+            {
+                if (tabpage.Name == filePath)
+                {
+                    tabpage.Text = StringUtil.markFileAsSaved(tabpage.Text);
+
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void NewOpenImage_FrontOpt(string filepath)
@@ -192,8 +216,8 @@ namespace DevelopKit
             //创建一个tabpage
             TabPage tabPage = new TabPage();
             tabPage.Tag = ht;
-            tabPage.Name = filename;
-            tabPage.Text = StringUtil.GetFileUnsavedTitle(filename);
+            tabPage.Name = filepath;
+            tabPage.Text = StringUtil.markFileAsUnsafed(filename);
             tabPage.Padding = new Padding(3);
             tabPage.ToolTipText = filepath;
 

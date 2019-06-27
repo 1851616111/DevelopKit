@@ -33,7 +33,7 @@ namespace DevelopKit
             }
         }
 
-        public static string GetFileUnsavedTitle(string filename)
+        public static string markFileAsUnsafed(string filename)
         {
             if (filename.LastIndexOf("＊") == filename.Length - 1)
             {
@@ -42,5 +42,17 @@ namespace DevelopKit
             else
                 return string.Format("{0}＊", filename);
         }
+
+        public static string markFileAsSaved(string filename)
+        {
+            int index = filename.LastIndexOf("＊");
+            if (index == filename.Length -1)
+            {
+                return filename.Remove(index, 1);
+            }
+            else
+                return filename;
+        }
+
     }
 }
