@@ -66,6 +66,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ByteUtil.cs" />
+    <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_delegate.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="Form1_Tab_Page.cs">
@@ -128,6 +130,7 @@
       <DependentUpon>Form4_Merge_Img_Util.cs</DependentUpon>
     </Compile>
     <Compile Include="StringUtil.cs" />
+    <Compile Include="ProjectSyncTools.cs" />
     <Compile Include="XmlUtil.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

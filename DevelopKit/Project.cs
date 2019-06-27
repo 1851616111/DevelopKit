@@ -28,8 +28,6 @@ namespace DevelopKit
         public SortedList sl; //车型_场景       vs 组件
         public SortedList s2; //车型_场景_组建  vs 属姓  
         
-
-
         public Project(string vtype, string name, string path, string dev)
         {
             VehicleType = vtype;
@@ -138,7 +136,7 @@ namespace DevelopKit
 
                 XElement element = ToXElement();
 
-                element.Save(GetConfigXml());
+                FileUtil.WriteStringToFile(GetConfigXml(), element.ToString());
             }
             catch (Exception ex)
             {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Collections;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace DevelopKit
 {
@@ -11,12 +12,16 @@ namespace DevelopKit
         static private int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
         const int CLOSE_SIZE = 16; //Tabcontroll 的tagpage 页面 标签关闭按钮区域大小
-
+        ParameterizedThreadStart pts ;
+        Thread t;
         public Form1()
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
             hideOpenedProject();
+            pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
+            t = new Thread(pts);
+
             //example.Example.Show();
         }
 
@@ -49,6 +54,8 @@ namespace DevelopKit
             splitter1.Visible = true;
             splitter2.Visible = true;
             initTabControl1();
+
+            t.Start(GlobalProject);
         }
 
         private void hideOpenedProject()
@@ -399,6 +406,8 @@ namespace DevelopKit
                 e.Node.Expand();
             }
         }
+
+
     }
 }
 
