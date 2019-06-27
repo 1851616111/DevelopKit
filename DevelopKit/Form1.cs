@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Collections;
 using System.Windows.Forms;
@@ -47,6 +48,7 @@ namespace DevelopKit
             tabControl1.Visible = true;
             splitter1.Visible = true;
             splitter2.Visible = true;
+            initTabControl1();
         }
 
         private void hideOpenedProject()
@@ -303,6 +305,98 @@ namespace DevelopKit
                         }
                     }
                 }
+            }
+        }
+
+        private void TabControl2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            if (tabControl2.SelectedIndex == 0)
+            {
+                treeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+            }
+            else
+            {
+
+            }
+        }
+
+        private void initTabControl1()
+        {
+            tabControl1.SelectedIndex = 0;
+
+            treeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+        }
+
+        private void treeView1_LoadCurrentProject(string projectdir)
+        {
+            Directory.SetCurrentDirectory(projectdir);
+
+            string projectDir = GlobalProject.GetUserSpaceDir();
+            string[] dirs = Directory.GetDirectories(projectdir);
+
+            treeView1.Nodes.Clear();
+            foreach (string dir in dirs)
+            {
+                string relativePath = dir.Remove(0, projectDir.Length + 1);
+                if (relativePath == ".kit")
+                {
+                    continue;
+                }
+                treeView1.Nodes.Add(dir, relativePath);
+            }
+            string[] files = Directory.GetFiles(projectdir);
+            foreach (string longfile in files)
+            {
+                string relativePath = longfile.Remove(0, projectDir.Length + 1);
+                treeView1.Nodes.Add(longfile, relativePath);
+            }
+        }
+
+        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            ReadDir(e);
+        }
+
+        private void ReadDir(TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Node.Nodes.Count > 0)
+            {
+                if (e.Node.IsSelected)
+                {
+                    return;
+                }
+                if (e.Node.IsExpanded)
+                {
+                    e.Node.Collapse();
+                }
+                else
+                {
+                    e.Node.Expand();
+                }
+            }
+            else
+            {
+                if (Directory.Exists(e.Node.Name))
+                {
+                    try
+                    {
+                        string[] allDirectory = Directory.GetDirectories(e.Node.Name);
+                        foreach (string dir in allDirectory)
+                        {
+                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length+1));
+                        }
+                        string[] allFiles = Directory.GetFiles(e.Node.Name);
+                        foreach (string longfile in allFiles)
+                        {
+                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length+1));
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+                e.Node.Expand();
             }
         }
     }
