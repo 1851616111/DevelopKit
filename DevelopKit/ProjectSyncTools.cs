@@ -11,30 +11,26 @@ namespace DevelopKit
     {
         public static void Sync(Object projectObj)
         {
-    ParameterizedThreadStart:
+
+        ParameterizedThreadStart:
             Project project = (Project)(projectObj);
             try
             {
-                Console.WriteLine("project.GetConfigXml() ------> " + project.GetConfigXml());
-                FileStream fileStream = new FileStream(project.GetConfigXml(), FileMode.Open, FileAccess.Read, FileShare.Read);
-                byte[] fileData = new byte[fileStream.Length];
-                try
+                byte[] fileData;
+                if (!FileUtil.ReadBytes(project.GetConfigXml(), out fileData))
                 {
-                    fileStream.Read(fileData, 0, (int)(fileStream.Length));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("project read xml error:" + ex.ToString());
+                    Log.Error("Sync模块", "读取配置文件失败", "");
                 }
 
-                string newDataStr = project.ToXElement().ToString();
-                Console.WriteLine("fileData ------> ", fileData);
-                Console.WriteLine("newDataStr ------> ", newDataStr);
-                byte[] memData = Encoding.UTF8.GetBytes(newDataStr);
+                byte[] memData = Encoding.UTF8.GetBytes(project.ToXElement().ToString());
 
                 if (!ByteUtil.Diff(fileData, memData))
                 {
-                    FileUtil.WriteStringToFile(project.GetConfigXml(), newDataStr);
+                    Log.Error("Sync模块", "对比XML不同", "");
+                    Log.Error("Sync模块", "原磁盘数据", Encoding.UTF8.GetString(fileData));
+                    Log.Error("Sync模块", "新内存数据", project.ToXElement().ToString());
+
+                    FileUtil.WriteBytesToFile(project.GetConfigXml(), memData);
                 }
             }
             catch (Exception ex)
@@ -43,26 +39,8 @@ namespace DevelopKit
             }
 
             Thread.Sleep(1000 * 5);
-            Console.WriteLine("restart");
+
             goto ParameterizedThreadStart;
-        }
-
-        private static bool diffFile(Project project)
-        {
-            FileStream fileStream = new FileStream(project.GetConfigXml(), FileMode.Open, FileAccess.Read, FileShare.Read);
-            byte[] fileData = new byte[fileStream.Length];
-            try
-            {
-                fileStream.Read(fileData, 0, (int)(fileStream.Length));
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("project read xml error:" + ex.ToString());
-            }
-
-            byte[] memData = Encoding.UTF8.GetBytes(project.ToXElement().ToString());
-
-            return ByteUtil.Diff(fileData, memData);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace DevelopKit
     {
         static private int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
-        const int CLOSE_SIZE = 16; //Tabcontroll 的tagpage 页面 标签关闭按钮区域大小
+
         ParameterizedThreadStart pts;
         Thread t;
         private Hashtable treeViewLeafNodeTag;
@@ -20,6 +20,8 @@ namespace DevelopKit
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
+
+            Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             hideOpenedProject();
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
@@ -33,7 +35,6 @@ namespace DevelopKit
             this.GlobalProject = project;
             ProjectStatusHandler(project);
         }
-
 
         private void ProjectStatusHandler(Project project)
         {
@@ -142,10 +143,6 @@ namespace DevelopKit
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "创建失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-
-                Console.WriteLine("----->"+ GlobalProject.GetUserSpaceDir());
-                Console.WriteLine("----->" + openFileDialog.FileName);
-                Console.WriteLine(openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()));
 
                 if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
                 {
@@ -271,7 +268,6 @@ namespace DevelopKit
             {
                 tabPage.Text = StringUtil.markFileAsUnsafed(filename);
             }
-            Console.WriteLine("----------> " + filename + "-->"+ StringUtil.markFileAsUnsafed(filename) + "---" + saved.ToString());
 
             tabPage.Padding = new Padding(6);
             tabPage.ToolTipText = filepath;

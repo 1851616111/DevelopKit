@@ -19,9 +19,6 @@ namespace DevelopKit
         public string ProjectPath;  //项目路径
         public string Developer;    //开发者
         public ProjectStatus Status; //项目状态
-        public string CreateTime;   //创建时间
-        public string LastOpenTime; //上次打开时间
-        public string LastInternalError; //上次内部错误信息; 
 
         public ProjectFileEditer filesEditer; // 文件编辑器
 
@@ -34,7 +31,6 @@ namespace DevelopKit
             ProjectName = name;
             ProjectPath = path;
             Developer = dev;
-            CreateTime = DateTime.Now.ToString();
             Status = ProjectStatus.StartCreateProject;
             filesEditer = new ProjectFileEditer();
         }
@@ -68,13 +64,11 @@ namespace DevelopKit
 
         public XElement ToXElement()
         {
-            XElement element = new XElement("Project");
-            element.SetElementValue(nameof(VehicleType), VehicleType);
-            element.SetElementValue(nameof(ProjectName), ProjectName);
-            element.SetElementValue(nameof(ProjectPath), ProjectPath);
-            element.SetElementValue(nameof(Developer), Developer);
-            element.SetElementValue(nameof(LastOpenTime), LastOpenTime);
-            element.SetElementValue(nameof(LastInternalError), LastInternalError);
+            XElement element = new XElement("project");
+            element.SetElementValue("vehicle_type", VehicleType);
+            element.SetElementValue("name", ProjectName);
+            element.SetElementValue("path", ProjectPath);
+            element.SetElementValue("developer", Developer);
             element.Add(filesEditer.ToXElement());
 
             return element;

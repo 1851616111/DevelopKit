@@ -82,6 +82,7 @@
     <Compile Include="Form1_Image.Designer.cs">
       <DependentUpon>Form1_Image.cs</DependentUpon>
     </Compile>
+    <Compile Include="Log.cs" />
     <Compile Include="ProjectFileEditer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

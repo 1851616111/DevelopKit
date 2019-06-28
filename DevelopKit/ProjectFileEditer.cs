@@ -18,11 +18,12 @@ namespace DevelopKit
 
         public XElement ToXElement()
         {
-            XElement element = new XElement("ProjectFiles");
-
+            XElement element = new XElement("project_files");
             foreach (Object ProjectFileobj in projectFileList)
             {
-                element.Add(((ProjectFile)(ProjectFileobj)).ToXElement());
+                ProjectFile pf = (ProjectFile)ProjectFileobj;
+
+                element.Add(pf.ToXElement());
             }
 
             return element;
@@ -38,8 +39,7 @@ namespace DevelopKit
             return false;
         }
 
-        //新打开一个图片或文件后，当没有保存到本地时，暂时不需要追踪内容一致性
-        //保存到项目中后需要开始追踪状态
+        //不论用户打开的是外部文件还是内部文件， 都需要存储FileEditor中， 已边下次打开Kit使用
         public void OpenImage(string filepath)
         {
             ProjectFile projectFile = new ProjectFile();
@@ -47,8 +47,8 @@ namespace DevelopKit
             projectFile.fileName = StringUtil.GetFileName(filepath);
             projectFile.filePath = filepath;
             projectFile.fileType = FileType.Image;
-            projectFile.ifOpenning = true;
-            projectFile.ifSaveToProject = false;
+
+            projectFileList.AddLast(projectFile);
         }
     }
 
@@ -62,19 +62,14 @@ namespace DevelopKit
     {
         public string fileName;  //read.txt write 
         public string filePath;  //C:\Programs\read.txt   
-        public FileType fileType; // Txt 
-        public bool ifOpenning; //是否用户正在编辑这个图片
-        public bool ifSaveToProject; //是否保存到项目制定目录中
-        public System.Drawing.Bitmap savedBitmap; //最新的已保存的图片内容
+        public FileType fileType; // Txt Img
 
         public XElement ToXElement()
         {
-            System.Xml.Linq.XElement element = new System.Xml.Linq.XElement("ProjectFile");
-            element.SetElementValue(nameof(fileName), fileName);
-            element.SetElementValue(nameof(filePath), filePath);
-            element.SetElementValue(nameof(fileType), fileType);
-            element.SetElementValue(nameof(ifOpenning), ifOpenning);
-            element.SetElementValue(nameof(ifSaveToProject), ifOpenning);
+            XElement element = new XElement("project_file");
+            element.SetElementValue("name", fileName);
+            element.SetElementValue("path", filePath);
+            element.SetElementValue("type", fileType);
 
             return element;
         }
