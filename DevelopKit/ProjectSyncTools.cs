@@ -15,7 +15,7 @@ namespace DevelopKit
             Project project = (Project)(projectObj);
             try
             {
-                XElement xml = project.ToXElement();
+                Console.WriteLine("project.GetConfigXml() ------> " + project.GetConfigXml());
                 FileStream fileStream = new FileStream(project.GetConfigXml(), FileMode.Open, FileAccess.Read, FileShare.Read);
                 byte[] fileData = new byte[fileStream.Length];
                 try
@@ -28,6 +28,8 @@ namespace DevelopKit
                 }
 
                 string newDataStr = project.ToXElement().ToString();
+                Console.WriteLine("fileData ------> ", fileData);
+                Console.WriteLine("newDataStr ------> ", newDataStr);
                 byte[] memData = Encoding.UTF8.GetBytes(newDataStr);
 
                 if (!ByteUtil.Diff(fileData, memData))

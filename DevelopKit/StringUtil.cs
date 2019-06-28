@@ -32,7 +32,7 @@ namespace DevelopKit
                 return "";
             }
         }
-
+        //tabcontrol 的bug 如果后面不增加空格， 随着标签字数越多，星号就无法显示
         public static string markFileAsUnsafed(string filename)
         {
             if (isFileUnSafed(filename))
@@ -40,12 +40,12 @@ namespace DevelopKit
                 return filename;
             }
             else
-                return string.Format("{0}＊", filename);
+                return string.Format("{0}＊  ", filename);  
         }
 
         public static string markFileAsSaved(string filename)
         {
-            int index = filename.LastIndexOf("＊");
+            int index = filename.LastIndexOf("＊  ");
             if (index == filename.Length -1)
             {
                 return filename.Remove(index, 1);
@@ -56,12 +56,12 @@ namespace DevelopKit
 
         public static bool isFileUnSafed(string filename)
         {
-            return filename.LastIndexOf("＊") == filename.Length - 1;
+            return filename.LastIndexOf("＊  ") == filename.Length - 1;
         }
 
         public static bool isFileSafed(string filename)
         {
-            return filename.LastIndexOf("＊") != filename.Length - 1;
+            return filename.LastIndexOf("＊  ") != filename.Length - 1;
         }
     }
 }

@@ -95,7 +95,7 @@
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(450, 33);
             this.comboBox1.TabIndex = 4;
-            this.comboBox1.Text = "C:\\Program FIles\\DevelopKit\\projects";
+            this.comboBox1.Text = "C:\\Program Files\\DevelopKit\\projects";
             this.comboBox1.TextChanged += new System.EventHandler(this.ComboBox1_Changed);
             // 
             // label4

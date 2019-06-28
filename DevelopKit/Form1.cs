@@ -142,7 +142,19 @@ namespace DevelopKit
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "创建失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                OpenUnsavedImage(openFileDialog.FileName);
+
+                Console.WriteLine("----->"+ GlobalProject.GetUserSpaceDir());
+                Console.WriteLine("----->" + openFileDialog.FileName);
+                Console.WriteLine(openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()));
+
+                if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
+                {
+                    OpenSavedImage(openFileDialog.FileName);
+                }
+                else
+                {
+                    OpenUnsavedImage(openFileDialog.FileName);
+                }
             }
         }
 
@@ -259,8 +271,9 @@ namespace DevelopKit
             {
                 tabPage.Text = StringUtil.markFileAsUnsafed(filename);
             }
+            Console.WriteLine("----------> " + filename + "-->"+ StringUtil.markFileAsUnsafed(filename) + "---" + saved.ToString());
 
-            tabPage.Padding = new Padding(3);
+            tabPage.Padding = new Padding(6);
             tabPage.ToolTipText = filepath;
 
             //将tabpage 添加到 tabcontroll中
