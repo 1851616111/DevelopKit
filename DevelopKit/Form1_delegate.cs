@@ -9,12 +9,20 @@ namespace DevelopKit
 {
     public delegate void FormDelegate(Object param);
 
-    public struct SaveImageReuqest
+    public enum OperateImageType
     {
-        public string filepath;
+        Save=1,
+        Close=2
+    }
+    public struct OperateImageReuqest
+    {
 
-        public SaveImageReuqest(string srcFilePath)
+        public string filepath;
+        public OperateImageType operatetype;
+
+        public OperateImageReuqest(OperateImageType opttype, string srcFilePath)
         {
+            operatetype = opttype;
             filepath = srcFilePath;
         }
     }

@@ -22,11 +22,23 @@ namespace DevelopKit
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new SaveImageReuqest((string)hashTable["filepath"]));
+            formDelegateHandler(new OperateImageReuqest(OperateImageType.Save, (string)hashTable["filepath"]));
         }
 
         private void Form_Image_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void CloseImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //1.关闭自身窗体
+            this.Close();
+            this.Dispose();
+
+            //2. 通知主form 关闭tabpage
+            Hashtable hashTable = (Hashtable)this.Tag;
+            formDelegateHandler(new OperateImageReuqest(OperateImageType.Close, (string)hashTable["filepath"]));
 
         }
     }

@@ -12,8 +12,10 @@ namespace DevelopKit
         static private int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
         const int CLOSE_SIZE = 16; //Tabcontroll 的tagpage 页面 标签关闭按钮区域大小
-        ParameterizedThreadStart pts ;
+        ParameterizedThreadStart pts;
         Thread t;
+        private Hashtable treeViewLeafNodeTag;
+
         public Form1()
         {
             InitializeComponent();
@@ -65,6 +67,9 @@ namespace DevelopKit
             tabControl1.Visible = false;
             splitter1.Visible = false;
             splitter2.Visible = false;
+
+            treeViewLeafNodeTag = new Hashtable();
+            treeViewLeafNodeTag["is_leaf_node"] = true;
         }
 
 
@@ -134,22 +139,56 @@ namespace DevelopKit
                 bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out error);
                 if (!ok)
                 {
-
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "创建失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
-                NewOpenImage_FrontOpt(openFileDialog.FileName);
+                OpenUnsavedImage(openFileDialog.FileName);
             }
         }
 
         //Form_Image的所有操作请求均通过此函数出发 相应操作
         public void Form_Image_Handler(Object requestObj)
         {
-            if (requestObj.GetType() == typeof(SaveImageReuqest))
+            if (requestObj.GetType() != typeof(OperateImageReuqest))
             {
+                return;
+            }
 
-                SaveImageReuqest request = (SaveImageReuqest)requestObj;
-                saveImageByFilePath(request.filepath);
+            OperateImageReuqest request = (OperateImageReuqest)requestObj;
+            switch (request.operatetype)
+            {
+                case OperateImageType.Save:
+                    saveImageByFilePath(request.filepath);
+                    break;
+                case OperateImageType.Close:
+                    foreach (TabPage tabpage in tabControl1.TabPages)
+                    {
+                        if (tabpage.Name == request.filepath)
+                        {
+                            int index = tabControl1.TabPages.IndexOf(tabpage);
+                            int newSelectIndex;
+                         
+                            if (tabControl1.TabPages.Count == 1) //如果只有一个
+                            {
+                                tabControl1.TabPages.Remove(tabpage);
+                                return;
+                            }
+
+                            if (index == tabControl1.TabPages.Count - 1)    //如果需要删除的tabpage是最后一个打开的
+                            {
+                                newSelectIndex = tabControl1.TabPages.Count - 2;
+                            }
+                            else
+                            {
+                                newSelectIndex = tabControl1.TabPages.Count;
+                            }
+
+                            tabControl1.SelectedIndex = newSelectIndex;
+                            tabControl1.TabPages.Remove(tabpage);
+                            return;
+                        }
+                    }
+                    break;
             }
         }
 
@@ -168,7 +207,17 @@ namespace DevelopKit
             return false;
         }
 
-        private void NewOpenImage_FrontOpt(string filepath)
+        private void OpenUnsavedImage(string filepath)
+        {
+            openImage(filepath, false);
+        }
+
+        private void OpenSavedImage(string filepath)
+        {
+            openImage(filepath, true);
+        }
+
+        private void openImage(string filepath, bool saved)
         {
             System.Drawing.Image image;
             try
@@ -202,7 +251,15 @@ namespace DevelopKit
             TabPage tabPage = new TabPage();
             tabPage.Tag = ht;
             tabPage.Name = filepath;
-            tabPage.Text = StringUtil.markFileAsUnsafed(filename);
+            if (saved)
+            {
+                tabPage.Text = filename;
+            }
+            else
+            {
+                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
+            }
+
             tabPage.Padding = new Padding(3);
             tabPage.ToolTipText = filepath;
 
@@ -343,6 +400,21 @@ namespace DevelopKit
             string[] dirs = Directory.GetDirectories(projectdir);
 
             treeView1.Nodes.Clear();
+
+            string[] files = Directory.GetFiles(projectdir);
+            foreach (string longfile in files)
+            {
+                string relativePath = longfile.Remove(0, projectDir.Length + 1);
+                treeView1.Nodes.Add(longfile, relativePath);
+
+            }
+
+            //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
+            foreach (TreeNode node in treeView1.Nodes)
+            {
+                node.Tag = treeViewLeafNodeTag;
+            }
+
             foreach (string dir in dirs)
             {
                 string relativePath = dir.Remove(0, projectDir.Length + 1);
@@ -352,17 +424,19 @@ namespace DevelopKit
                 }
                 treeView1.Nodes.Add(dir, relativePath);
             }
-            string[] files = Directory.GetFiles(projectdir);
-            foreach (string longfile in files)
-            {
-                string relativePath = longfile.Remove(0, projectDir.Length + 1);
-                treeView1.Nodes.Add(longfile, relativePath);
-            }
+
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            ReadDir(e);
+            if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
+            {
+                OpenSavedImage(e.Node.Name);
+            }
+            else
+            {
+                ReadDir(e);
+            }
         }
 
         private void ReadDir(TreeNodeMouseClickEventArgs e)
@@ -388,15 +462,22 @@ namespace DevelopKit
                 {
                     try
                     {
-                        string[] allDirectory = Directory.GetDirectories(e.Node.Name);
-                        foreach (string dir in allDirectory)
-                        {
-                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length+1));
-                        }
                         string[] allFiles = Directory.GetFiles(e.Node.Name);
                         foreach (string longfile in allFiles)
                         {
-                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length+1));
+                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length + 1));
+                        }
+
+                        //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
+                        foreach (TreeNode node in e.Node.Nodes)
+                        {
+                            node.Tag = treeViewLeafNodeTag;
+                        }
+
+                        string[] allDirectory = Directory.GetDirectories(e.Node.Name);
+                        foreach (string dir in allDirectory)
+                        {
+                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length + 1));
                         }
                     }
                     catch
@@ -406,8 +487,6 @@ namespace DevelopKit
                 e.Node.Expand();
             }
         }
-
-
     }
 }
 

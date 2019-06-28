@@ -49,13 +49,13 @@
             this.deleteImageToolStripMenuItem,
             this.operateImageToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(148, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 136);
             // 
             // saveImageToolStripMenuItem
             // 
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
             this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.saveImageToolStripMenuItem.Text = "保存";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
@@ -63,21 +63,22 @@
             // 
             this.closeImageToolStripMenuItem.Name = "closeImageToolStripMenuItem";
             this.closeImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.closeImageToolStripMenuItem.Text = "关闭";
+            this.closeImageToolStripMenuItem.Click += new System.EventHandler(this.CloseImageToolStripMenuItem_Click);
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
             this.copyImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.copyImageToolStripMenuItem.Text = "复制";
             // 
             // deleteImageToolStripMenuItem
             // 
             this.deleteImageToolStripMenuItem.Name = "deleteImageToolStripMenuItem";
             this.deleteImageToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.deleteImageToolStripMenuItem.Text = "删除";
             // 
             // operateImageToolStripMenuItem
@@ -86,7 +87,7 @@
             this.filterColorToolStripMenuItem,
             this.wrToolStripMenuItem});
             this.operateImageToolStripMenuItem.Name = "operateImageToolStripMenuItem";
-            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.operateImageToolStripMenuItem.Text = "其他";
             // 
             // filterColorToolStripMenuItem
@@ -101,7 +102,7 @@
             this.wrToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.wrToolStripMenuItem.Text = "写字";
             // 
-            // Form_Image
+            // Form1_Image
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -109,7 +110,7 @@
             this.ContextMenuStrip = this.contextMenuStrip1;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
-            this.Name = "Form_Image";
+            this.Name = "Form1_Image";
             this.Text = "Form_Image";
             this.Load += new System.EventHandler(this.Form_Image_Load);
             this.contextMenuStrip1.ResumeLayout(false);
