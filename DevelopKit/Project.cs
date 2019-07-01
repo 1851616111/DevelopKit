@@ -5,26 +5,39 @@ using System.IO;
 using System.Xml.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DevelopKit
 {
-
+    [Serializable]
+    [XmlRoot("project")]
     public class Project
     {
-        static string RuntimeConfigDirName = ".kit";
-        static string RuntimeConfigXmlName = "project.xml";
+        public static string RuntimeConfigDirName = ".kit";
+        public static string RuntimeConfigXmlName = "project.xml";
 
+        [XmlElement(ElementName = "vehicle_type")]
         public string VehicleType;  //车型
+
+        [XmlElement(ElementName = "project_name")]
         public string ProjectName;  //项目名称
+
+        [XmlElement(ElementName = "project_path")]
         public string ProjectPath;  //项目路径
+
+        [XmlElement(ElementName = "developer")]
         public string Developer;    //开发者
+
+
         public ProjectStatus Status; //项目状态
 
-        public ProjectFileEditer filesEditer; // 文件编辑器
+        [XmlElement(ElementName = "files_editer")]
+        public FilesEditer filesEditer; // 文件编辑器
 
-        public SortedList sl; //车型_场景       vs 组件
-        public SortedList s2; //车型_场景_组建  vs 属姓  
-        
+        public Project()
+        {
+        }
         public Project(string vtype, string name, string path, string dev)
         {
             VehicleType = vtype;
@@ -32,7 +45,7 @@ namespace DevelopKit
             ProjectPath = path;
             Developer = dev;
             Status = ProjectStatus.StartCreateProject;
-            filesEditer = new ProjectFileEditer();
+            filesEditer = new FilesEditer();
         }
 
         public void SetStatusOpen()
@@ -62,16 +75,51 @@ namespace DevelopKit
             return Status;
         }
 
-        public XElement ToXElement()
+        public string SerializeToStrInMemory()
         {
-            XElement element = new XElement("project");
-            element.SetElementValue("vehicle_type", VehicleType);
-            element.SetElementValue("name", ProjectName);
-            element.SetElementValue("path", ProjectPath);
-            element.SetElementValue("developer", Developer);
-            element.Add(filesEditer.ToXElement());
+            MemoryStream Stream = new MemoryStream();
+            XmlSerializer xml = new XmlSerializer(typeof(Project));
+            //序列化对象
+            xml.Serialize(Stream, this);
+            Stream.Position = 0;
+            StreamReader sr = new StreamReader(Stream);
+            string str = sr.ReadToEnd();
 
-            return element;
+            sr.Dispose();
+            Stream.Dispose();
+
+            return str;
+        }
+
+        public void WriteXmlFile()
+        {
+            Error error;
+            lock (this)
+            {
+                error = FileUtil.SerializeObjectToFile(this, GetConfigXml());
+            }
+
+            if (error != null)
+            {
+                Log.Error("Project core", "Save to xml file " + GetConfigXml(), error.Message);
+            }
+        }
+
+        public byte[] ReadXmlFileBytes()
+        {
+            byte[] fileData;
+            bool ok;
+            lock (this)
+            {
+                ok = FileUtil.ReadBytes(GetConfigXml(), out fileData);
+            }
+
+            if (!ok)
+            {
+                Log.Error("Project模块", "LoadXmlFileBytes ", "读取配置文件数据失败");
+                return null;
+            }
+            return fileData;
         }
 
         public string GetUserSpaceDir()
@@ -95,12 +143,13 @@ namespace DevelopKit
         {
             error = "";
             //若已在项目中， 返回错误
+            Console.WriteLine("-------->>>" + filepath);
             if (filesEditer.IsFileInProjectDir(filepath))
             {
                 error = Errors.ProjectFileAlreadyExist;
-                    return false;
+                return false;
             }
-            filesEditer.OpenImage(filepath);
+            filesEditer.RecordFile(filepath);
             return true;
         }
 
@@ -128,9 +177,7 @@ namespace DevelopKit
                     Directory.CreateDirectory(GetRuntimeConfigDir());
                 }
 
-                XElement element = ToXElement();
-
-                FileUtil.WriteStringToFile(GetConfigXml(), element.ToString());
+                WriteXmlFile();
             }
             catch (Exception ex)
             {
@@ -140,10 +187,8 @@ namespace DevelopKit
             }
             return true;
         }
-
     }
 
-        
 
     public enum ProjectStatus : int
     {
@@ -151,5 +196,5 @@ namespace DevelopKit
         FinishCreateProject,
         StartOpenProject,
         FinishOpenProject
-    }
+    } 
 }

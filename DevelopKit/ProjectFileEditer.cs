@@ -5,28 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Xml;
+using System.Xml.Serialization;
+
 namespace DevelopKit
 {
-    public class ProjectFileEditer
+    [Serializable]
+    [XmlRoot("files_editer")]
+    public class FilesEditer
     {
-        private LinkedList<ProjectFile> projectFileList;
 
-        public ProjectFileEditer()
+        [XmlElementAttribute(ElementName = "file")]
+        public List<ProjectFile> projectFileList;
+
+        public FilesEditer()
         {
-            projectFileList = new LinkedList<ProjectFile>();
-        }
-
-        public XElement ToXElement()
-        {
-            XElement element = new XElement("project_files");
-            foreach (Object ProjectFileobj in projectFileList)
-            {
-                ProjectFile pf = (ProjectFile)ProjectFileobj;
-
-                element.Add(pf.ToXElement());
-            }
-
-            return element;
+            projectFileList = new List<ProjectFile>();
         }
 
         public bool IsFileInProjectDir(string filepath)
@@ -40,15 +34,23 @@ namespace DevelopKit
         }
 
         //不论用户打开的是外部文件还是内部文件， 都需要存储FileEditor中， 已边下次打开Kit使用
-        public void OpenImage(string filepath)
+        public void RecordFile(string filepath)
         {
             ProjectFile projectFile = new ProjectFile();
 
             projectFile.fileName = StringUtil.GetFileName(filepath);
             projectFile.filePath = filepath;
-            projectFile.fileType = FileType.Image;
 
-            projectFileList.AddLast(projectFile);
+
+            if (FileUtil.IsFileImage(filepath))
+            {
+                projectFile.fileType = FileType.Image;
+            }
+            else {
+                projectFile.fileType = FileType.Txt;
+            }
+            Console.WriteLine("-------->>>rojectFileList.Add(projectFile " + filepath);
+            projectFileList.Add(projectFile);
         }
     }
 
@@ -60,18 +62,11 @@ namespace DevelopKit
 
     public class ProjectFile
     {
+        [XmlElement("name")]
         public string fileName;  //read.txt write 
+        [XmlElement("path")]
         public string filePath;  //C:\Programs\read.txt   
+        [XmlElement("type")]
         public FileType fileType; // Txt Img
-
-        public XElement ToXElement()
-        {
-            XElement element = new XElement("project_file");
-            element.SetElementValue("name", fileName);
-            element.SetElementValue("path", filePath);
-            element.SetElementValue("type", fileType);
-
-            return element;
-        }
     }
 }

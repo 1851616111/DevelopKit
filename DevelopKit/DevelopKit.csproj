@@ -132,7 +132,6 @@
     </Compile>
     <Compile Include="StringUtil.cs" />
     <Compile Include="ProjectSyncTools.cs" />
-    <Compile Include="XmlUtil.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

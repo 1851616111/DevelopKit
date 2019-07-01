@@ -46,9 +46,9 @@ namespace DevelopKit
         public static string markFileAsSaved(string filename)
         {
             int index = filename.LastIndexOf("＊  ");
-            if (index == filename.Length -1)
+            if (index == filename.Length -1 -2)
             {
-                return filename.Remove(index, 1);
+                return filename.Remove(index, 3);
             }
             else
                 return filename;
@@ -56,12 +56,12 @@ namespace DevelopKit
 
         public static bool isFileUnSafed(string filename)
         {
-            return filename.LastIndexOf("＊  ") == filename.Length - 1;
+            return filename.LastIndexOf("＊  ") == filename.Length - 1 - 2;
         }
 
         public static bool isFileSafed(string filename)
         {
-            return filename.LastIndexOf("＊  ") != filename.Length - 1;
+            return filename.LastIndexOf("＊  ") != filename.Length - 1 - 2;
         }
     }
 }

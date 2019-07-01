@@ -1,14 +1,58 @@
 ﻿using System.IO;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace DevelopKit
 {
     public static class FileUtil
     {
+        public static Error SerializeObjectToFile(Object obj, string file)
+        {
+            try
+            {
+                FileStream fs;
+                if (!File.Exists(file))
+                {
+                    fs = File.Create(file);
+                }
+                else
+                {
+                    fs = new FileStream(file, FileMode.Truncate, FileAccess.ReadWrite);
+                }
+
+                StreamWriter sw = new StreamWriter(fs, Encoding.UTF8);
+                XmlSerializer xmlSerializer = new XmlSerializer(obj.GetType());
+                xmlSerializer.Serialize(sw, obj);
+                fs.Close();
+                fs.Dispose();
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.ToString(), typeof(FileUtil), "SerializeObjectToFile");
+            }
+        }
+
+        public static Object DeserializeObjectFromFile(Type type, string file)
+        {
+            Object obj;
+            try
+            {
+                FileStream fs = File.OpenRead(file);
+                XmlSerializer xmlSerializer = new XmlSerializer(type);
+                obj = xmlSerializer.Deserialize(fs);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("FileUtil", "open file:" + file, ex.ToString());
+                return null;
+            }
+            return obj;
+        }
+
         public static bool ReadBytes(string file, out byte[] data)
         {
             FileStream fileStream = File.OpenRead(file);
@@ -56,11 +100,11 @@ namespace DevelopKit
             }
         }
 
-        public static bool WriteBytesToFile(string file, byte[] bytes)
+        public static bool FlushBytesToFile(string file, byte[] bytes)
         {
             try
             {
-                FileStream fileStream = new FileStream(file, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite);
+                FileStream fileStream = new FileStream(file, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite);
 
                 //向文件中写入字节数组
                 fileStream.Write(bytes, 0, bytes.Length);
@@ -70,13 +114,33 @@ namespace DevelopKit
                 fileStream.Close();
 
                 fileStream.Dispose();
-                return true;
             }
             catch (Exception ex)
             {
-                Log.Write(Log.LogLevel.Fatal, nameof(FileUtil), "文件写入字节失败", string.Format("write file={0} err:{1}", file, ex.ToString()));
+                Console.WriteLine("----->" + ex.ToString());
                 return false;
             }
+
+            return true;
+        }
+
+
+        static string[] commonImageFileExt = new string[]{"PNG","ICO", "BMP","PCX","TIF","GIF","JPEG","TGA", "EXIF",
+        "FPX","SVG", "PSD", "CDR", "PCD", "DXF", "UFO","EPS",
+        "AI","HDRI", "RAW", "WMF", "FLIC", "EMF", "Webp", };
+
+        public static bool IsFileImage(string file_ext)
+        {
+            foreach(string ext in commonImageFileExt)
+            {
+
+                if (file_ext.ToLower().EndsWith(ext.ToLower()))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

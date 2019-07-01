@@ -37,11 +37,13 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.closeprojectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -67,6 +69,7 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -78,12 +81,42 @@
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
             this.createToolStripMenuItem,
-            this.openToolStripMenuItem});
+            this.closeToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(73, 25);
             this.toolStripMenuItem1.Text = "文件(F)";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
+            // 
+            // openToolStripMenuItem
+            // 
+            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openProjectToolStripMenuItem1,
+            this.openImageToolStripMenuItem});
+            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
+            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.openToolStripMenuItem.Text = "打开(O)";
+            // 
+            // openProjectToolStripMenuItem1
+            // 
+            this.openProjectToolStripMenuItem1.Name = "openProjectToolStripMenuItem1";
+            this.openProjectToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.openProjectToolStripMenuItem1.Size = new System.Drawing.Size(254, 26);
+            this.openProjectToolStripMenuItem1.Text = "项目";
+            this.openProjectToolStripMenuItem1.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem1_Click);
+            // 
+            // openImageToolStripMenuItem
+            // 
+            this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
+            this.openImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
+            | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.O)));
+            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
+            this.openImageToolStripMenuItem.Text = "图片";
+            this.openImageToolStripMenuItem.Click += new System.EventHandler(this.OpenImageToolStripMenuItem_Click);
             // 
             // createToolStripMenuItem
             // 
@@ -103,33 +136,22 @@
             this.createProjectToolStripMenuItem.Text = "项目";
             this.createProjectToolStripMenuItem.Click += new System.EventHandler(this.ProjectToolStripMenuItem_Click);
             // 
-            // openToolStripMenuItem
+            // closeToolStripMenuItem
             // 
-            this.openToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openProjectToolStripMenuItem1,
-            this.openImageToolStripMenuItem});
-            this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.openToolStripMenuItem.Text = "打开(O)";
+            this.closeToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeprojectToolStripMenuItem});
+            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.closeToolStripMenuItem.Text = "关闭(C)";
             // 
-            // openProjectToolStripMenuItem1
+            // closeprojectToolStripMenuItem
             // 
-            this.openProjectToolStripMenuItem1.Name = "openProjectToolStripMenuItem1";
-            this.openProjectToolStripMenuItem1.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.O)));
-            this.openProjectToolStripMenuItem1.Size = new System.Drawing.Size(254, 26);
-            this.openProjectToolStripMenuItem1.Text = "项目";
-            // 
-            // openImageToolStripMenuItem
-            // 
-            this.openImageToolStripMenuItem.Name = "openImageToolStripMenuItem";
-            this.openImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Alt) 
-            | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.O)));
-            this.openImageToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
-            this.openImageToolStripMenuItem.Text = "图片";
-            this.openImageToolStripMenuItem.Click += new System.EventHandler(this.OpenImageToolStripMenuItem_Click);
+            this.closeprojectToolStripMenuItem.Name = "closeprojectToolStripMenuItem";
+            this.closeprojectToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.C)));
+            this.closeprojectToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
+            this.closeprojectToolStripMenuItem.Text = "项目";
+            this.closeprojectToolStripMenuItem.Click += new System.EventHandler(this.CloseprojectToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -272,11 +294,14 @@
             // 
             // tabControl2
             // 
+            this.tabControl2.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(0);
+            this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
@@ -287,10 +312,10 @@
             // 
             this.tabPage2.Controls.Add(this.treeView1);
             this.tabPage2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage2.Location = new System.Drawing.Point(4, 30);
+            this.tabPage2.Location = new System.Drawing.Point(32, 4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(192, 923);
+            this.tabPage2.Size = new System.Drawing.Size(164, 949);
             this.tabPage2.TabIndex = 0;
             this.tabPage2.Text = "目录";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -300,17 +325,17 @@
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(186, 917);
+            this.treeView1.Size = new System.Drawing.Size(158, 943);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // tabPage3
             // 
             this.tabPage3.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage3.Location = new System.Drawing.Point(4, 30);
+            this.tabPage3.Location = new System.Drawing.Point(32, 4);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(192, 923);
+            this.tabPage3.Size = new System.Drawing.Size(164, 949);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "流程";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -446,6 +471,9 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
+        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeprojectToolStripMenuItem;
     }
 }
 

@@ -22,7 +22,7 @@ namespace DevelopKit
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new OperateImageReuqest(OperateImageType.Save, (string)hashTable["filepath"]));
+            formDelegateHandler(new OperateFileReuqest(OperateFileType.Save, (string)hashTable["filepath"]));
         }
 
         private void Form_Image_Load(object sender, EventArgs e)
@@ -38,7 +38,7 @@ namespace DevelopKit
 
             //2. 通知主form 关闭tabpage
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new OperateImageReuqest(OperateImageType.Close, (string)hashTable["filepath"]));
+            formDelegateHandler(new OperateFileReuqest(OperateFileType.Close, (string)hashTable["filepath"]));
 
         }
     }

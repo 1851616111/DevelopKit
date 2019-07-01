@@ -16,22 +16,21 @@ namespace DevelopKit
             Project project = (Project)(projectObj);
             try
             {
-                byte[] fileData;
-                if (!FileUtil.ReadBytes(project.GetConfigXml(), out fileData))
-                {
-                    Log.Error("Sync模块", "读取配置文件失败", "");
-                }
-
-                byte[] memData = Encoding.UTF8.GetBytes(project.ToXElement().ToString());
+                byte[] fileData = project.ReadXmlFileBytes();
+                byte[] memData = Encoding.UTF8.GetBytes(project.SerializeToStrInMemory());
 
                 if (!ByteUtil.Diff(fileData, memData))
                 {
                     Log.Error("Sync模块", "对比XML不同", "");
                     Log.Error("Sync模块", "原磁盘数据", Encoding.UTF8.GetString(fileData));
-                    Log.Error("Sync模块", "新内存数据", project.ToXElement().ToString());
+                    Log.Error("Sync模块", "新内存数据", Encoding.UTF8.GetString(memData));
 
-                    FileUtil.WriteBytesToFile(project.GetConfigXml(), memData);
+                    if (!FileUtil.FlushBytesToFile(project.GetConfigXml(), memData))
+                    {
+                        Log.Error("Sync模块", "FlushBytesToFile", "failed");
+                    }
                 }
+               
             }
             catch (Exception ex)
             {

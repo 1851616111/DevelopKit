@@ -19,6 +19,19 @@ namespace DevelopKit
             logStream = new BufferedStream(logFile, 4096 * 6);
         }
 
+        public static void Dipose()
+        {
+            if (logStream != null)
+            {
+                logStream.Dispose();
+            }
+            if (logFile != null)
+            {
+                logFile.Close();
+                logFile.Dispose();
+            }
+        }
+
         public static void Write(LogLevel level, string model, string key, string text)
         {
             if (level < DefaultLevel) {

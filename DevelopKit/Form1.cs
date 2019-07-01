@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Drawing;
+using System.Text;
 using System.Collections;
 using System.Windows.Forms;
 using System.Threading;
@@ -23,10 +24,7 @@ namespace DevelopKit
 
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             hideOpenedProject();
-            pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
-            t = new Thread(pts);
 
-            //example.Example.Show();
         }
 
         private Project GlobalProject;
@@ -42,9 +40,10 @@ namespace DevelopKit
             {
                 case (ProjectStatus.StartOpenProject):
                     toolStripStatusLabel1.Text = "打开皮肤项目：" + project.ProjectName;
-                    showOpenedProject();
                     project.NextStatus();
+                    showOpenedProject();
                     toolStripStatusLabel1.Text = "就绪";
+
                     break;
             }
         }
@@ -56,8 +55,10 @@ namespace DevelopKit
             tabControl1.Visible = true;
             splitter1.Visible = true;
             splitter2.Visible = true;
-            initTabControl1();
+            preInstallContent();
 
+            pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
+            t = new Thread(pts);
             t.Start(GlobalProject);
         }
 
@@ -71,6 +72,7 @@ namespace DevelopKit
 
             treeViewLeafNodeTag = new Hashtable();
             treeViewLeafNodeTag["is_leaf_node"] = true;
+            GlobalProject = null;
         }
 
 
@@ -140,17 +142,17 @@ namespace DevelopKit
                 bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out error);
                 if (!ok)
                 {
-                    MessageBox.Show(Errors.ProjectFileAlreadyExist, "创建失败", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(Errors.ProjectFileAlreadyExist, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
                 {
-                    OpenSavedImage(openFileDialog.FileName);
+                    openImage(openFileDialog.FileName, true);
                 }
                 else
                 {
-                    OpenUnsavedImage(openFileDialog.FileName);
+                    openImage(openFileDialog.FileName, false);
                 }
             }
         }
@@ -158,25 +160,25 @@ namespace DevelopKit
         //Form_Image的所有操作请求均通过此函数出发 相应操作
         public void Form_Image_Handler(Object requestObj)
         {
-            if (requestObj.GetType() != typeof(OperateImageReuqest))
+            if (requestObj.GetType() != typeof(OperateFileReuqest))
             {
                 return;
             }
 
-            OperateImageReuqest request = (OperateImageReuqest)requestObj;
+            OperateFileReuqest request = (OperateFileReuqest)requestObj;
             switch (request.operatetype)
             {
-                case OperateImageType.Save:
+                case OperateFileType.Save:
                     saveImageByFilePath(request.filepath);
                     break;
-                case OperateImageType.Close:
+                case OperateFileType.Close:
                     foreach (TabPage tabpage in tabControl1.TabPages)
                     {
                         if (tabpage.Name == request.filepath)
                         {
                             int index = tabControl1.TabPages.IndexOf(tabpage);
                             int newSelectIndex;
-                         
+
                             if (tabControl1.TabPages.Count == 1) //如果只有一个
                             {
                                 tabControl1.TabPages.Remove(tabpage);
@@ -216,14 +218,47 @@ namespace DevelopKit
             return false;
         }
 
-        private void OpenUnsavedImage(string filepath)
+        private void OpenFile(string filepath )
         {
-            openImage(filepath, false);
+            bool Saved;
+            if (filepath.StartsWith(GlobalProject.GetUserSpaceDir()))
+            {
+                Saved = true;
+            }
+            else
+            {
+                Saved = false;
+            }
+            if (FileUtil.IsFileImage(filepath))
+            {
+                openImage(filepath, Saved);
+            }
+            else {
+                openTxt(filepath, Saved);
+            }
         }
 
-        private void OpenSavedImage(string filepath)
+        private void OpenFile(ProjectFile file)
         {
-            openImage(filepath, true);
+            bool Saved;
+
+            if (file.filePath.StartsWith(GlobalProject.GetUserSpaceDir()))
+            {
+                Saved = true;
+            }
+            else
+            {
+                Saved = false;
+            }
+
+            if (file.fileType == FileType.Image)
+            {
+                openImage(file.filePath, Saved);
+            }
+            else
+            {
+                openTxt(file.filePath, Saved);
+            }
         }
 
         private void openImage(string filepath, bool saved)
@@ -300,6 +335,80 @@ namespace DevelopKit
             form.Show();
         }
 
+        private void openTxt(string filepath, bool saved)
+        {
+            RichTextBox richTextBox = new RichTextBox();
+            try
+            {
+                byte[] bytes = File.ReadAllBytes(filepath);
+                // richTextBox.Text = File.
+                richTextBox.Text = Encoding.UTF8.GetString(bytes);
+            }
+            catch (OutOfMemoryException)
+            {
+                MessageBox.Show("内存不足", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                MessageBox.Show("该文件已不存在, 请重新选择", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("打开错误", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            string filename = StringUtil.GetFileName(filepath);
+            Hashtable ht = new Hashtable();
+            ht.Add("filetype", FileType.Txt);
+            ht.Add("filename", filename);
+            ht.Add("filepath", filepath);
+
+
+            //创建一个tabpage
+            TabPage tabPage = new TabPage();
+            tabPage.Tag = ht;
+            tabPage.Name = filepath;
+            if (saved)
+            {
+                tabPage.Text = filename;
+            }
+            else
+            {
+                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
+            }
+
+            tabPage.Padding = new Padding(6);
+            tabPage.ToolTipText = filepath;
+
+            //将tabpage 添加到 tabcontroll中
+            tabControl1.TabPages.Add(tabPage);
+            tabControl1.SelectTab(tabPage);
+
+            //在tabpage绑定一个form
+            Form1_Image form = new Form1_Image();
+            form.Name = filepath;
+            form.Tag = ht;
+            form.TopLevel = false;     //设置为非顶级控件
+            form.Dock = DockStyle.Fill;
+            form.FormBorderStyle = FormBorderStyle.None;
+            form.formDelegateHandler = Form_Image_Handler;
+            tabPage.Controls.Add(form);
+
+            //在form中创建一个picturebox
+
+            richTextBox.Dock = DockStyle.Fill;
+            richTextBox.Name = filename;
+            richTextBox.TabIndex = 0;
+
+            form.Controls.Add(richTextBox);
+            richTextBox.Show();
+            form.Show();
+        }
+
+
         //保存当前Tabpage页的图片 ,由form1 自上而下发起保存图片请求
         private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
         {
@@ -340,6 +449,7 @@ namespace DevelopKit
 
             string filename = (string)tag["filename"];
             string filepath = (string)tag["filepath"];
+            FileType filetype = (FileType)tag["filetype"];
             if (StringUtil.isFileSafed(tabpage.Text))
             {
                 MessageBox.Show(filename);
@@ -355,10 +465,6 @@ namespace DevelopKit
 
                 foreach (Control childControl in control.Controls)
                 {
-                    if (childControl.GetType() != typeof(PictureBox))
-                    {
-                        continue;
-                    }
 
                     SaveFileDialog fileDialog = new SaveFileDialog();
                     fileDialog.Filter = "PNG|*.png|所有文件|*.*";
@@ -369,7 +475,17 @@ namespace DevelopKit
                     {
                         try
                         {
-                            ((PictureBox)childControl).Image.Save(fileDialog.FileName);
+                            if (filetype == FileType.Image)
+                            {
+                                ((PictureBox)childControl).Image.Save(fileDialog.FileName);
+                            }
+                            else if (filetype == FileType.Txt)
+                            {
+                                ((RichTextBox)childControl).SaveFile(fileDialog.FileName);
+                            }
+                            else {
+                                MessageBox.Show("未知的文件类型");
+                            }
                             changeFileWindowsTextAsSaved(filepath);
                         }
                         catch (Exception ex)
@@ -394,12 +510,15 @@ namespace DevelopKit
             }
         }
 
-        private void initTabControl1()
+        private void preInstallContent()
         {
             tabControl1.SelectedIndex = 0;
 
+
             treeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
         }
+
+
 
         private void treeView1_LoadCurrentProject(string projectdir)
         {
@@ -440,7 +559,16 @@ namespace DevelopKit
         {
             if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
             {
-                OpenSavedImage(e.Node.Name);
+                string error = "";
+                if (!GlobalProject.NewOpenImage(e.Node.Name, out error))
+                {
+                    MessageBox.Show("打开文件失败: " + error, "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                OpenFile(e.Node.Name);
+
+               
             }
             else
             {
@@ -495,6 +623,80 @@ namespace DevelopKit
                 }
                 e.Node.Expand();
             }
+        }
+
+        //打开已存在的项目
+        private void OpenProjectToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            if (folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                string userProjectDir = folderBrowserDialog.SelectedPath;
+                if (!Directory.Exists(userProjectDir))
+                {
+                    MessageBox.Show("项目目录不存在，请确认后重新打开", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string projectInnerDir = Path.Combine(userProjectDir, Project.RuntimeConfigDirName);
+
+                if (!Directory.Exists(projectInnerDir))
+                {
+                    MessageBox.Show("项目目录不存在，请确认后重新打开", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                string projectConfigXML = Path.Combine(projectInnerDir, Project.RuntimeConfigXmlName);
+                if (!File.Exists(projectConfigXML))
+                {
+                    MessageBox.Show("项目配置不存在，请确认后重新打开", "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                Object projectProject = FileUtil.DeserializeObjectFromFile(typeof(Project), projectConfigXML);
+                SetGlobalProject((Project)projectProject);
+                showOpenedProject();
+
+                foreach (ProjectFile pf in GlobalProject.filesEditer.projectFileList)
+                {
+                    OpenFile(pf);
+                }
+            }
+        }
+
+        //关闭项目
+        private void CloseprojectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //清除左侧tabcontrol
+            foreach (TabPage tabpage in tabControl2.TabPages)
+            {
+                tabpage.Controls.Clear();
+            }
+
+
+            //清除中间tabcontrol
+            int start = 0;
+            foreach (TabPage tabpage in tabControl1.TabPages)
+            {
+                if (start != 0)
+                {
+                    tabControl1.TabPages.Remove(tabpage);
+                    start++;
+                }
+                else
+                {
+                    start++;
+                    continue;
+                }
+            }
+
+            t.Abort();
+            hideOpenedProject();
+        }
+
+        private void TextBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
