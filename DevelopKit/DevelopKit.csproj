@@ -70,17 +70,17 @@
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_delegate.cs" />
     <Compile Include="Errors.cs" />
-    <Compile Include="Form1_Tab_Page.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1_Tab_Page.Designer.cs">
-      <DependentUpon>Form1_Tab_Page.cs</DependentUpon>
-    </Compile>
     <Compile Include="Form1_Image.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1_Image.Designer.cs">
       <DependentUpon>Form1_Image.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1_Txt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1_Txt.Designer.cs">
+      <DependentUpon>Form1_Txt.cs</DependentUpon>
     </Compile>
     <Compile Include="Form1_Util.cs" />
     <Compile Include="Log.cs" />
@@ -135,6 +135,9 @@
     <Compile Include="ProjectSyncTools.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1_Txt.resx">
+      <DependentUpon>Form1_Txt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>

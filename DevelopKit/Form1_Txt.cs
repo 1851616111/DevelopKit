@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public partial class Form1_Tab_Page : Form
+    public partial class Form1_Txt : Form
     {
-        public Form1_Tab_Page()
+        public Form1_Txt()
         {
             InitializeComponent();
         }

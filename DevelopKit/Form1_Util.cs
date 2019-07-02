@@ -66,27 +66,22 @@ namespace DevelopKit
                 Dock = DockStyle.Fill,
                 FormBorderStyle = FormBorderStyle.None,
                 formDelegateHandler = formDelegate,
+                
             };
-
-            //3.创建一个picuterbox
-            PictureBox pictureBox1 = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.CenterImage,
-                Name = filename,
-                TabIndex = 0,
-                Image = image,
-            };
-            //pictureBox1.Move += new System.EventHandler(this.PictureBox1_Move);
 
             //将tabpage 添加到 tabcontroll中
-            innerForm.Controls.Add(pictureBox1);
             tabPage.Controls.Add(innerForm);
             tabcontrol1.TabPages.Add(tabPage);
             tabcontrol1.SelectTab(tabPage);
-
-            pictureBox1.Show();
             innerForm.Show();
+
+            //重新计算图片放置位置
+            innerForm.pictureBox1.Location = new Point((innerForm.Width - image.Size.Width) / 2 + innerForm.Location.X, (innerForm.Height - image.Size.Height) / 2);
+            innerForm.pictureBox1.Size = image.Size;
+            innerForm.pictureBox1.Name = filename;
+            innerForm.pictureBox1.Image = image;
+
+            innerForm.toolStripStatusLabel1.Text = string.Format("尺寸 {0}*{1}", innerForm.pictureBox1.Size.Width, innerForm.pictureBox1.Size.Height);
         }
 
         public static void OpenTxtForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)
