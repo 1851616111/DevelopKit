@@ -151,7 +151,7 @@ namespace DevelopKit
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out string error);
+                bool ok = GlobalProject.NewOpenFile(openFileDialog.FileName, out string error);
                 if (!ok)
                 {
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -161,11 +161,11 @@ namespace DevelopKit
 
                 if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
                 {
-                    OpenImage(openFileDialog.FileName, true);
+                    Form1_Util.OpenImageForm(openFileDialog.FileName, true, tabControl1, Form_Image_Handler);
                 }
                 else
                 {
-                    OpenImage(openFileDialog.FileName, false);
+                    Form1_Util.OpenImageForm(openFileDialog.FileName, false, tabControl1, Form_Image_Handler);
                 }
             }
         }
@@ -209,7 +209,9 @@ namespace DevelopKit
 
                             tabControl1.SelectedIndex = newSelectIndex;
                             tabControl1.TabPages.Remove(tabpage);
-                            return;
+                            tabpage.Dispose();
+
+                            GlobalProject.CloseFile(request.filepath);
                         }
                     }
                     break;
@@ -244,11 +246,11 @@ namespace DevelopKit
             }
             if (FileUtil.IsFileImage(filepath))
             {
-                OpenImage(filepath, Saved);
+                Form1_Util.OpenImageForm(filepath, Saved, tabControl1, Form_Image_Handler);
             }
             else
             {
-                OpenTxt(filepath, Saved);
+                Form1_Util.OpenTxtForm(filepath, Saved, tabControl1, Form_Image_Handler);
             }
         }
 
@@ -267,179 +269,12 @@ namespace DevelopKit
 
             if (file.fileType == FileType.Image)
             {
-                OpenImage(file.filePath, Saved);
+                Form1_Util.OpenImageForm(file.filePath, Saved, tabControl1, Form_Image_Handler);
             }
             else
             {
-                OpenTxt(file.filePath, Saved);
+                Form1_Util.OpenTxtForm(file.filePath, Saved, tabControl1, Form_Image_Handler);
             }
-        }
-
-        private void OpenImage(string filepath, bool saved)
-        {
-            System.Drawing.Image image;
-            try
-            {
-                image = System.Drawing.Image.FromFile(filepath);
-            }
-            catch (OutOfMemoryException ex)
-            {
-                MessageBox.Show("内存不足", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Error("Form1 openImage()", "catch OutOfMemoryException", ex.ToString());
-                return;
-            }
-            catch (System.IO.FileNotFoundException ex)
-            {
-                MessageBox.Show("该文件已不存在, 请重新选择", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Error("Form1 openImage()", "catch FileNotFoundException", ex.ToString());
-                return;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("打开图片文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Error("Form1 openImage()", "catch exception", ex.ToString());
-                return;
-            }
-
-            string filename = StringUtil.GetFileName(filepath);
-            Hashtable ht = new Hashtable
-            {
-                ["filetype"] = FileType.Image,
-                ["filename"] = filename,
-                ["filepath"] = filepath
-            };
-
-
-
-            //创建一个tabpage
-            TabPage tabPage = new TabPage
-            {
-                Tag = ht,
-                Name = filepath
-            };
-            if (saved)
-            {
-                tabPage.Text = filename;
-            }
-            else
-            {
-                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
-            }
-
-            tabPage.Padding = new Padding(6);
-            tabPage.ToolTipText = filepath;
-
-            //将tabpage 添加到 tabcontroll中
-            tabControl1.TabPages.Add(tabPage);
-            tabControl1.SelectTab(tabPage);
-
-            //在tabpage绑定一个form
-            Form1_Image form = new Form1_Image
-            {
-                Name = filepath,
-                Tag = ht,
-                TopLevel = false,     //设置为非顶级控件
-                Dock = DockStyle.Fill,
-                FormBorderStyle = FormBorderStyle.None,
-                formDelegateHandler = Form_Image_Handler,
-            };
-            tabPage.Controls.Add(form);
-
-            //在form中创建一个picturebox
-
-            PictureBox pictureBox1 = new PictureBox
-            {
-                Dock = DockStyle.Fill,
-                SizeMode = PictureBoxSizeMode.CenterImage,
-                Name = filename,
-                TabIndex = 0,
-                Image = image,
-            };
-
-            form.Controls.Add(pictureBox1);
-            pictureBox1.Show();
-            form.Show();
-        }
-
-        private void OpenTxt(string filepath, bool saved)
-        {
-            RichTextBox richTextBox = new RichTextBox();
-            try
-            {
-                byte[] bytes = File.ReadAllBytes(filepath);
-                // richTextBox.Text = File.
-                richTextBox.Text = Encoding.UTF8.GetString(bytes);
-            }
-            catch (OutOfMemoryException)
-            {
-                MessageBox.Show("内存不足", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                MessageBox.Show("该文件已不存在, 请重新选择", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("打开文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Log.Error("Form1.OpenTxt()", "打开文件失败", ex.ToString());
-
-                return;
-            }
-
-            string filename = StringUtil.GetFileName(filepath);
-            Hashtable ht = new Hashtable
-            {
-                ["filetype"] = FileType.Txt,
-                ["filename"] = filename,
-                ["filepath"] = filepath
-            };
-
-
-            //创建一个tabpage
-            TabPage tabPage = new TabPage
-            {
-                Tag = ht,
-                Name = filepath,
-            };
-            if (saved)
-            {
-                tabPage.Text = filename;
-            }
-            else
-            {
-                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
-            }
-
-            tabPage.Padding = new Padding(6);
-            tabPage.ToolTipText = filepath;
-
-            //将tabpage 添加到 tabcontroll中
-            tabControl1.TabPages.Add(tabPage);
-            tabControl1.SelectTab(tabPage);
-
-            //在tabpage绑定一个form
-            Form1_Image form = new Form1_Image
-            {
-                Name = filepath,
-                Tag = ht,
-                TopLevel = false,     //设置为非顶级控件
-                Dock = DockStyle.Fill,
-                FormBorderStyle = FormBorderStyle.None,
-                formDelegateHandler = Form_Image_Handler,
-            };
-            tabPage.Controls.Add(form);
-
-            //在form中创建一个picturebox
-
-            richTextBox.Dock = DockStyle.Fill;
-            richTextBox.Name = filename;
-            richTextBox.TabIndex = 0;
-
-            form.Controls.Add(richTextBox);
-            richTextBox.Show();
-            form.Show();
         }
 
 
@@ -597,7 +432,7 @@ namespace DevelopKit
         {
             if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
             {
-                if (!GlobalProject.NewOpenImage(e.Node.Name, out string error))
+                if (!GlobalProject.NewOpenFile(e.Node.Name, out string error))
                 {
                     MessageBox.Show("打开文件失败: " + error, "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Log.Error("Form1.treeView1_NodeMouseDoubleClick()", "GlobalProject.NewOpenImag() " + e.Node.Name, error);

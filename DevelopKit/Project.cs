@@ -33,7 +33,7 @@ namespace DevelopKit
         public ProjectStatus Status; //项目状态
 
         [XmlElement(ElementName = "files_editer")]
-        public FilesEditer filesEditer; // 文件编辑器
+        public RecordFile filesEditer; // 文件编辑器
 
         public Project()
         {
@@ -45,7 +45,7 @@ namespace DevelopKit
             ProjectPath = path;
             Developer = dev;
             Status = ProjectStatus.StartCreateProject;
-            filesEditer = new FilesEditer();
+            filesEditer = new RecordFile();
         }
 
         public void SetStatusOpen()
@@ -139,7 +139,7 @@ namespace DevelopKit
 
 
         // 菜单 --> 文件 --> 打开 --> 图片
-        public bool NewOpenImage(string filepath, out string error)
+        public bool NewOpenFile(string filepath, out string error)
         {
             error = "";
             //若已在项目中， 返回错误
@@ -148,8 +148,13 @@ namespace DevelopKit
                 error = Errors.ProjectFileAlreadyExist;
                 return false;
             }
-            filesEditer.RecordFile(filepath);
+            filesEditer.AddOpenedFile(filepath);
             return true;
+        }
+
+        public bool CloseFile(string filepath)
+        {
+            return filesEditer.CloseOpenedFile(filepath);
         }
 
         //初始化项目目录

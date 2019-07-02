@@ -12,13 +12,13 @@ namespace DevelopKit
 {
     [Serializable]
     [XmlRoot("files_editer")]
-    public class FilesEditer
+    public class RecordFile
     {
 
         [XmlElementAttribute(ElementName = "file")]
         public List<ProjectFile> projectFileList;
 
-        public FilesEditer()
+        public RecordFile()
         {
             projectFileList = new List<ProjectFile>();
         }
@@ -34,11 +34,24 @@ namespace DevelopKit
         }
 
         //不论用户打开的是外部文件还是内部文件， 都需要存储FileEditor中， 已边下次打开Kit使用
-        public void RecordFile(string filepath)
+        public void AddOpenedFile(string filepath)
         {
             ProjectFile projectFile = new ProjectFile(filepath);
           
             projectFileList.Add(projectFile);
+        }
+
+        public bool CloseOpenedFile(string filepath)
+        {
+            foreach (ProjectFile file in projectFileList)
+            {
+                if (filepath == file.filePath)
+                {
+                    projectFileList.Remove(file);
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
