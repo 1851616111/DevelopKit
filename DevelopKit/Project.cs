@@ -29,7 +29,7 @@ namespace DevelopKit
         [XmlElement(ElementName = "developer")]
         public string Developer;    //开发者
 
-
+        [XmlIgnore]
         public ProjectStatus Status; //项目状态
 
         [XmlElement(ElementName = "files_editer")]

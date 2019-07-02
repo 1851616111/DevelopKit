@@ -34,7 +34,12 @@ namespace DevelopKit
         private Project GlobalProject;
         public void SetGlobalProject(Project project)
         {
+            if (project.Status == 0)
+            {
+                project.Status = ProjectStatus.StartOpenProject;
+            }
             this.GlobalProject = project;
+
             ProjectStatusHandler(this.GlobalProject);
         }
 
