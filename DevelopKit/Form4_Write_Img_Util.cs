@@ -56,7 +56,7 @@ namespace DevelopKit
             {
                 font = fontDialog.Font;
                 textBox1.Font = font;
-                enableButton();
+                EnableButton();
             }
             else
             {
@@ -71,7 +71,7 @@ namespace DevelopKit
             {
                 color = colorDialog.Color;
                 textBox1.ForeColor = color;
-                enableButton();
+                EnableButton();
             }
             else
             {
@@ -88,23 +88,22 @@ namespace DevelopKit
                 return;
             }
 
-            int x, y, w, h;
-            if (!parseIntStr(true, textBox2.Text, out x))
+            if (!ParseIntStr(true, textBox2.Text, out int x))
             {
                 MessageBox.Show("文字起始坐标X格式不合法");
                 return;
             }
-            if (!parseIntStr(true, textBox3.Text, out y))
+            if (!ParseIntStr(true, textBox3.Text, out int y))
             {
                 MessageBox.Show("文字起始坐标Y格式不合法");
                 return;
             }
-            if (!parseIntStr(false, textBox4.Text, out w))
+            if (!ParseIntStr(false, textBox4.Text, out int w))
             {
                 MessageBox.Show("文字行宽度不合法");
                 return;
             }
-            if (!parseIntStr(false, textBox5.Text, out h))
+            if (!ParseIntStr(false, textBox5.Text, out int h))
             {
                 MessageBox.Show("文字行高度不合法");
                 return;
@@ -123,7 +122,7 @@ namespace DevelopKit
             }
         }
 
-        private void enableButton()
+        private void EnableButton()
         {
             if ((image == null) || (font == null) || (color == null))
             {
@@ -134,28 +133,30 @@ namespace DevelopKit
 
         private void Button4_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.RestoreDirectory = true;
-            saveFileDialog.Filter = "PNG|*.png|所有文件|*.*";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                RestoreDirectory = true,
+                Filter = "PNG|*.png|所有文件|*.*"
 
+            };
             try
             {
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string targetFileName = saveFileDialog.FileName;
 
-                    pictureBox1.Image.Save(targetFileName);
+                    pictureBox1.Image.Save(saveFileDialog.FileName);
                     MessageBox.Show("保存图片成功");
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("保存图片失败");
+                Log.Error("Form4_Writer_Img_util.Button4_Click", "保存图片失败", ex.ToString());
             }
 
         }
 
-        private bool parseIntStr(bool allowZero, string input, out int output)
+        private bool ParseIntStr(bool allowZero, string input, out int output)
         {
             output = 0; 
             if (input.Length == 0)

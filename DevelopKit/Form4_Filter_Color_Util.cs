@@ -98,7 +98,6 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
                 MessageBox.Show("保存失败");
             }
         }

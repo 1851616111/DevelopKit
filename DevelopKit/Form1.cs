@@ -10,12 +10,16 @@ namespace DevelopKit
 {
     public partial class Form1 : Form
     {
-        static private int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
-        static private int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
+        static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
+        static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
+
 
         ParameterizedThreadStart pts;
         Thread t;
-        private Hashtable treeViewLeafNodeTag;
+        private static readonly Hashtable treeViewLeafNodeTag = new Hashtable
+        {
+            ["is_leaf_node"] = true
+        };
 
         public Form1()
         {
@@ -23,15 +27,20 @@ namespace DevelopKit
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
 
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
-            hideOpenedProject();
-
+            HideOpenedProject();
+            GlobalProject = null;
         }
 
         private Project GlobalProject;
         public void SetGlobalProject(Project project)
         {
             this.GlobalProject = project;
-            ProjectStatusHandler(project);
+            ProjectStatusHandler(this.GlobalProject);
+        }
+
+        public Project GetGlobalProject()
+        {
+            return GlobalProject;
         }
 
         private void ProjectStatusHandler(Project project)
@@ -41,40 +50,39 @@ namespace DevelopKit
                 case (ProjectStatus.StartOpenProject):
                     toolStripStatusLabel1.Text = "打开皮肤项目：" + project.ProjectName;
                     project.NextStatus();
-                    showOpenedProject();
+                    ShowOpenedProject();
                     toolStripStatusLabel1.Text = "就绪";
 
                     break;
             }
         }
 
-        private void showOpenedProject()
+        private void ShowOpenedProject()
         {
             panel1.Visible = true;
             panel2.Visible = true;
             tabControl1.Visible = true;
             splitter1.Visible = true;
             splitter2.Visible = true;
-            preInstallContent();
+            openImageToolStripMenuItem.Enabled = true;
+            PreInstallContent();
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
-            t.Start(GlobalProject);
+            t.Start(this);
         }
 
-        private void hideOpenedProject()
+        private void HideOpenedProject()
         {
             panel1.Visible = false;
             panel2.Visible = false;
             tabControl1.Visible = false;
             splitter1.Visible = false;
             splitter2.Visible = false;
+            openImageToolStripMenuItem.Enabled = false;
 
-            treeViewLeafNodeTag = new Hashtable();
-            treeViewLeafNodeTag["is_leaf_node"] = true;
             GlobalProject = null;
         }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -138,21 +146,21 @@ namespace DevelopKit
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                string error;
-                bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out error);
+                bool ok = GlobalProject.NewOpenImage(openFileDialog.FileName, out string error);
                 if (!ok)
                 {
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.Error("Form1 OpenImageToolStripMenuItem_Click()", "GlobalProject.NewOpenImage()", error);
                     return;
                 }
 
                 if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
                 {
-                    openImage(openFileDialog.FileName, true);
+                    OpenImage(openFileDialog.FileName, true);
                 }
                 else
                 {
-                    openImage(openFileDialog.FileName, false);
+                    OpenImage(openFileDialog.FileName, false);
                 }
             }
         }
@@ -169,7 +177,7 @@ namespace DevelopKit
             switch (request.operatetype)
             {
                 case OperateFileType.Save:
-                    saveImageByFilePath(request.filepath);
+                    SaveImageByFilePath(request.filepath);
                     break;
                 case OperateFileType.Close:
                     foreach (TabPage tabpage in tabControl1.TabPages)
@@ -204,7 +212,7 @@ namespace DevelopKit
         }
 
         //文件保存成功后， 需要移除*， 向用户标识该文件已经同步
-        private bool changeFileWindowsTextAsSaved(string filePath)
+        private bool ChangeFileWindowsTextAsSaved(string filePath)
         {
             foreach (TabPage tabpage in tabControl1.TabPages)
             {
@@ -218,7 +226,7 @@ namespace DevelopKit
             return false;
         }
 
-        private void OpenFile(string filepath )
+        private void OpenFile(string filepath)
         {
             bool Saved;
             if (filepath.StartsWith(GlobalProject.GetUserSpaceDir()))
@@ -231,10 +239,11 @@ namespace DevelopKit
             }
             if (FileUtil.IsFileImage(filepath))
             {
-                openImage(filepath, Saved);
+                OpenImage(filepath, Saved);
             }
-            else {
-                openTxt(filepath, Saved);
+            else
+            {
+                OpenTxt(filepath, Saved);
             }
         }
 
@@ -253,48 +262,56 @@ namespace DevelopKit
 
             if (file.fileType == FileType.Image)
             {
-                openImage(file.filePath, Saved);
+                OpenImage(file.filePath, Saved);
             }
             else
             {
-                openTxt(file.filePath, Saved);
+                OpenTxt(file.filePath, Saved);
             }
         }
 
-        private void openImage(string filepath, bool saved)
+        private void OpenImage(string filepath, bool saved)
         {
             System.Drawing.Image image;
             try
             {
                 image = System.Drawing.Image.FromFile(filepath);
             }
-            catch (OutOfMemoryException)
+            catch (OutOfMemoryException ex)
             {
-                MessageBox.Show("内存不足", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("内存不足", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Error("Form1 openImage()", "catch OutOfMemoryException", ex.ToString());
                 return;
             }
-            catch (System.IO.FileNotFoundException)
+            catch (System.IO.FileNotFoundException ex)
             {
-                MessageBox.Show("该文件已不存在, 请重新选择", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("该文件已不存在, 请重新选择", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Error("Form1 openImage()", "catch FileNotFoundException", ex.ToString());
                 return;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("打开错误", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("打开图片文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Error("Form1 openImage()", "catch exception", ex.ToString());
                 return;
             }
 
             string filename = StringUtil.GetFileName(filepath);
-            Hashtable ht = new Hashtable();
-            ht.Add("filetype", FileType.Image);
-            ht.Add("filename", filename);
-            ht.Add("filepath", filepath);
+            Hashtable ht = new Hashtable
+            {
+                ["filetype"] = FileType.Image,
+                ["filename"] = filename,
+                ["filepath"] = filepath
+            };
+
 
 
             //创建一个tabpage
-            TabPage tabPage = new TabPage();
-            tabPage.Tag = ht;
-            tabPage.Name = filepath;
+            TabPage tabPage = new TabPage
+            {
+                Tag = ht,
+                Name = filepath
+            };
             if (saved)
             {
                 tabPage.Text = filename;
@@ -312,30 +329,34 @@ namespace DevelopKit
             tabControl1.SelectTab(tabPage);
 
             //在tabpage绑定一个form
-            Form1_Image form = new Form1_Image();
-            form.Name = filepath;
-            form.Tag = ht;
-            form.TopLevel = false;     //设置为非顶级控件
-            form.Dock = DockStyle.Fill;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.formDelegateHandler = Form_Image_Handler;
+            Form1_Image form = new Form1_Image
+            {
+                Name = filepath,
+                Tag = ht,
+                TopLevel = false,     //设置为非顶级控件
+                Dock = DockStyle.Fill,
+                FormBorderStyle = FormBorderStyle.None,
+                formDelegateHandler = Form_Image_Handler,
+            };
             tabPage.Controls.Add(form);
 
             //在form中创建一个picturebox
 
-            PictureBox pictureBox1 = new PictureBox();
-            pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
-            pictureBox1.Name = filename;
-            pictureBox1.TabIndex = 0;
-            pictureBox1.Image = image;
+            PictureBox pictureBox1 = new PictureBox
+            {
+                Dock = DockStyle.Fill,
+                SizeMode = PictureBoxSizeMode.CenterImage,
+                Name = filename,
+                TabIndex = 0,
+                Image = image,
+            };
 
             form.Controls.Add(pictureBox1);
             pictureBox1.Show();
             form.Show();
         }
 
-        private void openTxt(string filepath, bool saved)
+        private void OpenTxt(string filepath, bool saved)
         {
             RichTextBox richTextBox = new RichTextBox();
             try
@@ -356,21 +377,27 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
-                MessageBox.Show("打开错误", "打开文件失败", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("打开文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Error("Form1.OpenTxt()", "打开文件失败", ex.ToString());
+
                 return;
             }
 
             string filename = StringUtil.GetFileName(filepath);
-            Hashtable ht = new Hashtable();
-            ht.Add("filetype", FileType.Txt);
-            ht.Add("filename", filename);
-            ht.Add("filepath", filepath);
+            Hashtable ht = new Hashtable
+            {
+                ["filetype"] = FileType.Txt,
+                ["filename"] = filename,
+                ["filepath"] = filepath
+            };
 
 
             //创建一个tabpage
-            TabPage tabPage = new TabPage();
-            tabPage.Tag = ht;
-            tabPage.Name = filepath;
+            TabPage tabPage = new TabPage
+            {
+                Tag = ht,
+                Name = filepath,
+            };
             if (saved)
             {
                 tabPage.Text = filename;
@@ -388,13 +415,15 @@ namespace DevelopKit
             tabControl1.SelectTab(tabPage);
 
             //在tabpage绑定一个form
-            Form1_Image form = new Form1_Image();
-            form.Name = filepath;
-            form.Tag = ht;
-            form.TopLevel = false;     //设置为非顶级控件
-            form.Dock = DockStyle.Fill;
-            form.FormBorderStyle = FormBorderStyle.None;
-            form.formDelegateHandler = Form_Image_Handler;
+            Form1_Image form = new Form1_Image
+            {
+                Name = filepath,
+                Tag = ht,
+                TopLevel = false,     //设置为非顶级控件
+                Dock = DockStyle.Fill,
+                FormBorderStyle = FormBorderStyle.None,
+                formDelegateHandler = Form_Image_Handler,
+            };
             tabPage.Controls.Add(form);
 
             //在form中创建一个picturebox
@@ -417,23 +446,23 @@ namespace DevelopKit
             {
                 return;
             }
-            saveImageInTabPage(selectedTabTage);
+            SaveImageInTabPage(selectedTabTage);
         }
 
         //子Form通过delegate 回调通知的filepath来保存图片， 需要便利所有tabpage
-        private void saveImageByFilePath(string filepath)
+        private void SaveImageByFilePath(string filepath)
         {
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
                 if (tabPage.Name == filepath)
                 {
-                    saveImageInTabPage(tabPage);
+                    SaveImageInTabPage(tabPage);
                     return;
                 }
             }
         }
 
-        private void saveImageInTabPage(TabPage tabpage)
+        private void SaveImageInTabPage(TabPage tabpage)
         {
             if (tabpage.Tag == null)
             {
@@ -466,11 +495,14 @@ namespace DevelopKit
                 foreach (Control childControl in control.Controls)
                 {
 
-                    SaveFileDialog fileDialog = new SaveFileDialog();
-                    fileDialog.Filter = "PNG|*.png|所有文件|*.*";
-                    fileDialog.FilterIndex = 1;
-                    fileDialog.RestoreDirectory = true;
-                    fileDialog.InitialDirectory = GlobalProject.GetUserSpaceDir();
+                    SaveFileDialog fileDialog = new SaveFileDialog
+                    {
+                        Filter = "PNG|*.png|所有文件|*.*",
+                        FilterIndex = 1,
+                        RestoreDirectory = true,
+                        InitialDirectory = GlobalProject.GetUserSpaceDir()
+
+                    };
                     if (fileDialog.ShowDialog() == DialogResult.OK)
                     {
                         try
@@ -483,14 +515,16 @@ namespace DevelopKit
                             {
                                 ((RichTextBox)childControl).SaveFile(fileDialog.FileName);
                             }
-                            else {
+                            else
+                            {
                                 MessageBox.Show("未知的文件类型");
                             }
-                            changeFileWindowsTextAsSaved(filepath);
+                            ChangeFileWindowsTextAsSaved(filepath);
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show("保存文件失败");
+                            Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
                         }
                     }
                 }
@@ -502,7 +536,7 @@ namespace DevelopKit
 
             if (tabControl2.SelectedIndex == 0)
             {
-                treeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+                TreeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
             }
             else
             {
@@ -510,17 +544,16 @@ namespace DevelopKit
             }
         }
 
-        private void preInstallContent()
+        private void PreInstallContent()
         {
             tabControl1.SelectedIndex = 0;
 
-
-            treeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+            TreeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
         }
 
 
 
-        private void treeView1_LoadCurrentProject(string projectdir)
+        private void TreeView1_LoadCurrentProject(string projectdir)
         {
             Directory.SetCurrentDirectory(projectdir);
 
@@ -555,20 +588,18 @@ namespace DevelopKit
 
         }
 
-        private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void TreeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
             {
-                string error = "";
-                if (!GlobalProject.NewOpenImage(e.Node.Name, out error))
+                if (!GlobalProject.NewOpenImage(e.Node.Name, out string error))
                 {
                     MessageBox.Show("打开文件失败: " + error, "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Log.Error("Form1.treeView1_NodeMouseDoubleClick()", "GlobalProject.NewOpenImag() " + e.Node.Name, error);
                     return;
                 }
 
                 OpenFile(e.Node.Name);
-
-               
             }
             else
             {
@@ -654,8 +685,14 @@ namespace DevelopKit
                 }
 
                 Object projectProject = FileUtil.DeserializeObjectFromFile(typeof(Project), projectConfigXML);
+                if (projectProject == null)
+                {
+                    MessageBox.Show("读取项目配置文件失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 SetGlobalProject((Project)projectProject);
-                showOpenedProject();
+                ShowOpenedProject();
 
                 foreach (ProjectFile pf in GlobalProject.filesEditer.projectFileList)
                 {
@@ -667,12 +704,9 @@ namespace DevelopKit
         //关闭项目
         private void CloseprojectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //清除左侧tabcontrol
-            foreach (TabPage tabpage in tabControl2.TabPages)
-            {
-                tabpage.Controls.Clear();
-            }
+            //清除左侧treewiew1
 
+            treeView1.Nodes.Clear();
 
             //清除中间tabcontrol
             int start = 0;
@@ -690,8 +724,8 @@ namespace DevelopKit
                 }
             }
 
-            t.Abort();
-            hideOpenedProject();
+            HideOpenedProject();
+            GlobalProject = null;
         }
 
         private void TextBox1_TextChanged(object sender, EventArgs e)

@@ -13,8 +13,8 @@ namespace DevelopKit
 {
     public partial class Form4_Filter_Color2_Util : Form
     {
-        private int mininumFormWidth = 500;
-        private int miniumFormHeight = 400;
+        private readonly int mininumFormWidth = 500;
+        private readonly int miniumFormHeight = 400;
 
         bool startDraw;
         Point startPoint;
@@ -104,7 +104,8 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
-                MessageBox.Show("上传图片失败, 请重新上传", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("上传图片失败, 请重新上传", "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Log.Error("Form4_Filter_Color_Util", "上传图片失败", ex.ToString());
             }
         }
     }

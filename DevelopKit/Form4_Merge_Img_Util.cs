@@ -13,7 +13,7 @@ namespace DevelopKit
 {
     public partial class Form4_Merge_Img_Util : Form
     {
-        private Image defaultImageBackgroud;
+        private readonly Image defaultImageBackgroud;
         private bool baseImageOK; //底图
         private bool upImageOK;    //上图
         private int baseImageWidth;
@@ -23,7 +23,7 @@ namespace DevelopKit
         {
             InitializeComponent();
             defaultImageBackgroud = pictureBox1.Image; //记录下默认的+号图片内容
-            disableUserOpt(true, true);
+            DisableUserOpt(true, true);
         }
 
         private void PictureBox1_Click(object sender, EventArgs e)
@@ -37,7 +37,7 @@ namespace DevelopKit
                     Image baseImage = Image.FromFile(fileAbsName);
                     label1.Text = string.Format("底图添加成功。({0}*{1}{2})", baseImage.Width, baseImage.Height, Path.GetExtension(openFileDialog.FileName));
                     pictureBox1.Image = baseImage;
-                    enableUserOpt(true, false, baseImage.Width, baseImage.Height);
+                    EnableUserOpt(true, false, baseImage.Width, baseImage.Height);
                     return;
                 }
                 else
@@ -47,10 +47,11 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
-                MessageBox.Show("添加图片失败", "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("添加图片失败", "错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Log.Error("Form4_Merge_Img+_Util", "添加图片异常", ex.ToString());
             }
             pictureBox1.Image = defaultImageBackgroud;
-            disableUserOpt(true, false);
+            DisableUserOpt(true, false);
         }
 
         private void PictureBox2_Click(object sender, EventArgs e)
@@ -64,7 +65,7 @@ namespace DevelopKit
                     Image image = Image.FromFile(fileAbsName);
                     label2.Text = string.Format("上层图片添加成功。({0}*{1}{2})", image.Width, image.Height, Path.GetExtension(openFileDialog.FileName));
                     pictureBox2.Image = image;
-                    enableUserOpt(false, true, image.Width, image.Height);
+                    EnableUserOpt(false, true, image.Width, image.Height);
                     return;
                 }
                 else
@@ -76,11 +77,11 @@ namespace DevelopKit
             {
                 MessageBox.Show("上层图片失败:" + ex.ToString(), "错误信息", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            disableUserOpt(false, true);
+            DisableUserOpt(false, true);
             pictureBox2.Image = defaultImageBackgroud;
         }
 
-        private void disableUserOpt(bool fromBaseImage, bool fromUpImage)
+        private void DisableUserOpt(bool fromBaseImage, bool fromUpImage)
         {
             button1.Enabled = false;
             button2.Enabled = false;
@@ -101,7 +102,7 @@ namespace DevelopKit
             label7.Text = "最大不超过底图高度";
         }
 
-        private void enableUserOpt(bool fromBaseImage, bool fromUpImage, int maxX, int maxY)
+        private void EnableUserOpt(bool fromBaseImage, bool fromUpImage, int maxX, int maxY)
         {
             if (fromBaseImage)
             {
@@ -158,11 +159,13 @@ namespace DevelopKit
 
             try
             {
-                PngUtil.favoriteImageObj img = new PngUtil.favoriteImageObj();
-                img.image = pictureBox2.Image;
+                PngUtil.favoriteImageObj img = new PngUtil.favoriteImageObj
+                {
+                    image = pictureBox2.Image,
+                    x = Convert.ToInt32(textBox1.Text),
+                    y = Convert.ToInt32(textBox2.Text)
+                };
 
-                img.x = Convert.ToInt32(textBox1.Text);
-                img.y = Convert.ToInt32(textBox2.Text);
                 if (img.x < 0 || img.x > baseImageWidth)
                 {
                     MessageBox.Show("请输入合理的X坐标", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -174,13 +177,15 @@ namespace DevelopKit
                 pictureBox3.Image = PngUtil.MergeImages2(pictureBox1.Image, img);
 
             }
-            catch (System.ArgumentOutOfRangeException ex)
+            catch (ArgumentOutOfRangeException ex)
             {
-                MessageBox.Show("输入参数不合法, 请输入合理范围的整数", "错误提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("输入参数不合法, 请输入合理范围的整数", "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Log.Error("Form4_Merge_Img_util", "ArgumentOutOfRangeException", ex.ToString());
             }
             catch (Exception ex)
             {
                 MessageBox.Show("合成失败");
+                Log.Error("Form4_Merge_Img_util", "exception", ex.ToString());
             }
 
             if (pictureBox3.Image != null)
@@ -191,9 +196,11 @@ namespace DevelopKit
 
         private void Button2_Click(object sender, EventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "PNG|*.png|所有文件|*.*";
-            saveFileDialog.RestoreDirectory = true;
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                RestoreDirectory = true,
+                Filter = "PNG|*.png|所有文件|*.*"
+            };
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 string target = saveFileDialog.FileName;

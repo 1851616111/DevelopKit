@@ -39,12 +39,11 @@ namespace DevelopKit
 
 
             Project newProject = new Project(vehicleType, projectName, projectPath, developor);
-            string error, errorDetails;
             bool overwrite = false;
 
         recreate:
 
-            if (newProject.StartCreateProject(overwrite, out error, out errorDetails))
+            if (newProject.StartCreateProject(overwrite, out string error, out string errorDetails))
             {
                 newProject.NextStatus();
                 MessageBox.Show("创建项目成功", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -65,7 +64,7 @@ namespace DevelopKit
                     catch (IOException ex)
                     {
                         MessageBox.Show("项目正在被打开，请确认后再删除", "警告", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                        Log.Error("Form2.Button3_Click()", "清除项目文件失败", ex.ToString());
                         return;
                     }
                     overwrite = true;
@@ -135,7 +134,6 @@ namespace DevelopKit
                 }
                 catch (System.ArgumentException ex)
                 {
-                    Console.WriteLine(ex.ToString());
                     MessageBox.Show("路径不存在, 请检查路径是否正确，然后重试", "选择文件夹", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }

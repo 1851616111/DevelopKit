@@ -9,16 +9,23 @@ namespace DevelopKit
 {
     public static class ProjectSyncTools
     {
-        public static void Sync(Object projectObj)
+        public static void Sync(Object form1Obj)
         {
-
+            Form1 form1 = (Form1)form1Obj;
         ParameterizedThreadStart:
-            Project project = (Project)(projectObj);
+
+        restart:
+            Project project = form1.GetGlobalProject();
+            if (project == null)
+            {
+                Thread.Sleep(1000 * 5);
+                goto restart;
+            }
+
             try
             {
                 byte[] fileData = project.ReadXmlFileBytes();
                 byte[] memData = Encoding.UTF8.GetBytes(project.SerializeToStrInMemory());
-
                 if (!ByteUtil.Diff(fileData, memData))
                 {
                     Log.Error("Sync模块", "对比XML不同", "");
@@ -30,11 +37,11 @@ namespace DevelopKit
                         Log.Error("Sync模块", "FlushBytesToFile", "failed");
                     }
                 }
-               
+
             }
             catch (Exception ex)
             {
-                Console.WriteLine("project sync xml error:" + ex.ToString());
+                Log.Error("Sync模块", "catch Exception", ex.ToString());
             }
 
             Thread.Sleep(1000 * 5);

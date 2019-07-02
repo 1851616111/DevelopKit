@@ -44,6 +44,7 @@ namespace DevelopKit
                 FileStream fs = File.OpenRead(file);
                 XmlSerializer xmlSerializer = new XmlSerializer(type);
                 obj = xmlSerializer.Deserialize(fs);
+                fs.Close();
             }
             catch (Exception ex)
             {
@@ -117,7 +118,6 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
-                Console.WriteLine("----->" + ex.ToString());
                 return false;
             }
 

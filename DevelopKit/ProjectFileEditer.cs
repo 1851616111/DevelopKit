@@ -36,20 +36,8 @@ namespace DevelopKit
         //不论用户打开的是外部文件还是内部文件， 都需要存储FileEditor中， 已边下次打开Kit使用
         public void RecordFile(string filepath)
         {
-            ProjectFile projectFile = new ProjectFile();
-
-            projectFile.fileName = StringUtil.GetFileName(filepath);
-            projectFile.filePath = filepath;
-
-
-            if (FileUtil.IsFileImage(filepath))
-            {
-                projectFile.fileType = FileType.Image;
-            }
-            else {
-                projectFile.fileType = FileType.Txt;
-            }
-            Console.WriteLine("-------->>>rojectFileList.Add(projectFile " + filepath);
+            ProjectFile projectFile = new ProjectFile(filepath);
+          
             projectFileList.Add(projectFile);
         }
     }
@@ -68,5 +56,24 @@ namespace DevelopKit
         public string filePath;  //C:\Programs\read.txt   
         [XmlElement("type")]
         public FileType fileType; // Txt Img
+
+        public ProjectFile()
+        { }
+
+        public ProjectFile(string filepath)
+        {
+           fileName = StringUtil.GetFileName(filepath);
+           filePath = filepath;
+
+
+            if (FileUtil.IsFileImage(filepath))
+            {
+                fileType = FileType.Image;
+            }
+            else
+            {
+                fileType = FileType.Txt;
+            }
+        }
     }
 }

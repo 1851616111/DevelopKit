@@ -143,7 +143,6 @@ namespace DevelopKit
         {
             error = "";
             //若已在项目中， 返回错误
-            Console.WriteLine("-------->>>" + filepath);
             if (filesEditer.IsFileInProjectDir(filepath))
             {
                 error = Errors.ProjectFileAlreadyExist;
