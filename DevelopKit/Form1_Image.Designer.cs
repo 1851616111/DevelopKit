@@ -43,6 +43,8 @@
             this.toolStripStatusLabel3 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel4 = new System.Windows.Forms.ToolStripStatusLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.label1 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -176,18 +178,42 @@
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
             this.pictureBox1.Resize += new System.EventHandler(this.PictureBox1_Resize);
             // 
+            // hScrollBar1
+            // 
+            this.hScrollBar1.LargeChange = 100;
+            this.hScrollBar1.Location = new System.Drawing.Point(328, 406);
+            this.hScrollBar1.Maximum = 799;
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(129, 10);
+            this.hScrollBar1.SmallChange = 100;
+            this.hScrollBar1.TabIndex = 4;
+            this.hScrollBar1.Value = 1;
+            this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(476, 406);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 5;
+            this.label1.Text = "label1";
+            // 
             // Form1_Image
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.pictureBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "Form1_Image";
             this.Text = "Form_Image";
+            this.Load += new System.EventHandler(this.Form1_Image_Load);
             this.contextMenuStrip1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
@@ -213,5 +239,7 @@
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
         public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.Label label1;
     }
 }
