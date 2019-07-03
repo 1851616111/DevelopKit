@@ -47,11 +47,22 @@ namespace DevelopKit
 
         private void PictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
+
             if (pictureBox1.Image != null)
             {
                 Bitmap bmp = (Bitmap)pictureBox1.Image;
 
-                Color color = bmp.GetPixel(e.X, e.Y);
+                try
+                {
+                    Color color = bmp.GetPixel(e.X, e.Y);
+                    if (color != null)
+                    {
+                    toolStripStatusLabel2.Text = string.Format("{0},{1},{2} RGB", color.R, color.G, color.B);
+                    }
+                }
+                catch (Exception)
+                {
+                }
 
                 Hashtable hs = (Hashtable)this.Tag;
                 string fielpath = (string)hs["filepath"];
@@ -75,7 +86,6 @@ namespace DevelopKit
                 }
 
                 toolStripStatusLabel1.Text = string.Format("{0},{1}像素", e.X, e.Y);
-                toolStripStatusLabel2.Text = string.Format("{0},{1},{2} RGB", color.R, color.G, color.B);
                 toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
                 toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
             }

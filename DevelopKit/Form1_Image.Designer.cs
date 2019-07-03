@@ -235,10 +235,10 @@
         private System.Windows.Forms.ToolStripMenuItem wrToolStripMenuItem;
         public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
-        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
-        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
-        public System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel2;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel3;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Label label1;
     }
