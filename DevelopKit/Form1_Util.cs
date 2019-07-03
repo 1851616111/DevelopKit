@@ -81,8 +81,6 @@ namespace DevelopKit
             innerForm.pictureBox1.Size = image.Size;
             innerForm.pictureBox1.Name = filename;
             innerForm.pictureBox1.Image = image;
-
-            innerForm.toolStripStatusLabel1.Text = string.Format("尺寸 {0}*{1}", innerForm.pictureBox1.Size.Width, innerForm.pictureBox1.Size.Height);
         }
 
         public static void OpenTxtForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)

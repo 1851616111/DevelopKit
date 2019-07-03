@@ -144,7 +144,7 @@ namespace DevelopKit
         }
 
 
-        static string[] commonImageFileExt = new string[]{"PNG","ICO", "BMP","PCX","TIF","GIF","JPEG","TGA", "EXIF",
+        static readonly string[] commonImageFileExt = new string[]{"PNG","ICO", "BMP","PCX","TIF","GIF","JPEG","TGA", "EXIF",
         "FPX","SVG", "PSD", "CDR", "PCD", "DXF", "UFO","EPS",
         "AI","HDRI", "RAW", "WMF", "FLIC", "EMF", "Webp", };
 

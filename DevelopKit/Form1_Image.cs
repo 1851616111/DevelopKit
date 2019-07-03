@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,8 +45,63 @@ namespace DevelopKit
                 Bitmap bmp = (Bitmap)pictureBox1.Image;
 
                 Color color = bmp.GetPixel(e.X, e.Y);
-                toolStripStatusLabel2.Text = string.Format("鼠标({0},{1})", e.X, e.Y);
-                toolStripStatusLabel3.Text = string.Format("色值({0},{1},{2})", color.R, color.G, color.B);
+
+                Hashtable hs = (Hashtable)this.Tag;
+                string fielpath = (string)hs["filepath"];
+                FileInfo fi = new FileInfo(fielpath);
+                float number = fi.Length; //B 字节
+                string unit = "B";
+                if (number > 1024)
+                {
+                    number /= 1024; //KB
+                    unit = "KB";
+                }
+                if (number > 1024)
+                {
+                    number /= 1024;  //MB
+                    unit = "MB";
+                }
+                if (number > 1024)
+                {
+                    number /= 1024;  //GB
+                    unit = "GB";
+                }
+
+                toolStripStatusLabel1.Text = string.Format("{0},{1}像素", e.X, e.Y);
+                toolStripStatusLabel2.Text = string.Format("{0},{1},{2} RGB", color.R, color.G, color.B);
+                toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
+                toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
+            }
+        }
+
+        private void PictureBox1_Resize(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                Hashtable hs = (Hashtable)this.Tag;
+
+                string fielpath = (string)hs["filepath"];
+                FileInfo fi = new FileInfo(fielpath);
+                float number = fi.Length; //B 字节
+                string unit = "B";
+                if (number > 1024)
+                {
+                    number /= 1024; //KB
+                    unit = "KB";
+                }
+                if (number > 1024)
+                {
+                    number /= 1024;  //MB
+                    unit = "MB";
+                }
+                if (number > 1024)
+                {
+                    number /= 1024;  //GB
+                    unit = "GB";
+                }
+
+                toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
+                toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
             }
         }
     }
