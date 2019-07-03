@@ -16,5 +16,10 @@ namespace DevelopKit
         {
             InitializeComponent();
         }
+
+        private void Form1_Txt_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace DevelopKit
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
 
-
         ParameterizedThreadStart pts;
         Thread t;
         private static readonly Hashtable treeViewLeafNodeTag = new Hashtable
@@ -31,7 +30,15 @@ namespace DevelopKit
             GlobalProject = null;
         }
 
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            this.ControlBox = true;
+            this.SetBounds(0, 0, displayWidth, displayHeight);
+            this.menuStrip1.Items[0].MouseHover += new EventHandler(ToolStripMenuItem1_MouseOver);
+        }
+
         private Project GlobalProject;
+
         public void SetGlobalProject(Project project)
         {
             if (project.Status == 0)
@@ -70,7 +77,7 @@ namespace DevelopKit
             splitter1.Visible = true;
             splitter2.Visible = true;
             openImageToolStripMenuItem.Enabled = true;
-            PreInstallContent();
+            InstallTreeView();
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
@@ -87,52 +94,6 @@ namespace DevelopKit
             openImageToolStripMenuItem.Enabled = false;
 
             GlobalProject = null;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            this.ControlBox = true;
-            this.SetBounds(0, 0, displayWidth, displayHeight);
-            this.menuStrip1.Items[0].MouseHover += new EventHandler(ToolStripMenuItem1_MouseOver);
-        }
-
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            toolBar1.Show();
-        }
-        private void ToolStripMenuItem1_MouseOver(object sender, EventArgs e)
-        {
-            toolBar1.Visible = true;
-            //this.menuStrip1.Items[0].BackColor = Color.Black;
-        }
-
-
-        private void ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form4_Merge_Img_Util form4 = new Form4_Merge_Img_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            Form4_Write_Img_Util form4 = new Form4_Write_Img_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            Form4_Filter_Color_Util form4 = new Form4_Filter_Color_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            Form4_Filter_Color2_Util form4 = new Form4_Filter_Color2_Util();
-            form4.BringToFront();
-            form4.Show();
         }
 
         //创建项目
@@ -384,13 +345,12 @@ namespace DevelopKit
             }
         }
 
-        private void PreInstallContent()
+        private void InstallTreeView()
         {
             tabControl1.SelectedIndex = 0;
 
             TreeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
         }
-
 
 
         private void TreeView1_LoadCurrentProject(string projectdir)
@@ -406,8 +366,7 @@ namespace DevelopKit
             foreach (string longfile in files)
             {
                 string relativePath = longfile.Remove(0, projectDir.Length + 1);
-                treeView1.Nodes.Add(longfile, relativePath);
-
+                treeView1.Nodes.Add(longfile, relativePath, (int)FileUtil.GetImageIndexByFileName(relativePath));
             }
 
             //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
@@ -423,9 +382,15 @@ namespace DevelopKit
                 {
                     continue;
                 }
-                treeView1.Nodes.Add(dir, relativePath);
+                treeView1.Nodes.Add(dir, relativePath, (int)FileUtil.ImageListIndexOfTreeView.Directory);
             }
 
+            //防止单机图片抖动
+            foreach (var node in treeView1.Nodes)
+            {
+                var Node = node as TreeNode;
+                Node.SelectedImageIndex = Node.ImageIndex;
+            }
         }
 
         private void TreeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -473,7 +438,7 @@ namespace DevelopKit
                         string[] allFiles = Directory.GetFiles(e.Node.Name);
                         foreach (string longfile in allFiles)
                         {
-                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length + 1));
+                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length + 1), (int)FileUtil.GetImageIndexByFileName(longfile));
                         }
 
                         //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
@@ -485,7 +450,14 @@ namespace DevelopKit
                         string[] allDirectory = Directory.GetDirectories(e.Node.Name);
                         foreach (string dir in allDirectory)
                         {
-                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length + 1));
+                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length + 1), (int)FileUtil.ImageListIndexOfTreeView.Directory);
+                        }
+
+                        //防止单机图片抖动
+                        foreach (var node in e.Node.Nodes)
+                        {
+                            var Node = node as TreeNode;
+                            Node.SelectedImageIndex = Node.ImageIndex;
                         }
                     }
                     catch
@@ -532,7 +504,7 @@ namespace DevelopKit
                 }
 
                 SetGlobalProject((Project)projectProject);
-                ShowOpenedProject();
+                //ShowOpenedProject();
 
                 foreach (ProjectFile pf in GlobalProject.filesEditer.projectFileList)
                 {
@@ -568,7 +540,47 @@ namespace DevelopKit
             GlobalProject = null;
         }
 
-        private void TextBox1_TextChanged(object sender, EventArgs e)
+
+        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            toolBar1.Show();
+        }
+        private void ToolStripMenuItem1_MouseOver(object sender, EventArgs e)
+        {
+            toolBar1.Visible = true;
+            //this.menuStrip1.Items[0].BackColor = Color.Black;
+        }
+
+        private void ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form4_Merge_Img_Util form4 = new Form4_Merge_Img_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
+
+        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Form4_Write_Img_Util form4 = new Form4_Write_Img_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
+
+        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            Form4_Filter_Color_Util form4 = new Form4_Filter_Color_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
+
+        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            Form4_Filter_Color2_Util form4 = new Form4_Filter_Color2_Util();
+            form4.BringToFront();
+            form4.Show();
+        }
+
+        //鼠标
+        private void TabControl2_MouseMove(object sender, MouseEventArgs e)
         {
 
         }

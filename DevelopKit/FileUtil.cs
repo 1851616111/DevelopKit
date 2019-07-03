@@ -54,6 +54,24 @@ namespace DevelopKit
             return obj;
         }
 
+        public static bool ReadText(string file, out string content)
+        {
+            content = "";
+            try
+            {
+                StreamReader sr = new StreamReader(file, Encoding.GetEncoding("gb2312"));
+                content = sr.ReadToEnd();
+                sr.Close();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("FileUtil.ReadText", "读取文本文件错误", ex.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
         public static bool ReadBytes(string file, out byte[] data)
         {
             FileStream fileStream = File.OpenRead(file);
@@ -118,6 +136,7 @@ namespace DevelopKit
             }
             catch (Exception ex)
             {
+                Log.Error("FileUtil.FlushBytesToFile", "cath exception", ex.ToString());
                 return false;
             }
 
@@ -131,7 +150,7 @@ namespace DevelopKit
 
         public static bool IsFileImage(string file_ext)
         {
-            foreach(string ext in commonImageFileExt)
+            foreach (string ext in commonImageFileExt)
             {
 
                 if (file_ext.ToLower().EndsWith(ext.ToLower()))
@@ -141,6 +160,36 @@ namespace DevelopKit
             }
 
             return false;
+        }
+
+
+        //参考组件 treeviewImageList 的定义顺序
+        //0 文本文件
+        //1 文件夹
+        //2 图片
+        //3 xml
+        // 文件夹不参与判断
+        public enum ImageListIndexOfTreeView
+        {
+            Text,
+            Directory,
+            Image,
+            XML
+        }
+
+        public static ImageListIndexOfTreeView GetImageIndexByFileName(string filename)
+        {
+            if (filename.ToLower().EndsWith(".xml"))
+            {
+                return ImageListIndexOfTreeView.XML;
+            }
+            else if (IsFileImage(filename))
+            {
+                return ImageListIndexOfTreeView.Image;
+            }
+            else {
+                return ImageListIndexOfTreeView.Text;
+            }
         }
     }
 }

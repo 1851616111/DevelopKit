@@ -38,6 +38,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1_Txt";
             this.Text = "Form1_Txt";
+            this.Load += new System.EventHandler(this.Form1_Txt_Load);
             this.ResumeLayout(false);
 
         }

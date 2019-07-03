@@ -70,6 +70,7 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
+            this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -307,6 +308,7 @@
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
             this.tabControl2.TabIndex = 0;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.TabControl2_SelectedIndexChanged);
+            this.tabControl2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TabControl2_MouseMove);
             // 
             // tabPage2
             // 
@@ -323,8 +325,11 @@
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.treeviewImageList;
             this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Name = "treeView1";
+            this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(158, 943);
             this.treeView1.TabIndex = 0;
             this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView1_NodeMouseDoubleClick);
@@ -398,6 +403,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "流程面板";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // treeviewImageList
+            // 
+            this.treeviewImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeviewImageList.ImageStream")));
+            this.treeviewImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.treeviewImageList.Images.SetKeyName(0, "treeview_file.png");
+            this.treeviewImageList.Images.SetKeyName(1, "treeview_folder.png");
+            this.treeviewImageList.Images.SetKeyName(2, "treeview_image.png");
+            this.treeviewImageList.Images.SetKeyName(3, "treeview_xml.png");
             // 
             // Form1
             // 
@@ -474,6 +488,7 @@
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeprojectToolStripMenuItem;
+        private System.Windows.Forms.ImageList treeviewImageList;
     }
 }
 

@@ -9,6 +9,7 @@ namespace DevelopKit
 {
     public static class Form1_Util
     {
+      
         public static void OpenImageForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)
         {
             Image image;
@@ -90,12 +91,14 @@ namespace DevelopKit
             RichTextBox richTextBox;
             try
             {
+                FileUtil.ReadText(filepath, out string text);
+
                 richTextBox = new RichTextBox
                 {
                     Dock = DockStyle.Fill,
                     Name = filename,
                     TabIndex = 0,
-                    Text = Encoding.UTF8.GetString(File.ReadAllBytes(filepath))
+                    Text = text,
                 };
             }
             catch (OutOfMemoryException)
@@ -138,14 +141,13 @@ namespace DevelopKit
             }
 
             //2.在tabpage绑定一个form
-            Form1_Image form = new Form1_Image
+            Form1_Txt form = new Form1_Txt
             {
                 Name = filepath,
                 Tag = ht,
                 TopLevel = false,     //设置为非顶级控件
                 Dock = DockStyle.Fill,
                 FormBorderStyle = FormBorderStyle.None,
-                formDelegateHandler = formDelegate,
             };
 
             form.Controls.Add(richTextBox);
