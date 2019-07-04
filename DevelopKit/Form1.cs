@@ -255,6 +255,7 @@ namespace DevelopKit
         {
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
+                Console.WriteLine(tabPage.Name + "-------->" + filepath);
                 if (tabPage.Name == filepath)
                 {
                     SaveImageInTabPage(tabPage);
@@ -282,7 +283,7 @@ namespace DevelopKit
             FileType filetype = (FileType)tag["filetype"];
             if (StringUtil.isFileSafed(tabpage.Text))
             {
-                MessageBox.Show(filename);
+                toolStripStatusLabel1.Text = string.Format("文件{0}已保存到项目中", filename);
                 return; //已保存暂时不做处理
             }
 
@@ -295,7 +296,10 @@ namespace DevelopKit
 
                 foreach (Control childControl in control.Controls)
                 {
-
+                    if (childControl.GetType() != typeof(PictureBox))
+                    {
+                        continue;
+                    }
                     SaveFileDialog fileDialog = new SaveFileDialog
                     {
                         Filter = "PNG|*.png|所有文件|*.*",

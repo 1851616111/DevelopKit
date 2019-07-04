@@ -392,7 +392,6 @@ namespace DevelopKit
                 return Color.FromArgb(a, r, g, b);
             }
 
-
             if (stage == 1)
             {
                 int canChange = (g - min);

@@ -88,7 +88,7 @@ namespace DevelopKit
                     Color color = bmp.GetPixel(e.X, e.Y);
                     if (color != null)
                     {
-                        toolStripStatusLabel2.Text = string.Format("{0},{1},{2} RGB {3}", color.R, color.G, color.B, color.A);
+                        toolStripStatusLabel2.Text = string.Format("Alpha:{0}, RGB:({1},{2},{3})", color.A, color.R, color.G, color.B);
                     }
                 }
                 catch (Exception)

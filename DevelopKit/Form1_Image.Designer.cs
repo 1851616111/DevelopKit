@@ -34,8 +34,6 @@
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operateImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.filterColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabel2 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -55,11 +53,11 @@
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.closeImageToolStripMenuItem,
-            this.saveImageToolStripMenuItem,
             this.copyImageToolStripMenuItem,
+            this.saveImageToolStripMenuItem,
             this.operateImageToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(191, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(193, 114);
             // 
             // closeImageToolStripMenuItem
             // 
@@ -73,8 +71,8 @@
             // 
             this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
             this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.saveImageToolStripMenuItem.Text = "保存";
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.saveImageToolStripMenuItem.Text = "保存到项目中";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
             // copyImageToolStripMenuItem
@@ -88,24 +86,9 @@
             // 
             // operateImageToolStripMenuItem
             // 
-            this.operateImageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filterColorToolStripMenuItem,
-            this.wrToolStripMenuItem});
             this.operateImageToolStripMenuItem.Name = "operateImageToolStripMenuItem";
-            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.operateImageToolStripMenuItem.Text = "其他";
-            // 
-            // filterColorToolStripMenuItem
-            // 
-            this.filterColorToolStripMenuItem.Name = "filterColorToolStripMenuItem";
-            this.filterColorToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.filterColorToolStripMenuItem.Text = "滤色";
-            // 
-            // wrToolStripMenuItem
-            // 
-            this.wrToolStripMenuItem.Name = "wrToolStripMenuItem";
-            this.wrToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.wrToolStripMenuItem.Text = "写字";
             // 
             // statusStrip1
             // 
@@ -246,8 +229,6 @@
         private System.Windows.Forms.ToolStripMenuItem closeImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operateImageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem filterColorToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem wrToolStripMenuItem;
         public System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;

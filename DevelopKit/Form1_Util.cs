@@ -9,7 +9,7 @@ namespace DevelopKit
 {
     public static class Form1_Util
     {
-      
+
         public static void OpenImageForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)
         {
             Image image;
@@ -67,7 +67,7 @@ namespace DevelopKit
                 Dock = DockStyle.Fill,
                 FormBorderStyle = FormBorderStyle.None,
                 formDelegateHandler = formDelegate,
-                
+
             };
 
             //将tabpage 添加到 tabcontroll中
@@ -77,7 +77,7 @@ namespace DevelopKit
             innerForm.Show();
 
             //重新计算图片放置位置
-            innerForm.pictureBox1.Location = new Point((innerForm.Width - image.Size.Width) / 2 + innerForm.Location.X, (innerForm.Height - image.Size.Height) / 2);
+            innerForm.pictureBox1.Location = new Point((innerForm.Width - image.Size.Width) / 2 + innerForm.Location.X, (innerForm.Height - image.Size.Height) / 2 - 100);
             innerForm.pictureBox1.Size = image.Size;
             innerForm.pictureBox1.Name = filename;
             innerForm.pictureBox1.Image = image;
