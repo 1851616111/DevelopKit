@@ -341,7 +341,6 @@ namespace DevelopKit
         public static Bitmap RelativeChangeColor(Bitmap mybm, int target)
         {
 
-
             int width = ((Image)mybm).Width;
             int height = ((Image)mybm).Height;
             Bitmap bm = new Bitmap(width, height);//初始化一个记录滤色效果的图片对象
@@ -370,7 +369,7 @@ namespace DevelopKit
                         int max = MathUtil.Max(pixel.R, pixel.G, pixel.B);
                         int min = MathUtil.Min(pixel.R, pixel.G, pixel.B);
 
-                        Color newColor = ChangePixelByStage(1,  unit, pixel.A, pixel.R, pixel.G, pixel.B, max, min, target);
+                        Color newColor = ChangePixelByStage(1, unit, pixel.A, pixel.R, pixel.G, pixel.B, max, min, target);
 
                         bm.SetPixel(x, y, newColor);//绘图
                     }
@@ -404,6 +403,15 @@ namespace DevelopKit
                 }
                 else
                 {
+                    if (change > 240)
+                    {
+                        return ChangePixelByStage(4, Unit, a, g, b, r, max, min, change - 240);
+                    }
+                    else if (change > 120)
+                    {
+                        return ChangePixelByStage(2, Unit, a, b, r, g, max, min, change - 120);
+                    }
+
                     change -= (int)Math.Round((g - min) / Unit);
                     g = min;
                     return ChangePixelByStage(2, Unit, a, r, g, b, max, min, change);
@@ -411,6 +419,8 @@ namespace DevelopKit
             }
             else if (stage == 2)
             {
+
+
                 int canChange = (max - r);
                 if (change * Unit < canChange)
                 {
