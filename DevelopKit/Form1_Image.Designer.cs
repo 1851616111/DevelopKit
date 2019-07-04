@@ -30,10 +30,9 @@
         {
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.deleteImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operateImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wrToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +44,8 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.label1 = new System.Windows.Forms.Label();
+            this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
+            this.label2 = new System.Windows.Forms.Label();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -53,43 +54,37 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveImageToolStripMenuItem,
             this.closeImageToolStripMenuItem,
+            this.saveImageToolStripMenuItem,
             this.copyImageToolStripMenuItem,
-            this.deleteImageToolStripMenuItem,
             this.operateImageToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(148, 114);
-            // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.saveImageToolStripMenuItem.Text = "保存";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(191, 92);
             // 
             // closeImageToolStripMenuItem
             // 
             this.closeImageToolStripMenuItem.Name = "closeImageToolStripMenuItem";
             this.closeImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.closeImageToolStripMenuItem.Text = "关闭";
             this.closeImageToolStripMenuItem.Click += new System.EventHandler(this.CloseImageToolStripMenuItem_Click);
+            // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.saveImageToolStripMenuItem.Text = "保存";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
             // copyImageToolStripMenuItem
             // 
             this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.copyImageToolStripMenuItem.Text = "复制";
-            // 
-            // deleteImageToolStripMenuItem
-            // 
-            this.deleteImageToolStripMenuItem.Name = "deleteImageToolStripMenuItem";
-            this.deleteImageToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.deleteImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
-            this.deleteImageToolStripMenuItem.Text = "删除";
+            this.copyImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.copyImageToolStripMenuItem.Text = "另存为";
+            this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.CopyImageToolStripMenuItem_Click);
             // 
             // operateImageToolStripMenuItem
             // 
@@ -97,7 +92,7 @@
             this.filterColorToolStripMenuItem,
             this.wrToolStripMenuItem});
             this.operateImageToolStripMenuItem.Name = "operateImageToolStripMenuItem";
-            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.operateImageToolStripMenuItem.Text = "其他";
             // 
             // filterColorToolStripMenuItem
@@ -181,23 +176,42 @@
             // hScrollBar1
             // 
             this.hScrollBar1.LargeChange = 100;
-            this.hScrollBar1.Location = new System.Drawing.Point(328, 406);
+            this.hScrollBar1.Location = new System.Drawing.Point(254, 9);
             this.hScrollBar1.Maximum = 799;
             this.hScrollBar1.Name = "hScrollBar1";
             this.hScrollBar1.Size = new System.Drawing.Size(129, 10);
             this.hScrollBar1.SmallChange = 100;
             this.hScrollBar1.TabIndex = 4;
-            this.hScrollBar1.Value = 1;
             this.hScrollBar1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar1_Scroll);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(476, 406);
+            this.label1.Location = new System.Drawing.Point(416, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(41, 12);
             this.label1.TabIndex = 5;
             this.label1.Text = "label1";
+            // 
+            // hScrollBar2
+            // 
+            this.hScrollBar2.LargeChange = 20;
+            this.hScrollBar2.Location = new System.Drawing.Point(609, 9);
+            this.hScrollBar2.Maximum = 360;
+            this.hScrollBar2.Name = "hScrollBar2";
+            this.hScrollBar2.Size = new System.Drawing.Size(129, 10);
+            this.hScrollBar2.SmallChange = 20;
+            this.hScrollBar2.TabIndex = 11;
+            this.hScrollBar2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.HScrollBar2_Scroll);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(565, 9);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 12);
+            this.label2.TabIndex = 12;
+            this.label2.Text = "色相:";
             // 
             // Form1_Image
             // 
@@ -205,6 +219,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ContextMenuStrip = this.contextMenuStrip1;
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.hScrollBar2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.hScrollBar1);
             this.Controls.Add(this.statusStrip1);
@@ -229,7 +245,6 @@
         private System.Windows.Forms.ToolStripMenuItem saveImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyImageToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem deleteImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operateImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filterColorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem wrToolStripMenuItem;
@@ -241,5 +256,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel4;
         private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.HScrollBar hScrollBar2;
+        private System.Windows.Forms.Label label2;
     }
 }

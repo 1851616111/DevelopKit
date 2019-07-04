@@ -31,13 +31,15 @@ namespace DevelopKit
 
                     Image image = Image.FromFile(Path.GetFullPath(openFileDialog.FileName));
 
-                    PictureBox pb = new PictureBox();
-                    pb.Image = image;
-                    pb.BorderStyle = BorderStyle.FixedSingle;
-                    pb.Width = image.Width;
-                    pb.Height = image.Height;
-                    pb.SizeMode = PictureBoxSizeMode.Zoom;
-
+                    PictureBox pb = new PictureBox
+                    {
+                        Image = image,
+                        BorderStyle = BorderStyle.FixedSingle,
+                        Width = image.Width,
+                        Height = image.Height,
+                        SizeMode = PictureBoxSizeMode.Zoom
+                    };
+           
                     flowLayoutPanel1.Controls.Remove(pictureBox1);
                     flowLayoutPanel1.Controls.Add(pb);
                     flowLayoutPanel1.Controls.Add(pictureBox1);

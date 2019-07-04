@@ -110,7 +110,7 @@ namespace DevelopKit
             }
             try
             {
-                PngUtil.writeImage(image, new Rectangle(x, y, w, h), text, font, color);
+                PngUtil.WriteImage(image, new Rectangle(x, y, w, h), text, font, color);
                 pictureBox1.Image = image;
                 button4.Enabled = true;
                 MessageBox.Show("写入成功");

@@ -12,8 +12,10 @@ namespace DevelopKit
     public enum OperateFileType
     {
         Save=1,
-        Close=2
+        Close=2,
+        SaveAs=3,
     }
+
     public struct OperateFileReuqest
     {
 

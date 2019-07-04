@@ -159,7 +159,7 @@ namespace DevelopKit
 
             try
             {
-                PngUtil.favoriteImageObj img = new PngUtil.favoriteImageObj
+                PngUtil.FavoriteImageObj img = new PngUtil.FavoriteImageObj
                 {
                     image = pictureBox2.Image,
                     x = Convert.ToInt32(textBox1.Text),
