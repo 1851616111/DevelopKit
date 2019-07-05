@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operateImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
@@ -44,6 +44,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.hScrollBar2 = new System.Windows.Forms.HScrollBar();
             this.label2 = new System.Windows.Forms.Label();
+            this.纯白文字改色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -63,9 +64,18 @@
             // 
             this.closeImageToolStripMenuItem.Name = "closeImageToolStripMenuItem";
             this.closeImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
-            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.closeImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.closeImageToolStripMenuItem.Text = "关闭";
             this.closeImageToolStripMenuItem.Click += new System.EventHandler(this.CloseImageToolStripMenuItem_Click);
+            // 
+            // copyImageToolStripMenuItem
+            // 
+            this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
+            this.copyImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+            | System.Windows.Forms.Keys.S)));
+            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
+            this.copyImageToolStripMenuItem.Text = "另存为";
+            this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.CopyImageToolStripMenuItem_Click);
             // 
             // saveImageToolStripMenuItem
             // 
@@ -75,17 +85,10 @@
             this.saveImageToolStripMenuItem.Text = "保存到项目中";
             this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
-            // copyImageToolStripMenuItem
-            // 
-            this.copyImageToolStripMenuItem.Name = "copyImageToolStripMenuItem";
-            this.copyImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
-            | System.Windows.Forms.Keys.S)));
-            this.copyImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.copyImageToolStripMenuItem.Text = "另存为";
-            this.copyImageToolStripMenuItem.Click += new System.EventHandler(this.CopyImageToolStripMenuItem_Click);
-            // 
             // operateImageToolStripMenuItem
             // 
+            this.operateImageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.纯白文字改色ToolStripMenuItem});
             this.operateImageToolStripMenuItem.Name = "operateImageToolStripMenuItem";
             this.operateImageToolStripMenuItem.Size = new System.Drawing.Size(192, 22);
             this.operateImageToolStripMenuItem.Text = "其他";
@@ -196,6 +199,13 @@
             this.label2.TabIndex = 12;
             this.label2.Text = "色相:";
             // 
+            // 纯白文字改色ToolStripMenuItem
+            // 
+            this.纯白文字改色ToolStripMenuItem.Name = "纯白文字改色ToolStripMenuItem";
+            this.纯白文字改色ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.纯白文字改色ToolStripMenuItem.Text = "纯白文字改色";
+            this.纯白文字改色ToolStripMenuItem.Click += new System.EventHandler(this.纯白文字改色ToolStripMenuItem_Click);
+            // 
             // Form1_Image
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -239,5 +249,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.HScrollBar hScrollBar2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ToolStripMenuItem 纯白文字改色ToolStripMenuItem;
     }
 }

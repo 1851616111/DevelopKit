@@ -134,47 +134,19 @@ namespace DevelopKit
         //Form_Image的所有操作请求均通过此函数出发 相应操作
         public void Form_Image_Handler(Object requestObj)
         {
-            if (requestObj.GetType() != typeof(OperateFileReuqest))
+            if (requestObj.GetType() != typeof(FormReuqest))
             {
                 return;
             }
 
-            OperateFileReuqest request = (OperateFileReuqest)requestObj;
+            FormReuqest request = (FormReuqest)requestObj;
             switch (request.operatetype)
             {
                 case OperateFileType.Save:
-                    SaveImageByFilePath(request.filepath);
+                    FormRequest_SaveImage(request);
                     break;
                 case OperateFileType.Close:
-                    foreach (TabPage tabpage in tabControl1.TabPages)
-                    {
-                        if (tabpage.Name == request.filepath)
-                        {
-                            int index = tabControl1.TabPages.IndexOf(tabpage);
-                            int newSelectIndex;
-
-                            if (tabControl1.TabPages.Count == 1) //如果只有一个
-                            {
-                                tabControl1.TabPages.Remove(tabpage);
-                                return;
-                            }
-
-                            if (index == tabControl1.TabPages.Count - 1)    //如果需要删除的tabpage是最后一个打开的
-                            {
-                                newSelectIndex = tabControl1.TabPages.Count - 2;
-                            }
-                            else
-                            {
-                                newSelectIndex = tabControl1.TabPages.Count;
-                            }
-
-                            tabControl1.SelectedIndex = newSelectIndex;
-                            tabControl1.TabPages.Remove(tabpage);
-                            tabpage.Dispose();
-
-                            GlobalProject.CloseFile(request.filepath);
-                        }
-                    }
+                    FormRequest_CloseImage(request);
                     break;
             }
         }
@@ -248,20 +220,6 @@ namespace DevelopKit
                 return;
             }
             SaveImageInTabPage(selectedTabTage);
-        }
-
-        //子Form通过delegate 回调通知的filepath来保存图片， 需要便利所有tabpage
-        private void SaveImageByFilePath(string filepath)
-        {
-            foreach (TabPage tabPage in tabControl1.TabPages)
-            {
-                Console.WriteLine(tabPage.Name + "-------->" + filepath);
-                if (tabPage.Name == filepath)
-                {
-                    SaveImageInTabPage(tabPage);
-                    return;
-                }
-            }
         }
 
         private void SaveImageInTabPage(TabPage tabpage)
@@ -581,6 +539,54 @@ namespace DevelopKit
             Form4_Filter_Color2_Util form4 = new Form4_Filter_Color2_Util();
             form4.BringToFront();
             form4.Show();
+        }
+
+
+        //Form请求保存图片
+        private void FormRequest_SaveImage(FormReuqest request)
+        {
+            foreach (TabPage tabPage in tabControl1.TabPages)
+            {
+                if (tabPage.Name == request.filepath)
+                {
+                    SaveImageInTabPage(tabPage);
+                    return;
+                }
+            }
+        }
+
+        //Form请求关闭图片
+        private void FormRequest_CloseImage(FormReuqest request)
+        {
+            foreach (TabPage tabpage in tabControl1.TabPages)
+            {
+                if (tabpage.Name == request.filepath)
+                {
+                    int index = tabControl1.TabPages.IndexOf(tabpage);
+                    int newSelectIndex;
+
+                    if (tabControl1.TabPages.Count == 1) //如果只有一个
+                    {
+                        tabControl1.TabPages.Remove(tabpage);
+                        return;
+                    }
+
+                    if (index == tabControl1.TabPages.Count - 1)    //如果需要删除的tabpage是最后一个打开的
+                    {
+                        newSelectIndex = tabControl1.TabPages.Count - 2;
+                    }
+                    else
+                    {
+                        newSelectIndex = tabControl1.TabPages.Count;
+                    }
+
+                    tabControl1.SelectedIndex = newSelectIndex;
+                    tabControl1.TabPages.Remove(tabpage);
+                    tabpage.Dispose();
+
+                    GlobalProject.CloseFile(request.filepath);
+                }
+            }
         }
 
         //鼠标

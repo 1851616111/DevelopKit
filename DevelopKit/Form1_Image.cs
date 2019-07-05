@@ -39,7 +39,7 @@ namespace DevelopKit
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new OperateFileReuqest(OperateFileType.Save, (string)hashTable["filepath"]));
+            formDelegateHandler(new FormReuqest(OperateFileType.Save, (string)hashTable["filepath"]));
         }
 
         private void CloseImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,7 +50,7 @@ namespace DevelopKit
 
             //2. 通知主form 关闭tabpage
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new OperateFileReuqest(OperateFileType.Close, (string)hashTable["filepath"]));
+            formDelegateHandler(new FormReuqest(OperateFileType.Close, (string)hashTable["filepath"]));
 
         }
 
@@ -231,6 +231,15 @@ namespace DevelopKit
             catch
             {
                 return null;
+            }
+        }
+
+        private void 纯白文字改色ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                pictureBox1.Image = PngUtil.ChangeWhiteColor((Bitmap)pictureBox1.Image, colorDialog.Color);
             }
         }
     }

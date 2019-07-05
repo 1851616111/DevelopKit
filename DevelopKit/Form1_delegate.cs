@@ -16,13 +16,13 @@ namespace DevelopKit
         SaveAs=3,
     }
 
-    public struct OperateFileReuqest
+    public struct FormReuqest
     {
 
         public string filepath;
         public OperateFileType operatetype;
 
-        public OperateFileReuqest(OperateFileType opttype, string srcFilePath)
+        public FormReuqest(OperateFileType opttype, string srcFilePath)
         {
             operatetype = opttype;
             filepath = srcFilePath;

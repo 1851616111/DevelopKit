@@ -314,6 +314,42 @@ namespace DevelopKit
             return bm;
         }
 
+        public static Bitmap ChangeWhiteColor(Bitmap mybm, Color targetColor)
+        {
+            Bitmap bm = (Bitmap)mybm.Clone();//初始化一个记录滤色效果的图片对象
+            int x, y;
+
+
+            for (x = 0; x < bm.Width; x++)
+            {
+                for (y = 0; y < bm.Height; y++)
+                {
+
+                    Color pixel = mybm.GetPixel(x, y);//获取当前坐标的像素值
+
+                    if (pixel.Equals(Color.FromArgb(0, 0, 0, 0)))
+                    {
+                        continue;
+                    }
+
+                    if (pixel.A == 255 && pixel.R != 0 && pixel.R == pixel.G && pixel.G == pixel.B)
+                    {
+                        if (pixel.R == 255)
+                        {
+                            bm.SetPixel(x, y, Color.FromArgb(255, targetColor.R, targetColor.G, targetColor.B));
+                        }
+                        else
+                        {
+                            double downRate = pixel.R / 255.0d;
+                            bm.SetPixel(x, y, Color.FromArgb(255, (int)(downRate * targetColor.R), (int)(downRate * targetColor.G), (int)(downRate * targetColor.B)));
+                        }
+                    }
+                }
+            }
+            return bm;
+        }
+
+
         //相位值 从-180到+180共360个小阶段组成一个环状
         //每次只调整一个通道， 调整幅度
         //其对应RGB的调整关系如下
