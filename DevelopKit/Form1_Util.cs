@@ -10,12 +10,16 @@ namespace DevelopKit
     public static class Form1_Util
     {
 
-        public static void OpenImageForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)
+        public static void OpenImageForm(string filepath, TabControl tabcontrol1, FormDelegate formDelegate)
         {
+
             Image image;
             try
             {
-                image = Image.FromFile(filepath);
+                Stream s = File.Open(filepath, FileMode.Open);
+                image = Bitmap.FromStream(s);
+                s.Close();
+                s.Dispose();
             }
             catch (OutOfMemoryException ex)
             {
@@ -37,32 +41,26 @@ namespace DevelopKit
             }
 
             string filename = StringUtil.GetFileName(filepath);
-            Hashtable tag = new Hashtable
-            {
-                ["filetype"] = FileType.Image,
-                ["filename"] = filename,
-                ["filepath"] = filepath
-            };
 
-            //1.创建一个tabpage
             TabPage tabPage = new TabPage
             {
-                Tag = tag,
                 Name = filepath,
                 Text = filename,
                 Padding = new Padding(6),
-                ToolTipText = filepath
+                ToolTipText = filepath,
+                Tag = new Hashtable
+                {
+                    ["filetype"] = FileType.Image,
+                    ["filename"] = filename,
+                    ["filepath"] = filepath
+                }
             };
-            if (!saved)
-            {
-                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
-            }
 
-            //2.创建一个form用于放置picturebox
             Form1_Image innerForm = new Form1_Image
             {
+                filepath = filepath,
+                filename = filename,
                 Name = filepath,
-                Tag = tag,
                 TopLevel = false,     //设置为非顶级控件
                 Dock = DockStyle.Fill,
                 FormBorderStyle = FormBorderStyle.None,
@@ -83,21 +81,29 @@ namespace DevelopKit
             innerForm.pictureBox1.Image = image;
         }
 
-        public static void OpenTxtForm(string filepath, bool saved, TabControl tabcontrol1, FormDelegate formDelegate)
+        public static void OpenTxtForm(string projectDir, string filepath, TabControl tabcontrol1, FormDelegate formDelegate)
         {
             string filename = StringUtil.GetFileName(filepath);
-            RichTextBox richTextBox;
+            Form1_Txt form;
+
             try
             {
                 FileUtil.ReadText(filepath, out string text);
 
-                richTextBox = new RichTextBox
+                //2.在tabpage绑定一个form
+                form = new Form1_Txt
                 {
+                    ProjectUserDir = projectDir,
+                    Name = filepath,
+                    filepath = filepath,
+                    filename = filepath,
+                    TopLevel = false,     //设置为非顶级控件
                     Dock = DockStyle.Fill,
-                    Name = filename,
-                    TabIndex = 0,
-                    Text = text,
+                    FormBorderStyle = FormBorderStyle.None,
+                    formDelegateHandler = formDelegate,
+                    OriginalRichTextBoxData = text
                 };
+
             }
             catch (OutOfMemoryException)
             {
@@ -117,43 +123,19 @@ namespace DevelopKit
                 return;
             }
 
-            Hashtable ht = new Hashtable
-            {
-                ["filetype"] = FileType.Txt,
-                ["filename"] = filename,
-                ["filepath"] = filepath
-            };
-
             //1.创建一个tabpage
             TabPage tabPage = new TabPage
             {
-                Tag = ht,
                 Text = filename,
                 Name = filepath,
                 Padding = new Padding(6),
                 ToolTipText = filepath,
             };
-            if (!saved)
-            {
-                tabPage.Text = StringUtil.markFileAsUnsafed(filename);
-            }
 
-            //2.在tabpage绑定一个form
-            Form1_Txt form = new Form1_Txt
-            {
-                Name = filepath,
-                Tag = ht,
-                TopLevel = false,     //设置为非顶级控件
-                Dock = DockStyle.Fill,
-                FormBorderStyle = FormBorderStyle.None,
-            };
-
-            form.Controls.Add(richTextBox);
             tabPage.Controls.Add(form);
             tabcontrol1.TabPages.Add(tabPage);
             tabcontrol1.SelectTab(tabPage);
 
-            richTextBox.Show();
             form.Show();
         }
     }

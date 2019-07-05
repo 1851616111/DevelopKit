@@ -59,7 +59,7 @@ namespace DevelopKit
             content = "";
             try
             {
-                StreamReader sr = new StreamReader(file, Encoding.GetEncoding("gb2312"));
+                StreamReader sr = new StreamReader(file, Encoding.UTF8);
                 content = sr.ReadToEnd();
                 sr.Close();
             }
@@ -118,6 +118,33 @@ namespace DevelopKit
                 return false;
             }
         }
+
+        public static bool FlushStringToFile(string file, string str)
+        {
+            try
+            {
+                FileStream fileStream = new FileStream(file, FileMode.Truncate, FileAccess.ReadWrite, FileShare.ReadWrite);
+
+                byte[] bytes = Encoding.UTF8.GetBytes(str);
+
+                //向文件中写入字节数组
+                fileStream.Write(bytes, 0, bytes.Length);
+                //刷新缓冲区
+                fileStream.Flush();
+                //关闭流
+                fileStream.Close();
+
+                fileStream.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Log.Error("FileUtil.FlushBytesToFile", "cath exception", ex.ToString());
+                return false;
+            }
+
+            return true;
+        }
+
 
         public static bool FlushBytesToFile(string file, byte[] bytes)
         {

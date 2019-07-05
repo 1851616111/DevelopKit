@@ -120,32 +120,28 @@ namespace DevelopKit
                     return;
                 }
 
-                if (openFileDialog.FileName.StartsWith(GlobalProject.GetUserSpaceDir()))
-                {
-                    Form1_Util.OpenImageForm(openFileDialog.FileName, true, tabControl1, Form_Image_Handler);
-                }
-                else
-                {
-                    Form1_Util.OpenImageForm(openFileDialog.FileName, false, tabControl1, Form_Image_Handler);
-                }
+                Form1_Util.OpenImageForm(openFileDialog.FileName,  tabControl1, Form_Request_Handler);
             }
         }
 
         //Form_Image的所有操作请求均通过此函数出发 相应操作
-        public void Form_Image_Handler(Object requestObj)
+        public void Form_Request_Handler(Object requestObj)
         {
-            if (requestObj.GetType() != typeof(FormReuqest))
+            if (requestObj.GetType() != typeof(FormRequest))
             {
                 return;
             }
 
-            FormReuqest request = (FormReuqest)requestObj;
-            switch (request.operatetype)
+            FormRequest request = (FormRequest)requestObj;
+            switch (request.RequestType)
             {
-                case OperateFileType.Save:
-                    FormRequest_SaveImage(request);
+                case RequestType.MarkFileAsChanged:
+                    FormRequest_ChangeStatus(request);
                     break;
-                case OperateFileType.Close:
+                case RequestType.MarkFileAsSaved:
+                    FormRequest_ChangeStatus(request);
+                    break;
+                case RequestType.Close:
                     FormRequest_CloseImage(request);
                     break;
             }
@@ -168,48 +164,16 @@ namespace DevelopKit
 
         private void OpenFile(string filepath)
         {
-            bool Saved;
-            if (filepath.StartsWith(GlobalProject.GetUserSpaceDir()))
-            {
-                Saved = true;
-            }
-            else
-            {
-                Saved = false;
-            }
+            
             if (FileUtil.IsFileImage(filepath))
             {
-                Form1_Util.OpenImageForm(filepath, Saved, tabControl1, Form_Image_Handler);
+                Form1_Util.OpenImageForm(filepath,tabControl1, Form_Request_Handler);
             }
             else
             {
-                Form1_Util.OpenTxtForm(filepath, Saved, tabControl1, Form_Image_Handler);
+                Form1_Util.OpenTxtForm(GlobalProject.GetUserSpaceDir(), filepath, tabControl1, Form_Request_Handler);
             }
         }
-
-        private void OpenFile(ProjectFile file)
-        {
-            bool Saved;
-
-            if (file.filePath.StartsWith(GlobalProject.GetUserSpaceDir()))
-            {
-                Saved = true;
-            }
-            else
-            {
-                Saved = false;
-            }
-
-            if (file.fileType == FileType.Image)
-            {
-                Form1_Util.OpenImageForm(file.filePath, Saved, tabControl1, Form_Image_Handler);
-            }
-            else
-            {
-                Form1_Util.OpenTxtForm(file.filePath, Saved, tabControl1, Form_Image_Handler);
-            }
-        }
-
 
         //保存当前Tabpage页的图片 ,由form1 自上而下发起保存图片请求
         private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
@@ -219,7 +183,7 @@ namespace DevelopKit
             {
                 return;
             }
-            SaveImageInTabPage(selectedTabTage);
+            SaveFileInTabPage(selectedTabTage);
         }
 
         private void SaveImageInTabPage(TabPage tabpage)
@@ -239,9 +203,10 @@ namespace DevelopKit
             string filename = (string)tag["filename"];
             string filepath = (string)tag["filepath"];
             FileType filetype = (FileType)tag["filetype"];
+
             if (StringUtil.isFileSafed(tabpage.Text))
             {
-                toolStripStatusLabel1.Text = string.Format("文件{0}已保存到项目中", filename);
+                toolStripStatusLabel1.Text = string.Format("图片{0}已保存到项目中", filename);
                 return; //已保存暂时不做处理
             }
 
@@ -254,10 +219,11 @@ namespace DevelopKit
 
                 foreach (Control childControl in control.Controls)
                 {
-                    if (childControl.GetType() != typeof(PictureBox))
+                    if (childControl.GetType() != typeof(PictureBox))  //保存图片
                     {
                         continue;
                     }
+
                     SaveFileDialog fileDialog = new SaveFileDialog
                     {
                         Filter = "PNG|*.png|所有文件|*.*",
@@ -270,19 +236,9 @@ namespace DevelopKit
                     {
                         try
                         {
-                            if (filetype == FileType.Image)
-                            {
-                                ((PictureBox)childControl).Image.Save(fileDialog.FileName);
-                            }
-                            else if (filetype == FileType.Txt)
-                            {
-                                ((RichTextBox)childControl).SaveFile(fileDialog.FileName);
-                            }
-                            else
-                            {
-                                MessageBox.Show("未知的文件类型");
-                            }
+                            ((PictureBox)childControl).Image.Save(fileDialog.FileName);
                             ChangeFileWindowsTextAsSaved(filepath);
+
                         }
                         catch (Exception ex)
                         {
@@ -294,6 +250,80 @@ namespace DevelopKit
             }
         }
 
+        private void SaveFileInTabPage(TabPage tabpage)
+        {
+            //if (tabpage.Tag == null)
+            //{
+            //    return;
+            //}
+
+            //Hashtable tag = (Hashtable)(tabpage.Tag);
+
+            //if (tag["filetype"].GetType() != typeof(FileType))
+            //{
+            //    return;
+            //}
+
+            //string filename = (string)tag["filename"];
+            //string filepath = (string)tag["filepath"];
+            //FileType filetype = (FileType)tag["filetype"];
+
+
+            //foreach (Control control in tabpage.Controls)  //
+            //{
+            //    foreach (Control childControl in control.Controls)
+            //    {
+            //        if (filetype == FileType.Image && childControl.GetType() == typeof(PictureBox))  //保存图片
+            //        {
+            //            SaveFileDialog fileDialog = new SaveFileDialog
+            //            {
+            //                Filter = "PNG|*.png|所有文件|*.*",
+            //                FilterIndex = 1,
+            //                RestoreDirectory = true,
+            //                InitialDirectory = GlobalProject.GetUserSpaceDir()
+
+            //            };
+            //            if (fileDialog.ShowDialog() == DialogResult.OK)
+            //            {
+            //                try
+            //                {
+            //                    ((PictureBox)childControl).Image.Save(fileDialog.FileName);
+            //                    ChangeFileWindowsTextAsSaved(filepath);
+
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    MessageBox.Show("保存文件失败");
+            //                    Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
+            //                }
+            //            }
+
+            //        }
+            //        else if (filetype == FileType.Txt && childControl.GetType() == typeof(RichTextBox))
+            //        {
+
+            //            fileDialog.Filter = "Text|*.txt|所有文件|*.*";
+
+            //            if (fileDialog.ShowDialog() == DialogResult.OK)
+            //            {
+            //                try
+            //                {
+
+            //                    ((RichTextBox)childControl).SaveFile(fileDialog.FileName);
+            //                    ChangeFileWindowsTextAsSaved(filepath);
+
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    MessageBox.Show("保存文件失败");
+            //                    Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
+            //                }
+            //            }
+            //        }
+            //    }
+            //}
+        }
+
         private void TabControl2_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -303,7 +333,6 @@ namespace DevelopKit
             }
             else
             {
-
             }
         }
 
@@ -466,11 +495,10 @@ namespace DevelopKit
                 }
 
                 SetGlobalProject((Project)projectProject);
-                //ShowOpenedProject();
 
                 foreach (ProjectFile pf in GlobalProject.filesEditer.projectFileList)
                 {
-                    OpenFile(pf);
+                    OpenFile(pf.filePath);
                 }
             }
         }
@@ -542,25 +570,32 @@ namespace DevelopKit
         }
 
 
-        //Form请求保存图片
-        private void FormRequest_SaveImage(FormReuqest request)
+        //Form请求修改文件状态为已修改
+        private void FormRequest_ChangeStatus(FormRequest request)
         {
             foreach (TabPage tabPage in tabControl1.TabPages)
             {
-                if (tabPage.Name == request.filepath)
+                if (tabPage.Name == request.FilePath)
                 {
-                    SaveImageInTabPage(tabPage);
+                    if (StringUtil.isFileSafed(tabPage.Text) && request.RequestType == RequestType.MarkFileAsChanged)
+                    {
+                        tabPage.Text = StringUtil.markFileAsUnsafed(tabPage.Text);
+                    }
+                    if (StringUtil.isFileUnSafed(tabPage.Text) && request.RequestType == RequestType.MarkFileAsSaved)
+                    {
+                        tabPage.Text = StringUtil.markFileAsSaved(tabPage.Text);
+                    }
                     return;
                 }
             }
         }
 
         //Form请求关闭图片
-        private void FormRequest_CloseImage(FormReuqest request)
+        private void FormRequest_CloseImage(FormRequest request)
         {
             foreach (TabPage tabpage in tabControl1.TabPages)
             {
-                if (tabpage.Name == request.filepath)
+                if (tabpage.Name == request.FilePath)
                 {
                     int index = tabControl1.TabPages.IndexOf(tabpage);
                     int newSelectIndex;
@@ -584,15 +619,9 @@ namespace DevelopKit
                     tabControl1.TabPages.Remove(tabpage);
                     tabpage.Dispose();
 
-                    GlobalProject.CloseFile(request.filepath);
+                    GlobalProject.CloseFile(request.FilePath);
                 }
             }
-        }
-
-        //鼠标
-        private void TabControl2_MouseMove(object sender, MouseEventArgs e)
-        {
-
         }
     }
 }

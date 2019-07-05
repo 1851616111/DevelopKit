@@ -16,10 +16,12 @@ namespace DevelopKit
     public partial class Form1_Image : Form
     {
         public FormDelegate formDelegateHandler;
+        public string filepath;
+        public string filename;
+
         private int imageOriginalWidth;
         private int imageOriginalHeight;
         private Bitmap imageOriginalBitmap;
-
         private int resetSizeValue;
         private int resetWidth;
         private int resetHeight;
@@ -29,7 +31,6 @@ namespace DevelopKit
         {
             InitializeComponent();
             label1.Text = "100%";
-
         }
 
         private void Form1_Image_Load(object sender, EventArgs e)
@@ -38,8 +39,17 @@ namespace DevelopKit
 
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new FormReuqest(OperateFileType.Save, (string)hashTable["filepath"]));
+            try
+            {
+                File.Delete(filepath);
+                pictureBox1.Image.Save(filepath);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("保存文件失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Log.Error("From1_Image.SaveImageToolStripMenuItem_Click", "保存文件失败", ex.ToString());
+            }
+            formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
         }
 
         private void CloseImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -50,8 +60,7 @@ namespace DevelopKit
 
             //2. 通知主form 关闭tabpage
             Hashtable hashTable = (Hashtable)this.Tag;
-            formDelegateHandler(new FormReuqest(OperateFileType.Close, (string)hashTable["filepath"]));
-
+            formDelegateHandler(new FormRequest(RequestType.Close, FileType.Image, filepath));
         }
 
         private void CopyImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -62,6 +71,7 @@ namespace DevelopKit
                 {
                     RestoreDirectory = true,
                     Filter = "PNG|*.png|所有文件|*.*",
+                    FileName = filename,
                     FilterIndex = 1,
                 };
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
@@ -95,9 +105,7 @@ namespace DevelopKit
                 {
                 }
 
-                Hashtable hs = (Hashtable)this.Tag;
-                string fielpath = (string)hs["filepath"];
-                FileInfo fi = new FileInfo(fielpath);
+                FileInfo fi = new FileInfo(filepath);
                 float number = fi.Length; //B 字节
                 string unit = "B";
                 if (number > 1024)
@@ -138,10 +146,7 @@ namespace DevelopKit
                     imageOriginalBitmap = (Bitmap)pictureBox1.Image.Clone();
                 }
 
-                Hashtable hs = (Hashtable)this.Tag;
-
-                string fielpath = (string)hs["filepath"];
-                FileInfo fi = new FileInfo(fielpath);
+                FileInfo fi = new FileInfo(filepath);
                 float number = fi.Length; //B 字节
                 string unit = "B";
                 if (number > 1024)

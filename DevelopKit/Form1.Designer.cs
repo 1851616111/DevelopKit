@@ -308,7 +308,6 @@
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
             this.tabControl2.TabIndex = 0;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.TabControl2_SelectedIndexChanged);
-            this.tabControl2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.TabControl2_MouseMove);
             // 
             // tabPage2
             // 

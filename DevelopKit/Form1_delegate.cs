@@ -9,23 +9,24 @@ namespace DevelopKit
 {
     public delegate void FormDelegate(Object param);
 
-    public enum OperateFileType
+    public enum RequestType
     {
-        Save=1,
-        Close=2,
-        SaveAs=3,
+        Close = 1,
+        MarkFileAsChanged = 2,      
+        MarkFileAsSaved = 3,
     }
 
-    public struct FormReuqest
+    public class FormRequest
     {
+        public FileType FileType;
+        public string FilePath;
+        public RequestType RequestType;
 
-        public string filepath;
-        public OperateFileType operatetype;
-
-        public FormReuqest(OperateFileType opttype, string srcFilePath)
+        public FormRequest(RequestType reqType, FileType reqFileType, string reqFilePath)
         {
-            operatetype = opttype;
-            filepath = srcFilePath;
+            RequestType = reqType;
+            FileType = reqFileType;
+            FilePath = reqFilePath;
         }
     }
 }
