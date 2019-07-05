@@ -167,6 +167,14 @@ namespace DevelopKit
 
                 toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
                 toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
+
+                if (pictureBox1.Image.Width != imageOriginalWidth && pictureBox1.Image.Height != imageOriginalHeight)
+                {
+                    formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
+                }
+                else {
+                    formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
+                }
             }
         }
 
@@ -196,6 +204,14 @@ namespace DevelopKit
                 pictureBox1.Image = KiResizeImage(imageOriginalBitmap, resetWidth, resetHeight);
             }
             resetSizeValue = hScrollBar1.Value;
+
+            if (resetSizeValue != 0)
+            {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
+            }
+            else {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
+            }
         }
 
         //图片滤色选择操作
@@ -219,6 +235,15 @@ namespace DevelopKit
                 pictureBox1.Image = (Image)PngUtil.RelativeChangeColor(imageOriginalBitmap, hScrollBar2.Value);
             }
             resetColorValue = hScrollBar2.Value;
+
+            if (resetColorValue != 0)
+            {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
+            }
+            else
+            {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
+            }
         }
 
         public Bitmap KiResizeImage(Bitmap bmp, int newW, int newH)
@@ -245,6 +270,7 @@ namespace DevelopKit
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 pictureBox1.Image = PngUtil.ChangeWhiteColor((Bitmap)pictureBox1.Image, colorDialog.Color);
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
             }
         }
     }
