@@ -16,8 +16,6 @@ namespace DevelopKit
     public partial class Form1_Image : Form
     {
         private Image image;
-        private int formWidth;
-        private int formHeight;
         private FormDelegate formDelegateHandler;
         private string filepath;
         private string filename;
@@ -30,12 +28,10 @@ namespace DevelopKit
         private int resetHeight;
         private int resetColorValue;
 
-        public Form1_Image(int w, int h, Image image, string img_filepath, string img_filename, FormDelegate delegateFn)
+        public Form1_Image(Image image, string img_filepath, string img_filename, FormDelegate delegateFn)
         {
             InitializeComponent();
             label1.Text = "100%";
-            this.formWidth = w;
-            this.formHeight = h;
             this.image = image;
             this.filepath = img_filepath;
             this.filename = img_filename;

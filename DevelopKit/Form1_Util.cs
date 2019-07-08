@@ -60,7 +60,7 @@ namespace DevelopKit
             tabcontrol1.TabPages.Add(tabPage);
             tabcontrol1.SelectTab(tabPage);
 
-            Form1_Image innerForm = new Form1_Image(tabPage.Width, tabPage.Height, image, filepath, filename, formDelegate);
+            Form1_Image innerForm = new Form1_Image(image, filepath, filename, formDelegate);
             innerForm.Name = filepath;
             innerForm.TopLevel = false;     //设置为非顶级控件
             innerForm.Dock = DockStyle.Fill;
