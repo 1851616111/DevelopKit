@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.operateImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.纯白文字改色ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
@@ -68,6 +68,14 @@
             this.closeImageToolStripMenuItem.Text = "关闭";
             this.closeImageToolStripMenuItem.Click += new System.EventHandler(this.CloseImageToolStripMenuItem_Click);
             // 
+            // saveImageToolStripMenuItem
+            // 
+            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
+            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
+            this.saveImageToolStripMenuItem.Text = "保存";
+            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
+            // 
             // SaveAsToolStripMenuItem
             // 
             this.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
@@ -76,14 +84,6 @@
             this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
             this.SaveAsToolStripMenuItem.Text = "另存为";
             this.SaveAsToolStripMenuItem.Click += new System.EventHandler(this.CopyImageToolStripMenuItem_Click);
-            // 
-            // saveImageToolStripMenuItem
-            // 
-            this.saveImageToolStripMenuItem.Name = "saveImageToolStripMenuItem";
-            this.saveImageToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-            this.saveImageToolStripMenuItem.Size = new System.Drawing.Size(190, 22);
-            this.saveImageToolStripMenuItem.Text = "保存";
-            this.saveImageToolStripMenuItem.Click += new System.EventHandler(this.SaveImageToolStripMenuItem_Click);
             // 
             // operateImageToolStripMenuItem
             // 
@@ -96,7 +96,7 @@
             // 纯白文字改色ToolStripMenuItem
             // 
             this.纯白文字改色ToolStripMenuItem.Name = "纯白文字改色ToolStripMenuItem";
-            this.纯白文字改色ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.纯白文字改色ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.纯白文字改色ToolStripMenuItem.Text = "纯白文字改色";
             this.纯白文字改色ToolStripMenuItem.Click += new System.EventHandler(this.纯白文字改色ToolStripMenuItem_Click);
             // 
@@ -164,7 +164,6 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PictureBox1_MouseMove);
-            this.pictureBox1.Resize += new System.EventHandler(this.PictureBox1_Resize);
             // 
             // hScrollBar1
             // 
@@ -221,8 +220,10 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
             this.Name = "Form1_Image";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form_Image";
             this.Load += new System.EventHandler(this.Form1_Image_Load);
+            this.Resize += new System.EventHandler(this.Form1_Image_Resize);
             this.contextMenuStrip1.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();

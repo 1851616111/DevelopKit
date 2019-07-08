@@ -15,9 +15,12 @@ namespace DevelopKit
 {
     public partial class Form1_Image : Form
     {
-        public FormDelegate formDelegateHandler;
-        public string filepath;
-        public string filename;
+        private Image image;
+        private int formWidth;
+        private int formHeight;
+        private FormDelegate formDelegateHandler;
+        private string filepath;
+        private string filename;
 
         private int imageOriginalWidth;
         private int imageOriginalHeight;
@@ -27,14 +30,78 @@ namespace DevelopKit
         private int resetHeight;
         private int resetColorValue;
 
-        public Form1_Image()
+        public Form1_Image(int w, int h, Image image, string img_filepath, string img_filename, FormDelegate delegateFn)
         {
             InitializeComponent();
             label1.Text = "100%";
+            this.formWidth = w;
+            this.formHeight = h;
+            this.image = image;
+            this.filepath = img_filepath;
+            this.filename = img_filename;
+            this.formDelegateHandler = delegateFn;
+
+            pictureBox1.Image = image;
+            imageOriginalWidth = image.Width;
+            imageOriginalHeight = image.Height;
+            imageOriginalBitmap = (Bitmap)pictureBox1.Image.Clone();
+        }
+
+        private void Form1_Image_Resize(object sender, EventArgs e)
+        {
+           
+            pictureBox1.Location = new Point((this.Width - pictureBox1.Width) / 2, resetY((this.Height - pictureBox1.Height) / 2));
+            hScrollBar1.Location = new Point((this.Width - hScrollBar1.Width) / 2, this.Height - 50);
+            label1.Location = new Point(hScrollBar1.Location.X + hScrollBar1.Width + 20, this.Height - 55);
+            hScrollBar2.Location = new Point(label1.Location.X + label1.Width + 100, this.Height - 50);
+            label2.Location = new Point(hScrollBar2.Location.X - 45, this.Height - 55);
+
+            this.Show();
+        }
+   
+        private void resetForm()
+        {
+
+            if (image == null)
+            {
+                return;
+            }
+       
+            FileInfo fi = new FileInfo(filepath);
+            float number = fi.Length; //B 字节
+            string unit = "B";
+            if (number > 1024)
+            {
+                number /= 1024; //KB
+                unit = "KB";
+            }
+            if (number > 1024)
+            {
+                number /= 1024;  //MB
+                unit = "MB";
+            }
+            if (number > 1024)
+            {
+                number /= 1024;  //GB
+                unit = "GB";
+            }
+
+            toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
+            toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
+
+            if (pictureBox1.Image.Width != imageOriginalWidth && pictureBox1.Image.Height != imageOriginalHeight)
+            {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
+            }
+            else
+            {
+                formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
+            }
         }
 
         private void Form1_Image_Load(object sender, EventArgs e)
         {
+            resetForm();
         }
 
         private void SaveImageToolStripMenuItem_Click(object sender, EventArgs e)
@@ -128,55 +195,7 @@ namespace DevelopKit
                 toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
                 toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
             }
-        }
-
-        private void PictureBox1_Resize(object sender, EventArgs e)
-        {
-            if (pictureBox1.Image != null)
-            {
-                hScrollBar1.Location = new Point((this.Width - hScrollBar1.Width) / 2, this.Height - 50);
-                label1.Location = new Point(hScrollBar1.Location.X + hScrollBar1.Width + 20, this.Height - 55);
-                hScrollBar2.Location = new Point(label1.Location.X + label1.Width  + 100, this.Height - 50);
-                label2.Location = new Point(hScrollBar2.Location.X - 45  , this.Height - 55);
-
-                if (imageOriginalWidth == 0 && imageOriginalHeight == 0)
-                {
-                    imageOriginalWidth = pictureBox1.Image.Width;
-                    imageOriginalHeight = pictureBox1.Image.Height;
-                    imageOriginalBitmap = (Bitmap)pictureBox1.Image.Clone();
-                }
-
-                FileInfo fi = new FileInfo(filepath);
-                float number = fi.Length; //B 字节
-                string unit = "B";
-                if (number > 1024)
-                {
-                    number /= 1024; //KB
-                    unit = "KB";
-                }
-                if (number > 1024)
-                {
-                    number /= 1024;  //MB
-                    unit = "MB";
-                }
-                if (number > 1024)
-                {
-                    number /= 1024;  //GB
-                    unit = "GB";
-                }
-
-                toolStripStatusLabel3.Text = string.Format("{0} × {1}像素", pictureBox1.Image.Width, pictureBox1.Image.Height);
-                toolStripStatusLabel4.Text = string.Format("大小:{0}{1}", number.ToString("#.#"), unit);
-
-                if (pictureBox1.Image.Width != imageOriginalWidth && pictureBox1.Image.Height != imageOriginalHeight)
-                {
-                    formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
-                }
-                else {
-                    formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
-                }
-            }
-        }
+        }   
 
         //图片放大操作
         private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -190,7 +209,7 @@ namespace DevelopKit
             resetWidth = (int)(imageOriginalWidth * MultipleFactor);
             resetHeight = (int)(imageOriginalHeight * MultipleFactor);
 
-            pictureBox1.Location = new Point((this.Width - resetWidth) / 2, (this.Height - resetHeight) / 2);
+            pictureBox1.Location = new Point((this.Width - resetWidth) / 2, resetY((this.Height - resetHeight) / 2));
 
 
             label1.Text = string.Format("{0}%", (MultipleFactor * 100).ToString());
@@ -198,9 +217,10 @@ namespace DevelopKit
             if (resetColorValue > 0)
             {
                 Bitmap newBmp = PngUtil.RelativeChangeColor(imageOriginalBitmap, resetColorValue);
-                pictureBox1.Image = KiResizeImage(newBmp, resetWidth, resetHeight); 
+                pictureBox1.Image = KiResizeImage(newBmp, resetWidth, resetHeight);
             }
-            else {
+            else
+            {
                 pictureBox1.Image = KiResizeImage(imageOriginalBitmap, resetWidth, resetHeight);
             }
             resetSizeValue = hScrollBar1.Value;
@@ -209,7 +229,8 @@ namespace DevelopKit
             {
                 formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
             }
-            else {
+            else
+            {
                 formDelegateHandler(new FormRequest(RequestType.MarkFileAsSaved, FileType.Image, filepath));
             }
         }
@@ -225,13 +246,14 @@ namespace DevelopKit
             {
                 return;
             }
-            
+
             if (resetSizeValue > 0)
             {
                 Bitmap newImage = KiResizeImage(imageOriginalBitmap, resetWidth, resetHeight);
                 pictureBox1.Image = (Image)PngUtil.RelativeChangeColor(newImage, hScrollBar2.Value);
             }
-            else {
+            else
+            {
                 pictureBox1.Image = (Image)PngUtil.RelativeChangeColor(imageOriginalBitmap, hScrollBar2.Value);
             }
             resetColorValue = hScrollBar2.Value;
@@ -271,6 +293,19 @@ namespace DevelopKit
             {
                 pictureBox1.Image = PngUtil.ChangeWhiteColor((Bitmap)pictureBox1.Image, colorDialog.Color);
                 formDelegateHandler(new FormRequest(RequestType.MarkFileAsChanged, FileType.Image, filepath));
+            }
+        }
+
+        private int resetY(int y)
+        {
+            if (y > 100)
+            {
+                return y > 0 ? y - y / 5 : 0;
+
+            }
+            else
+            {
+                return y > 0 ? y - y / 4 : 0;
             }
         }
     }

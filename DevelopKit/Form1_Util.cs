@@ -46,7 +46,7 @@ namespace DevelopKit
             {
                 Name = filepath,
                 Text = filename,
-                Padding = new Padding(6),
+                //Padding = new Padding(6),
                 ToolTipText = filepath,
                 Tag = new Hashtable
                 {
@@ -56,29 +56,16 @@ namespace DevelopKit
                 }
             };
 
-            Form1_Image innerForm = new Form1_Image
-            {
-                filepath = filepath,
-                filename = filename,
-                Name = filepath,
-                TopLevel = false,     //设置为非顶级控件
-                Dock = DockStyle.Fill,
-                FormBorderStyle = FormBorderStyle.None,
-                formDelegateHandler = formDelegate,
-
-            };
-
             //将tabpage 添加到 tabcontroll中
-            tabPage.Controls.Add(innerForm);
             tabcontrol1.TabPages.Add(tabPage);
             tabcontrol1.SelectTab(tabPage);
-            innerForm.Show();
 
-            //重新计算图片放置位置
-            innerForm.pictureBox1.Location = new Point((innerForm.Width - image.Size.Width) / 2 + innerForm.Location.X, (innerForm.Height - image.Size.Height) / 2 - 100);
-            innerForm.pictureBox1.Size = image.Size;
-            innerForm.pictureBox1.Name = filename;
-            innerForm.pictureBox1.Image = image;
+            Form1_Image innerForm = new Form1_Image(tabPage.Width, tabPage.Height, image, filepath, filename, formDelegate);
+            innerForm.Name = filepath;
+            innerForm.TopLevel = false;     //设置为非顶级控件
+            innerForm.Dock = DockStyle.Fill;
+            innerForm.FormBorderStyle = FormBorderStyle.None;
+            tabPage.Controls.Add(innerForm);
         }
 
         public static void OpenTxtForm(string projectDir, string filepath, TabControl tabcontrol1, FormDelegate formDelegate)
