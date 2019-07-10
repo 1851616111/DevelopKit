@@ -1,0 +1,17 @@
+﻿<app>
+  <manufacturers>
+    <item>
+      <id>1</id>
+      <name>微马</name>
+    </item>
+  </manufacturers>
+  <cars>
+    <item>
+      <id>1</id>
+      <manufacturer_id>1</manufacturer_id>
+      <name>aes01</name>
+      <version>v0.7</version>
+      <config_file>cat_wm_aes01_v0.7.xml</config_file>
+    </item>
+  </cars>
+</app>

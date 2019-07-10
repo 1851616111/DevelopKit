@@ -49,6 +49,7 @@ namespace DevelopKit
             catch (Exception ex)
             {
                 Log.Error("FileUtil", "open file:" + file, ex.ToString());
+                Console.WriteLine(ex.ToString());
                 return null;
             }
             return obj;

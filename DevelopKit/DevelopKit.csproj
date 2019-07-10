@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteUtil.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_delegate.cs" />
     <Compile Include="Errors.cs" />
@@ -243,6 +244,14 @@
     <None Include="Resources\rgb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\conf\cat_wm_aes01_v0.7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\conf\app.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

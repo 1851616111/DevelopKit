@@ -11,85 +11,35 @@ using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public partial class Form2 : Form
+    public partial class Form_CreateProject : Form
     {
-        private App appConfig;
 
-        public Form2()
+        public Form_CreateProject()
         {
             InitializeComponent();
-            appConfig = (App)FileUtil.DeserializeObjectFromFile(typeof(App), @"Resources\conf\app.xml");
-            loadAppConfig(appConfig);
         }
 
         public delegate void UpdateGlobalProjectHandler(Project project);//声明委托， 用于将此页面的project数据传递回form1
         public UpdateGlobalProjectHandler updateGlobalProjectHandler;
-
-        private void loadAppConfig(App app)
-        {
-            Log.Info("Form2", "读取应用配置", string.Format("获取厂商{0}个， 汽车车型{1}个", app.manufacturers.Length, app.cars.Length));
-
-            comboBox2.Items.Clear();
-            foreach (Manufacturer manufacturer in app.manufacturers)
-            {
-                comboBox2.Items.Add(manufacturer.Name);
-            }
-            comboBox2.SelectedIndex = 0;
-        }
-
-        private void ComboBox2_SelectedValueChanged(object sender, EventArgs e)
-        {
-            Car[] cars = appConfig.ListCarsByManufacturer(comboBox2.SelectedItem.ToString());
-
-            comboBox3.Items.Clear();
-            foreach (Car car in cars)
-            {
-                if (!comboBox3.Items.Contains(car.Name))
-                {
-                    comboBox3.Items.Add(car.Name);
-                }
-            }
-            if (comboBox3.Items.Count > 0)
-            {
-                comboBox3.SelectedIndex = 0;
-            }
-        }
-
-        private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Car[] cars = appConfig.ListCarsByCarName(comboBox3.SelectedItem.ToString());
-            foreach (Car car in cars)
-            {
-                if (!comboBox4.Items.Contains(car.Version))
-                {
-                    comboBox4.Items.Add(car.Version);
-                }
-            }
-            if (comboBox4.Items.Count > 0)
-            {
-                comboBox4.SelectedIndex = 0;
-            }
-        }
 
         private void Form2_Load(object sender, EventArgs e)
         {
             textBox1.Text = "我的皮肤项目";
             textBox1.Focus();
             comboBox2.SelectedIndex = 0;
-
+            comboBox3.SelectedIndex = 0;
         }
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Car car = appConfig.GetCar(comboBox2.SelectedItem.ToString(),
-                comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString());
+            string vehicleType = comboBox2.SelectedItem.ToString();
+            string version = comboBox2.SelectedIndex.ToString();
             string projectName = textBox1.Text;
             string projectPath = comboBox1.Text;
             string developor = textBox2.Text;
 
-            Console.WriteLine("--------" + car.Name);
 
-            Project newProject = new Project(car, projectName, projectPath, developor);
+            Project newProject = new Project(vehicleType, version, projectName, projectPath, developor);
             bool overwrite = false;
 
         recreate:

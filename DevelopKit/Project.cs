@@ -17,8 +17,8 @@ namespace DevelopKit
         public static string RuntimeConfigDirName = ".kit";
         public static string RuntimeConfigXmlName = "project.xml";
 
-        [XmlElement(ElementName = "vehicle_type")]
-        public string VehicleType;  //车型
+        [XmlElement(ElementName = "car_info")]
+        public Car CarInfo;  //车型信息
 
         [XmlElement(ElementName = "project_name")]
         public string ProjectName;  //项目名称
@@ -38,9 +38,9 @@ namespace DevelopKit
         public Project()
         {
         }
-        public Project(string vtype, string name, string path, string dev)
+        public Project(Car car, string name, string path, string dev)
         {
-            VehicleType = vtype;
+            CarInfo = car;
             ProjectName = name;
             ProjectPath = path;
             Developer = dev;
