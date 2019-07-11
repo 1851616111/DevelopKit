@@ -18,7 +18,10 @@ namespace DevelopKit
         public static string RuntimeConfigXmlName = "project.xml";
 
         [XmlElement(ElementName = "car_info")]
-        public Car CarInfo;  //车型信息
+        public CarInfo CarInfo;  //车型信息
+
+        [XmlElement(ElementName = "car_config")]
+        public CarConfig CarConfig;  //车型皮肤配置
 
         [XmlElement(ElementName = "project_name")]
         public string ProjectName;  //项目名称
@@ -38,9 +41,11 @@ namespace DevelopKit
         public Project()
         {
         }
-        public Project(Car car, string name, string path, string dev)
+
+        public Project(CarInfo car, CarConfig ccfg, string name, string path, string dev)
         {
             CarInfo = car;
+            CarConfig = ccfg;
             ProjectName = name;
             ProjectPath = path;
             Developer = dev;
@@ -102,6 +107,7 @@ namespace DevelopKit
             if (error != null)
             {
                 Log.Error("Project core", "Save to xml file " + GetConfigXml(), error.Message);
+                Console.WriteLine("-------------? write xml file err " + error.Message );
             }
         }
 

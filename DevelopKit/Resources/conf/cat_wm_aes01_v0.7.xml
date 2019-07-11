@@ -1,203 +1,202 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<table>
-  <scene_list>
-    <scene>
+﻿<car_config>
+  <scenes>
+    <item>
       <id>1</id>
       <name>KL30</name>
       <groups>
-        <group>
+        <item>
           <id>1</id>
           <name>背景</name>
-        </group>
-        <group>
+        </item>
+        <item>
           <id>2</id>
           <name>充电界面</name>
-        </group>
-        <group>
+        </item>
+        <item>
           <id>3</id>
           <name>充电失败</name>
-        </group>
-        <group>
+        </item>
+        <item>
           <id>4</id>
           <name>全屏报警</name>
-        </group>
-        <group>
+        </item>
+        <item>
           <id>5</id>
           <name>门开报警</name>
-        </group>
-        <group>
+        </item>
+        <item>
           <id>6</id>
           <name>TT灯</name>
-        </group>
+        </item>
       </groups>
-    </scene>
-  </scene_list>
+    </item>
+  </scenes>
   <properties>
-    <property>
+    <item>
       <id>1</id>
       <group_id>1</group_id>
       <name>背景图片</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>2</id>
       <group_id>2</group_id>
       <name>进度数值颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>3</id>
       <group_id>2</group_id>
       <name>进度数值透明度</name>
       <type>alpha</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>4</id>
       <group_id>2</group_id>
       <name>进度单位颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>5</id>
       <group_id>2</group_id>
       <name>进度单位透明度</name>
       <type>alpha</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>6</id>
       <group_id>2</group_id>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>7</id>
       <group_id>2</group_id>
       <name>提示文本透明度</name>
       <type>alpha</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>8</id>
       <group_id>2</group_id>
       <name>时间功率电压电流数值颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>9</id>
       <group_id>2</group_id>
       <name>时间功率电压电流数值透明度</name>
       <type>alpha</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>10</id>
       <group_id>2</group_id>
       <name>时间功率电压电流单位颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>11</id>
       <group_id>2</group_id>
       <name>时间功率电压电流单位透明度</name>
       <type>alpha</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>13</id>
       <group_id>2</group_id>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>14</id>
       <group_id>3</group_id>
       <name>弹出框背景图</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>15</id>
       <group_id>3</group_id>
       <name>弹出框阴影图</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>16</id>
       <group_id>3</group_id>
       <name>图标</name>
       <type>in_group</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>17</id>
       <group_id>3</group_id>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>15</id>
       <group_id>4</group_id>
       <name>图标</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>16</id>
       <group_id>4</group_id>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>17</id>
       <group_id>4</group_id>
       <name>背景图片</name>
       <type>image</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>18</id>
       <group_id>5</group_id>
       <name>背景图片</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>false</can_edit>
-    </property>
-    <property>
+    </item>
+    <item>
       <id>19</id>
       <group_id>6</group_id>
       <name>/</name>
       <type>image</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
-    </property>
+    </item>
   </properties>
-</table>
+</car_config>

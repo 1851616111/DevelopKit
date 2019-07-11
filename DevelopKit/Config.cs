@@ -1,11 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
-
 namespace DevelopKit
 {
     [Serializable]
@@ -15,14 +16,14 @@ namespace DevelopKit
         [XmlArray("manufacturers"), XmlArrayItem("item")]
         public Manufacturer[] manufacturers;
 
-        [XmlArray("cars"), XmlArrayItem("item")]
-        public Car[] cars;
+        [XmlArray("car_info_list"), XmlArrayItem("item")]
+        public CarInfo[] carInfoList;
 
-        public Car GetCar(string mname, string car_name, string car_version)
+        public CarInfo GetCarInfo(string mname, string car_name, string car_version)
         {
-            Car[] cars = ListCarsByManufacturer(mname);
+            CarInfo[] cars = ListCarsByManufacturer(mname);
 
-            foreach (Car car in cars)
+            foreach (CarInfo car in cars)
             {
                 if (car.Name == car_name && car.Version == car_version)
                 {
@@ -34,42 +35,43 @@ namespace DevelopKit
         }
 
         //根据汽车厂商ID查询厂商下的汽车
-        public Car[] ListCarsByManufacturer(string name)
+        public CarInfo[] ListCarsByManufacturer(string name)
         {
             foreach (Manufacturer manufacturer in manufacturers)
             {
                 if (manufacturer.Name == name)
                 {
                     ArrayList list = new ArrayList();
-                    foreach (Car car in cars)
-                     {
+                    foreach (CarInfo car in carInfoList)
+                    {
                         if (car.ManufacturerId != manufacturer.Id)
                         {
                             continue;
                         }
-                        else {
+                        else
+                        {
                             list.Add(car);
                         }
                     }
-                    return (Car[])list.ToArray(typeof(Car));
+                    return (CarInfo[])list.ToArray(typeof(CarInfo));
                 }
             }
             return null;
         }
 
         //如果不同厂商叫同一个汽车名称过滤时会出现多余的情况
-        public Car[] ListCarsByCarName(string name)
+        public CarInfo[] ListCarsByCarName(string name)
         {
             ArrayList list = new ArrayList();
 
-            foreach (Car car in cars)
+            foreach (CarInfo car in carInfoList)
             {
                 if (name == car.Name)
                 {
                     list.Add(car);
                 }
             }
-            return (Car[])list.ToArray(typeof(Car));
+            return (CarInfo[])list.ToArray(typeof(CarInfo));
         }
 
     }
@@ -88,7 +90,7 @@ namespace DevelopKit
     }
 
     [Serializable]
-    public class Car
+    public class CarInfo
     {
         private int id;
         private string name;
@@ -110,5 +112,78 @@ namespace DevelopKit
 
         [XmlElement("manufacturer_id")]
         public int ManufacturerId { get => manufacturerId; set => manufacturerId = value; }
+
+        public CarConfig GetCarConfig()
+        {
+            return (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), configFile);
+        }
+
+        public bool Validate()
+        {
+            return File.Exists(configFile);
+        }
+    }
+
+
+    [Serializable]
+    [XmlRoot("car_config")]
+    public class CarConfig
+    {
+        [XmlArray("scenes"), XmlArrayItem("item")]
+        public List<Scene> scenes;
+
+        [XmlArray("properties"), XmlArrayItem("item")]
+        public List<Property> properties;
+    }
+
+    [Serializable]
+    public class Property
+    {
+        private int id;
+        private int groupId;
+        private string name;
+        private string type;
+        private bool inGroup;
+        private bool canEdit;
+
+        [XmlElement("id")]
+        public int Id { get => id; set => id = value; }
+        [XmlElement("group_id")]
+        public int GroupId { get => groupId; set => groupId = value; }
+        [XmlElement("name")]
+        public string Name { get => name; set => name = value; }
+        [XmlElement("type")]
+        public string Type { get => type; set => type = value; }
+        [XmlElement("in_group")]
+        public bool InGroup { get => inGroup; set => inGroup = value; }
+        [XmlElement("can_edit")]
+        public bool CanEdit { get => canEdit; set => canEdit = value; }
+    }
+
+    [Serializable]
+    public class Scene
+    {
+        private int id;
+        private string name;
+
+        [XmlArray("groups"), XmlArrayItem("item")]
+        public List<Group> groups;
+
+        [XmlElement("id")]
+        public int Id { get => id; set => id = value; }
+        [XmlElement("name")]
+        public string Name { get => name; set => name = value; }
+    }
+
+    [Serializable]
+    public class Group
+    {
+        private int id;
+        private string name;
+
+        [XmlElement("id")]
+        public int Id{get => id; set => id = value;}
+        [XmlElement("name")]
+        public string Name { get => name; set => name = value; }
     }
 }

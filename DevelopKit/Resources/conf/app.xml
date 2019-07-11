@@ -5,13 +5,13 @@
       <name>微马</name>
     </item>
   </manufacturers>
-  <cars>
+  <car_info_list>
     <item>
       <id>1</id>
       <manufacturer_id>1</manufacturer_id>
       <name>aes01</name>
       <version>v0.7</version>
-      <config_file>cat_wm_aes01_v0.7.xml</config_file>
+      <config_file>Resources/conf/cat_wm_aes01_v0.7.xml</config_file>
     </item>
-  </cars>
+  </car_info_list>
 </app>

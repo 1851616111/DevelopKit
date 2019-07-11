@@ -45,6 +45,7 @@ namespace DevelopKit
                 XmlSerializer xmlSerializer = new XmlSerializer(type);
                 obj = xmlSerializer.Deserialize(fs);
                 fs.Close();
+
             }
             catch (Exception ex)
             {

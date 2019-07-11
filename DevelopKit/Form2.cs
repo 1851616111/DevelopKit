@@ -27,7 +27,7 @@ namespace DevelopKit
 
         private void loadAppConfig(App app)
         {
-            Log.Info("Form2", "读取应用配置", string.Format("获取厂商{0}个， 汽车车型{1}个", app.manufacturers.Length, app.cars.Length));
+            Log.Info("Form2", "读取应用配置", string.Format("获取厂商{0}个， 汽车车型{1}个", app.manufacturers.Length, app.carInfoList.Length));
 
             comboBox2.Items.Clear();
             foreach (Manufacturer manufacturer in app.manufacturers)
@@ -39,10 +39,10 @@ namespace DevelopKit
 
         private void ComboBox2_SelectedValueChanged(object sender, EventArgs e)
         {
-            Car[] cars = appConfig.ListCarsByManufacturer(comboBox2.SelectedItem.ToString());
+            CarInfo[] cars = appConfig.ListCarsByManufacturer(comboBox2.SelectedItem.ToString());
 
             comboBox3.Items.Clear();
-            foreach (Car car in cars)
+            foreach (CarInfo car in cars)
             {
                 if (!comboBox3.Items.Contains(car.Name))
                 {
@@ -57,8 +57,8 @@ namespace DevelopKit
 
         private void ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Car[] cars = appConfig.ListCarsByCarName(comboBox3.SelectedItem.ToString());
-            foreach (Car car in cars)
+            CarInfo[] cars = appConfig.ListCarsByCarName(comboBox3.SelectedItem.ToString());
+            foreach (CarInfo car in cars)
             {
                 if (!comboBox4.Items.Contains(car.Version))
                 {
@@ -81,15 +81,21 @@ namespace DevelopKit
 
         private void Button3_Click(object sender, EventArgs e)
         {
-            Car car = appConfig.GetCar(comboBox2.SelectedItem.ToString(),
+            CarInfo car = appConfig.GetCarInfo(comboBox2.SelectedItem.ToString(),
                 comboBox3.SelectedItem.ToString(), comboBox4.SelectedItem.ToString());
+            if (!car.Validate())
+            {
+                MessageBox.Show("验证车型配置文件失败", "提示", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            CarConfig ccfg = car.GetCarConfig();
+
             string projectName = textBox1.Text;
             string projectPath = comboBox1.Text;
             string developor = textBox2.Text;
 
-            Console.WriteLine("--------" + car.Name);
 
-            Project newProject = new Project(car, projectName, projectPath, developor);
+            Project newProject = new Project(car, ccfg, projectName, projectPath, developor);
             bool overwrite = false;
 
         recreate:
