@@ -63,20 +63,24 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.treeView2 = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
+            this.panel2 = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStripMenuItem1
@@ -306,7 +310,7 @@
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
-            this.tabControl2.TabIndex = 0;
+            this.tabControl2.TabIndex = 1;
             this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.TabControl2_SelectedIndexChanged);
             // 
             // tabPage2
@@ -331,10 +335,19 @@
             this.treeView1.SelectedImageIndex = 0;
             this.treeView1.Size = new System.Drawing.Size(158, 943);
             this.treeView1.TabIndex = 0;
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView1_NodeMouseDoubleClick);
+            // 
+            // treeviewImageList
+            // 
+            this.treeviewImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeviewImageList.ImageStream")));
+            this.treeviewImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.treeviewImageList.Images.SetKeyName(0, "treeview_file.png");
+            this.treeviewImageList.Images.SetKeyName(1, "treeview_folder.png");
+            this.treeviewImageList.Images.SetKeyName(2, "treeview_image.png");
+            this.treeviewImageList.Images.SetKeyName(3, "treeview_xml.png");
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.treeView2);
             this.tabPage3.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabPage3.Location = new System.Drawing.Point(32, 4);
             this.tabPage3.Name = "tabPage3";
@@ -344,13 +357,14 @@
             this.tabPage3.Text = "流程";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // panel2
+            // treeView2
             // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1554, 82);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(370, 957);
-            this.panel2.TabIndex = 18;
+            this.treeView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView2.Location = new System.Drawing.Point(3, 3);
+            this.treeView2.Name = "treeView2";
+            this.treeView2.Size = new System.Drawing.Size(158, 943);
+            this.treeView2.TabIndex = 0;
+            this.treeView2.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView2_NodeMouseDoubleClick);
             // 
             // splitter1
             // 
@@ -393,6 +407,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.hScrollBar1);
             this.tabPage1.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
             this.tabPage1.Name = "tabPage1";
@@ -403,14 +418,25 @@
             this.tabPage1.Text = "流程面板";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // treeviewImageList
+            // hScrollBar1
             // 
-            this.treeviewImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeviewImageList.ImageStream")));
-            this.treeviewImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.treeviewImageList.Images.SetKeyName(0, "treeview_file.png");
-            this.treeviewImageList.Images.SetKeyName(1, "treeview_folder.png");
-            this.treeviewImageList.Images.SetKeyName(2, "treeview_image.png");
-            this.treeviewImageList.Images.SetKeyName(3, "treeview_xml.png");
+            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.hScrollBar1.Location = new System.Drawing.Point(3, 904);
+            this.hScrollBar1.Name = "hScrollBar1";
+            this.hScrollBar1.Size = new System.Drawing.Size(1326, 17);
+            this.hScrollBar1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.White;
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(1554, 82);
+            this.panel2.Margin = new System.Windows.Forms.Padding(0);
+            this.panel2.MaximumSize = new System.Drawing.Size(370, 0);
+            this.panel2.MinimumSize = new System.Drawing.Size(370, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(370, 957);
+            this.panel2.TabIndex = 18;
             // 
             // Form1
             // 
@@ -445,7 +471,9 @@
             this.panel1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -469,7 +497,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem4;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Splitter splitter2;
         private System.Windows.Forms.TabControl tabControl1;
@@ -488,6 +515,9 @@
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeprojectToolStripMenuItem;
         private System.Windows.Forms.ImageList treeviewImageList;
+        private System.Windows.Forms.TreeView treeView2;
+        private System.Windows.Forms.HScrollBar hScrollBar1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

@@ -121,13 +121,15 @@
       <can_edit>true</can_edit>
     </item>
     <item>
-      <id>13</id>
+      <id>12</id>
       <group_id>2</group_id>
+      <name>/</name>
+      <type>/</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
     </item>
     <item>
-      <id>14</id>
+      <id>13</id>
       <group_id>3</group_id>
       <name>弹出框背景图</name>
       <type>image</type>
@@ -135,7 +137,7 @@
       <can_edit>true</can_edit>
     </item>
     <item>
-      <id>15</id>
+      <id>14</id>
       <group_id>3</group_id>
       <name>弹出框阴影图</name>
       <type>image</type>
@@ -143,24 +145,8 @@
       <can_edit>true</can_edit>
     </item>
     <item>
-      <id>16</id>
-      <group_id>3</group_id>
-      <name>图标</name>
-      <type>in_group</type>
-      <in_group>true</in_group>
-      <can_edit>true</can_edit>
-    </item>
-    <item>
-      <id>17</id>
-      <group_id>3</group_id>
-      <name>提示文本颜色</name>
-      <type>txt_color</type>
-      <in_group>true</in_group>
-      <can_edit>true</can_edit>
-    </item>
-    <item>
       <id>15</id>
-      <group_id>4</group_id>
+      <group_id>3</group_id>
       <name>图标</name>
       <type>image</type>
       <in_group>true</in_group>
@@ -168,7 +154,7 @@
     </item>
     <item>
       <id>16</id>
-      <group_id>4</group_id>
+      <group_id>3</group_id>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
@@ -176,6 +162,22 @@
     </item>
     <item>
       <id>17</id>
+      <group_id>4</group_id>
+      <name>图标</name>
+      <type>image</type>
+      <in_group>true</in_group>
+      <can_edit>true</can_edit>
+    </item>
+    <item>
+      <id>18</id>
+      <group_id>4</group_id>
+      <name>提示文本颜色</name>
+      <type>txt_color</type>
+      <in_group>true</in_group>
+      <can_edit>true</can_edit>
+    </item>
+    <item>
+      <id>19</id>
       <group_id>4</group_id>
       <name>背景图片</name>
       <type>image</type>
@@ -185,8 +187,8 @@
     <item>
       <id>18</id>
       <group_id>5</group_id>
-      <name>背景图片</name>
-      <type>image</type>
+      <name>/</name>
+      <type>/</type>
       <in_group>true</in_group>
       <can_edit>false</can_edit>
     </item>
@@ -194,7 +196,7 @@
       <id>19</id>
       <group_id>6</group_id>
       <name>/</name>
-      <type>image</type>
+      <type>/</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
     </item>

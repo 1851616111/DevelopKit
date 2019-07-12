@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Text;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -77,7 +78,9 @@ namespace DevelopKit
             splitter1.Visible = true;
             splitter2.Visible = true;
             openImageToolStripMenuItem.Enabled = true;
+            tabControl2.SelectedIndex = 1;
             InstallTreeView();
+            Form1_Car_Config.LoadScene(treeView2, GlobalProject.CarConfig);
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
@@ -120,7 +123,7 @@ namespace DevelopKit
                     return;
                 }
 
-                Form1_Util.OpenImageForm(openFileDialog.FileName,  tabControl1, Form_Request_Handler);
+                Form1_Util.OpenImageForm(openFileDialog.FileName, tabControl1, Form_Request_Handler);
             }
         }
 
@@ -164,10 +167,10 @@ namespace DevelopKit
 
         private void OpenFile(string filepath)
         {
-            
+
             if (FileUtil.IsFileImage(filepath))
             {
-                Form1_Util.OpenImageForm(filepath,tabControl1, Form_Request_Handler);
+                Form1_Util.OpenImageForm(filepath, tabControl1, Form_Request_Handler);
             }
             else
             {
@@ -621,6 +624,30 @@ namespace DevelopKit
 
                     GlobalProject.CloseFile(request.FilePath);
                 }
+            }
+        }
+
+        //双击流程场景后在FlowLayout进行动态填充以及隐藏
+        private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            Scene scene = GlobalProject.CarConfig.GetSceneById(Convert.ToInt32(e.Node.Name));
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+
+            panel2.Controls.Add(flowLayoutPanel);
+
+            bool setFlow = false;
+            foreach (Group group in scene.groups)
+            {
+                TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+                flowLayoutPanel.Controls.Add(tableLayoutPanel);
+                if (!setFlow)
+                {
+                    Form1_FlowPanel.LoadFlowPanelConfig(flowLayoutPanel);
+                    setFlow = true;
+                }
+
+                Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width);
+                Form1_FlowPanel.LoadGroupTablePanelData(group.Name, tableLayoutPanel, GlobalProject.CarConfig.GetPropertiesByGroupId(group.Id), 50);
             }
         }
     }

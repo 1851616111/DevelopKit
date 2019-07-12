@@ -69,6 +69,7 @@
     <Compile Include="ByteUtil.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="FileUtil.cs" />
+    <Compile Include="Form1_FlowPanel.cs" />
     <Compile Include="Form1_delegate.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="Form1_Image.cs">
@@ -77,6 +78,7 @@
     <Compile Include="Form1_Image.Designer.cs">
       <DependentUpon>Form1_Image.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form1_Car_Config.cs" />
     <Compile Include="Form1_Txt.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -115,7 +115,9 @@ namespace DevelopKit
 
         public CarConfig GetCarConfig()
         {
-            return (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), configFile);
+            CarConfig carCfg = (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), configFile);
+            carCfg.MakeMappingCache();
+            return carCfg;
         }
 
         public bool Validate()
@@ -129,11 +131,51 @@ namespace DevelopKit
     [XmlRoot("car_config")]
     public class CarConfig
     {
-        [XmlArray("scenes"), XmlArrayItem("item")]
-        public List<Scene> scenes;
+        private List<Scene> scenes;
+        private List<Property> properties;
 
+        private Dictionary<int, Scene> sceneMapping;
+        private Dictionary<int, List<Property>> groupIdToPropertyMapping;
+
+        [XmlArray("scenes"), XmlArrayItem("item")]
+        public List<Scene> Scenes { get => scenes; set { scenes = value; } }
         [XmlArray("properties"), XmlArrayItem("item")]
-        public List<Property> properties;
+        public List<Property> Properties { get => properties; set { properties = value; } }
+
+        public Scene GetSceneById(int id)
+        {
+            return sceneMapping[id];
+        }
+
+        public List<Property> GetPropertiesByGroupId(int gid)
+        {
+            return groupIdToPropertyMapping[gid];
+        }
+
+        public void MakeMappingCache()
+        {
+            if (sceneMapping == null)
+            {
+                sceneMapping = new Dictionary<int, Scene>();
+                foreach (Scene scene in scenes)
+                {
+                    sceneMapping[scene.Id] = scene;
+                }
+            }
+
+            if (groupIdToPropertyMapping == null)
+            {
+                groupIdToPropertyMapping = new Dictionary<int, List<Property>>();
+                foreach (Property property in properties)
+                {
+                    if (!groupIdToPropertyMapping.ContainsKey(property.GroupId))
+                    {
+                        groupIdToPropertyMapping.Add(property.GroupId, new List<Property>());
+                    }
+                    groupIdToPropertyMapping[property.GroupId].Add(property);
+                }
+            }
+        }
     }
 
     [Serializable]
@@ -160,6 +202,14 @@ namespace DevelopKit
         public bool CanEdit { get => canEdit; set => canEdit = value; }
     }
 
+    public static class PropertyType
+    {
+        public const string Nil = "/";
+        public const string Image = "image";
+        public const string TxtColor = "txt_color";
+        public const string ImageAlpha = "alpha";
+    }
+
     [Serializable]
     public class Scene
     {
@@ -182,7 +232,7 @@ namespace DevelopKit
         private string name;
 
         [XmlElement("id")]
-        public int Id{get => id; set => id = value;}
+        public int Id { get => id; set => id = value; }
         [XmlElement("name")]
         public string Name { get => name; set => name = value; }
     }
