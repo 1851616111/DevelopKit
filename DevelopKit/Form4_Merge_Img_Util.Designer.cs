@@ -213,7 +213,6 @@
             this.Name = "Form4_Merge_Img_Util";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "图片叠加";
-            this.Load += new System.EventHandler(this.Form4_Merge_Img_Util_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.groupBox1.ResumeLayout(false);

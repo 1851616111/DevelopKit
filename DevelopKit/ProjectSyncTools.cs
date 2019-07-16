@@ -11,11 +11,10 @@ namespace DevelopKit
     {
         public static void Sync(Object form1Obj)
         {
-            Form1 form1 = (Form1)form1Obj;
         ParameterizedThreadStart:
 
         restart:
-            Project project = form1.GetGlobalProject();
+            Project project = GlobalConfig.Project;
             if (project == null)
             {
                 Thread.Sleep(1000 * 5);

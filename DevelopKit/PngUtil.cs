@@ -62,47 +62,11 @@ namespace DevelopKit
             }
         }
 
-        public struct FavoriteImageObj
+        public struct MergeImageParams
         {
-            private Image _imageObj;
-            private int _x;
-            private int _y;
-
-            public int x
-            {
-                get
-                {
-                    return _x;
-                }
-                set
-                {
-                    _x = value;
-                }
-            }
-
-            public int y
-            {
-                get
-                {
-                    return _y;
-                }
-                set
-                {
-                    _y = value;
-                }
-            }
-
-            public Image image
-            {
-                get
-                {
-                    return _imageObj;
-                }
-                set
-                {
-                    _imageObj = value;
-                }
-            }
+            public Image Image;
+            public int X;
+            public int Y;
         }
 
 
@@ -210,7 +174,7 @@ namespace DevelopKit
         /// <param name="y">要叠加的图片位置的Y坐标</param>
         /// <param name="isSave"></param>
         /// <returns>生成图片的路径</returns>        
-        public static Image MergeImages2(Image imgPhoto, params FavoriteImageObj[] favorite)
+        public static Image MergeImages2(Image imgPhoto, params MergeImageParams[] images)
         {
             //create a image object containing the photograph to watermark
             int phWidth = imgPhoto.Width;
@@ -227,7 +191,7 @@ namespace DevelopKit
             //Set the rendering quality for this Graphics object
             grPhoto.SmoothingMode = SmoothingMode.AntiAlias;//清除锯齿的呈现
             //haix
-            for (int i = 0; i < favorite.Length; i++)
+            for (int i = 0; i < images.Length; i++)
             {
                 //Draws the photo Image object at original size to the graphics object.
                 grPhoto.DrawImage(
@@ -244,7 +208,7 @@ namespace DevelopKit
                 //Step #2 - Insert Property image,For example:hair,skirt,shoes etc.
                 //------------------------------------------------------------
                 //create a image object containing the watermark
-                Image imgWatermark = new Bitmap(favorite[i].image);
+                Image imgWatermark = new Bitmap(images[i].Image);
                 int wmWidth = imgWatermark.Width;
                 int wmHeight = imgWatermark.Height;
 
@@ -258,8 +222,8 @@ namespace DevelopKit
                 Graphics grWatermark = Graphics.FromImage(bmWatermark);
 
 
-                int xPosOfWm = favorite[i].x;
-                int yPosOfWm = favorite[i].y;
+                int xPosOfWm = images[i].X;
+                int yPosOfWm = images[i].Y;
 
                 //叠加
                 grWatermark.DrawImage(imgWatermark, new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight),  //Set the detination Position
@@ -274,10 +238,10 @@ namespace DevelopKit
                 //Replace the original photgraphs bitmap with the new Bitmap
                 imgPhoto = bmWatermark;
 
-                //grWatermark.Dispose();
-                //imgWatermark.Dispose();
-                //grPhoto.Dispose();                
-                //bmWatermark.Dispose();
+                grWatermark.Dispose();
+                imgWatermark.Dispose();
+                grPhoto.Dispose();                
+                bmWatermark.Dispose();
             }
 
             return imgPhoto;

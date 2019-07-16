@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections;
 
 namespace DevelopKit
 {
@@ -23,20 +24,19 @@ namespace DevelopKit
             flowPanel.BackColor = Color.White;
         }
 
-        public static void LoadGroupTablePanelConfig(TableLayoutPanel tablePanel, int flowWidth)
+        public static void LoadGroupTablePanelConfig(TableLayoutPanel tablePanel, int flowWidth, Group group)
         {
             tablePanel.Anchor = ((AnchorStyles)(((AnchorStyles.Top | AnchorStyles.Left) | AnchorStyles.Right)));
             tablePanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tablePanel.ColumnCount = 1;
             tablePanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tablePanel.Location = new Point(0, 0);
-            tablePanel.Name = "tableLayoutPanel1";
+            tablePanel.Name = group.GetTablePanelId();
             tablePanel.Size = new Size(flowWidth - 23, 0); //由于外层FlowLayoutPanel有垂直滚动条， 会占用一定宽度，这里减去后不会出先横向滚动条
             tablePanel.TabIndex = 0;
-            tablePanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
         }
 
-        public static void LoadGroupTablePanelData(string groupName, TableLayoutPanel tabPanel, List<Property> properties, int propertyHeight)
+        public static void LoadGroupTablePanelData(string groupName, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
         {
             Button titleBtn = new Button
             {
@@ -49,43 +49,86 @@ namespace DevelopKit
             };
             titleBtn.Click += new EventHandler(delegate (object _, EventArgs b)
             {
-                if (tabPanel.RowStyles.Count == 1) //展开
+                if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
-                    LoadGroups(tabPanel, properties, propertyHeight);
+                    LoadGroups(tabPanel, properties, rowHeight);
                 }
-                else  //收缩合并
+                else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
-                    UnloadGroups(tabPanel, properties, propertyHeight);
+                    ShowTablePanelContent(tabPanel, rowHeight);
+                }
+                else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
+                {
+                    HideTablePanelContent(tabPanel, rowHeight);
+                }
+                else
+                {
+                    Log.Error("Form1_FlowPanel", "table panel button click unknow status", "");
                 }
             });
 
             int titleHeight = 30;
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, titleHeight));
+            tabPanel.RowCount++;
             tabPanel.Height += titleHeight;
             tabPanel.Controls.Add(titleBtn, 0, 0);
         }
 
-        private static void LoadGroups(TableLayoutPanel tabPanel, List<Property> properties, int propertyHeight)
+        private static void LoadGroups(TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
         {
-            tabPanel.Height += propertyHeight * properties.Count;
+            if (tabPanel.Tag == null)
+            {
+                tabPanel.Tag = new Hashtable
+                {
+                    {"hide", false }
+                }; 
+            }
+
+            tabPanel.Height += rowHeight * properties.Count;
             tabPanel.RowCount += properties.Count;
 
             int rowIndex = 1;
             foreach (Property property in properties)
             {
-                LoadProperty(tabPanel, rowIndex, property, propertyHeight);
+                LoadProperty(tabPanel, rowIndex, property, rowHeight);
                 rowIndex++;
+            }
+        }
+
+        private static void HideTablePanelContent(TableLayoutPanel tabPanel, int rowHeight)
+        {
+            ((Hashtable)tabPanel.Tag)["hide"] = true;
+            tabPanel.Height -= (tabPanel.RowStyles.Count - 1) * rowHeight;
+
+            for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
+            {
+                tabPanel.RowStyles[rowIndex].Height = 0;
+            }
+        }
+
+        private static void ShowTablePanelContent(TableLayoutPanel tabPanel, int rowHeight)
+        {
+            ((Hashtable)tabPanel.Tag)["hide"] = false;
+            tabPanel.Height += (tabPanel.RowStyles.Count - 1) * rowHeight;
+
+            for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
+            {
+                tabPanel.RowStyles[rowIndex].Height = rowHeight;
             }
         }
 
         private static void UnloadGroups(TableLayoutPanel tabPanel, List<Property> properties, int propertyHeight)
         {
+            if (tabPanel.RowCount == 1)
+            {
+                return;
+            }
             tabPanel.Height -= propertyHeight * properties.Count;
+            tabPanel.RowCount -= properties.Count;
             for (int i = 1; i <= properties.Count; i++)
             {
                 tabPanel.Controls.RemoveAt(1);
                 tabPanel.RowStyles.RemoveAt(1);
-                tabPanel.RowCount -= 1;
             }
         }
 
@@ -93,13 +136,56 @@ namespace DevelopKit
         private static void LoadProperty(TableLayoutPanel tabPanel, int index, Property property, int propertyHeight)
         {
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
-            
+
             switch (property.Type)
             {
                 case PropertyType.Image:
-                    Button btn = new Button();
-                    btn.Text = "image";
-                    tabPanel.Controls.Add(btn, 0, index);
+                    if (property.Value.Length > 0)
+                    {
+                        Panel panel = new Panel
+                        {
+                            Dock = DockStyle.Fill,
+                        };
+
+                        PictureBox pictureBox = new PictureBox
+                        {
+                            Name = property.GetPictureBoxId(),
+                            Size = new Size(50, 30),
+                            Image = Image.FromFile(@"D:\myprojects\DevelopKit\DevelopKit\Resources\project\ICU\KL30\background.png"),
+                            SizeMode = PictureBoxSizeMode.Zoom,
+                            BorderStyle = BorderStyle.FixedSingle,
+                            Location = new Point(10, 5),
+                        };
+                        Button button = new Button
+                        {
+                            Text = "更换",
+                            Location = new Point(80, 5),
+                        };
+                        panel.Controls.Add(pictureBox);
+                        panel.Controls.Add(button);
+
+                        button.Click += new EventHandler(delegate (object _, EventArgs b)
+                        {
+                            try
+                            {
+                                OpenFileDialog openFileDialog = new OpenFileDialog
+                                {
+                                    Filter = "Png|*.png|Jpg|*.jpg"
+                                };
+                                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                                {
+                                    pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                                    GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
+                                }
+
+                                MainImageUtil.CraeteDrawingBoard(tabPanel, property);
+                            }
+                            catch (Exception)
+                            { }
+                        });
+                        tabPanel.Controls.Add(panel, 0, index);
+                    }
+
                     break;
                 case PropertyType.TxtColor:
                     Button btn2 = new Button();
@@ -118,7 +204,6 @@ namespace DevelopKit
                     tabPanel.Controls.Add(btn4, 0, index);
                     break;
                 default:
-                    Console.WriteLine("----------------" + property.Type);
                     break;
             }
         }

@@ -159,18 +159,18 @@ namespace DevelopKit
 
             try
             {
-                PngUtil.FavoriteImageObj img = new PngUtil.FavoriteImageObj
+                PngUtil.MergeImageParams img = new PngUtil.MergeImageParams
                 {
-                    image = pictureBox2.Image,
-                    x = Convert.ToInt32(textBox1.Text),
-                    y = Convert.ToInt32(textBox2.Text)
+                    Image = pictureBox2.Image,
+                    X = Convert.ToInt32(textBox1.Text),
+                    Y = Convert.ToInt32(textBox2.Text)
                 };
 
-                if (img.x < 0 || img.x > baseImageWidth)
+                if (img.X < 0 || img.X > baseImageWidth)
                 {
                     MessageBox.Show("请输入合理的X坐标", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                if (img.y < 0 || img.y > baseImageHeight)
+                if (img.Y < 0 || img.Y > baseImageHeight)
                 {
                     MessageBox.Show("请输入合理的Y坐标", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -214,9 +214,5 @@ namespace DevelopKit
             }
         }
 
-        private void Form4_Merge_Img_Util_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

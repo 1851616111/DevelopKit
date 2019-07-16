@@ -9,6 +9,7 @@ using System.Threading;
 
 namespace DevelopKit
 {
+
     public partial class Form1 : Form
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
@@ -25,10 +26,9 @@ namespace DevelopKit
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
-
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             HideOpenedProject();
-            GlobalProject = null;
+            GlobalConfig.Project = null;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -38,22 +38,16 @@ namespace DevelopKit
             this.menuStrip1.Items[0].MouseHover += new EventHandler(ToolStripMenuItem1_MouseOver);
         }
 
-        private Project GlobalProject;
-
         public void SetGlobalProject(Project project)
         {
             if (project.Status == 0)
             {
                 project.Status = ProjectStatus.StartOpenProject;
             }
-            this.GlobalProject = project;
+            GlobalConfig.Project = project;
+            GlobalConfig.MainPictureBox = pictureBox1;
 
-            ProjectStatusHandler(this.GlobalProject);
-        }
-
-        public Project GetGlobalProject()
-        {
-            return GlobalProject;
+            ProjectStatusHandler(GlobalConfig.Project);
         }
 
         private void ProjectStatusHandler(Project project)
@@ -80,7 +74,7 @@ namespace DevelopKit
             openImageToolStripMenuItem.Enabled = true;
             tabControl2.SelectedIndex = 1;
             InstallTreeView();
-            Form1_Car_Config.LoadScene(treeView2, GlobalProject.CarConfig);
+            Form1_Car_Config.LoadScene(treeView2, GlobalConfig.Project.CarConfig);
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
@@ -96,7 +90,7 @@ namespace DevelopKit
             splitter2.Visible = false;
             openImageToolStripMenuItem.Enabled = false;
 
-            GlobalProject = null;
+            GlobalConfig.Project = null;
         }
 
         //创建项目
@@ -115,7 +109,7 @@ namespace DevelopKit
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                bool ok = GlobalProject.NewOpenFile(openFileDialog.FileName, out string error);
+                bool ok = GlobalConfig.Project.NewOpenFile(openFileDialog.FileName, out string error);
                 if (!ok)
                 {
                     MessageBox.Show(Errors.ProjectFileAlreadyExist, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -174,7 +168,7 @@ namespace DevelopKit
             }
             else
             {
-                Form1_Util.OpenTxtForm(GlobalProject.GetUserSpaceDir(), filepath, tabControl1, Form_Request_Handler);
+                Form1_Util.OpenTxtForm(GlobalConfig.Project.GetUserSpaceDir(), filepath, tabControl1, Form_Request_Handler);
             }
         }
 
@@ -232,7 +226,7 @@ namespace DevelopKit
                         Filter = "PNG|*.png|所有文件|*.*",
                         FilterIndex = 1,
                         RestoreDirectory = true,
-                        InitialDirectory = GlobalProject.GetUserSpaceDir()
+                        InitialDirectory = GlobalConfig.Project.GetUserSpaceDir()
 
                     };
                     if (fileDialog.ShowDialog() == DialogResult.OK)
@@ -332,7 +326,7 @@ namespace DevelopKit
 
             if (tabControl2.SelectedIndex == 0)
             {
-                TreeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+                TreeView1_LoadCurrentProject(GlobalConfig.Project.GetUserSpaceDir());
             }
             else
             {
@@ -343,7 +337,7 @@ namespace DevelopKit
         {
             tabControl1.SelectedIndex = 0;
 
-            TreeView1_LoadCurrentProject(GlobalProject.GetUserSpaceDir());
+            TreeView1_LoadCurrentProject(GlobalConfig.Project.GetUserSpaceDir());
         }
 
 
@@ -351,7 +345,7 @@ namespace DevelopKit
         {
             Directory.SetCurrentDirectory(projectdir);
 
-            string projectDir = GlobalProject.GetUserSpaceDir();
+            string projectDir = GlobalConfig.Project.GetUserSpaceDir();
             string[] dirs = Directory.GetDirectories(projectdir);
 
             treeView1.Nodes.Clear();
@@ -391,7 +385,7 @@ namespace DevelopKit
         {
             if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
             {
-                if (!GlobalProject.NewOpenFile(e.Node.Name, out string error))
+                if (!GlobalConfig.Project.NewOpenFile(e.Node.Name, out string error))
                 {
                     MessageBox.Show("打开文件失败: " + error, "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     Log.Error("Form1.treeView1_NodeMouseDoubleClick()", "GlobalProject.NewOpenImag() " + e.Node.Name, error);
@@ -499,7 +493,7 @@ namespace DevelopKit
 
                 SetGlobalProject((Project)projectProject);
 
-                foreach (ProjectFile pf in GlobalProject.filesEditer.projectFileList)
+                foreach (ProjectFile pf in GlobalConfig.Project.filesEditer.projectFileList)
                 {
                     OpenFile(pf.filePath);
                 }
@@ -530,7 +524,7 @@ namespace DevelopKit
             }
 
             HideOpenedProject();
-            GlobalProject = null;
+            GlobalConfig.Project = null;
         }
 
 
@@ -622,7 +616,7 @@ namespace DevelopKit
                     tabControl1.TabPages.Remove(tabpage);
                     tabpage.Dispose();
 
-                    GlobalProject.CloseFile(request.FilePath);
+                    GlobalConfig.Project.CloseFile(request.FilePath);
                 }
             }
         }
@@ -630,11 +624,21 @@ namespace DevelopKit
         //双击流程场景后在FlowLayout进行动态填充以及隐藏
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            Scene scene = GlobalProject.CarConfig.GetSceneById(Convert.ToInt32(e.Node.Name));
+            int sceneId = Convert.ToInt32(e.Node.Name);
+            //加载右侧菜单页
+            LoadFlowPanel(sceneId);
+
+            //按照layer绘制中央区域
+            LoadCenterImage(sceneId);
+        }
+
+        private void LoadFlowPanel(int sceneId)
+        {
+            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
 
             panel2.Controls.Add(flowLayoutPanel);
-
+            
             bool setFlow = false;
             foreach (Group group in scene.groups)
             {
@@ -646,10 +650,25 @@ namespace DevelopKit
                     setFlow = true;
                 }
 
-                Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width);
-                Form1_FlowPanel.LoadGroupTablePanelData(group.Name, tableLayoutPanel, GlobalProject.CarConfig.GetPropertiesByGroupId(group.Id), 50);
+                Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
+                Form1_FlowPanel.LoadGroupTablePanelData(group.Name, tableLayoutPanel, GlobalConfig.Project.CarConfig.GetPropertiesByGroupId(group.Id), 50);
             }
         }
+
+        private void LoadCenterImage(int sceneId)
+        {
+            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
+
+        }
+    }
+
+    public static class GlobalConfig
+    {
+        private static Project project;
+        private static PictureBox mainPicture;  
+
+        public static Project Project { get => project; set => project = value; }
+        public static PictureBox MainPictureBox { get => mainPicture; set => mainPicture = value; }
     }
 }
 

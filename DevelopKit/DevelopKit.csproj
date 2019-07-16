@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ByteUtil.cs" />
+    <Compile Include="MainImageUtil.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
@@ -254,6 +255,10 @@
     <Content Include="Resources\conf\app.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\project\ICU\KL30\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

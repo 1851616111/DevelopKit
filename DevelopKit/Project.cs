@@ -53,6 +53,14 @@ namespace DevelopKit
             filesEditer = new RecordFile();
         }
 
+        public void SetPropertyValueById(int id, string value)
+        {
+            if (CarConfig.PropertyIdMapping.ContainsKey(id))
+            {
+                CarConfig.PropertyIdMapping[id].Value = value;
+            }
+        }
+
         public void SetStatusOpen()
         {
             Status = ProjectStatus.StartOpenProject;
