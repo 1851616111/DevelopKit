@@ -36,14 +36,14 @@ namespace DevelopKit
             tablePanel.TabIndex = 0;
         }
 
-        public static void LoadGroupTablePanelData(string groupName, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
+        public static void LoadGroupTablePanelData(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
         {
             Button titleBtn = new Button
             {
                 Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
                 Dock = DockStyle.Fill,
                 Width = tabPanel.Width,
-                Text = groupName,
+                Text = group.Name,
                 Margin = new Padding(0, 0, 0, 0),
                 Padding = new Padding(0, 0, 0, 0)
             };
@@ -56,10 +56,27 @@ namespace DevelopKit
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
                     ShowTablePanelContent(tabPanel, rowHeight);
+
+                    //获取相同优先级的group
+                    List<Group> groups = GlobalConfig.Project.CarConfig.ListGroupByLayerId(group.Sceneid, group.LayerIndex);
+                    foreach (Group brotherGroup in groups)
+                    {
+                        if (brotherGroup.Id == group.Id)
+                            continue;
+
+                        Control[] tabControls = ((FlowLayoutPanel)tabPanel.Parent).Controls.Find(brotherGroup.GetTablePanelId(), true);
+                        if (tabControls.Length == 0)
+                        {
+                            Log.Error("Form1_FlowPanel", "获取优先级一致的兄弟组失败", "");
+                            continue;
+                        }
+
+                        HideTablePanelContent((TableLayoutPanel)tabControls[0]);
+                    }
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
-                    HideTablePanelContent(tabPanel, rowHeight);
+                    HideTablePanelContent(tabPanel);
                 }
                 else
                 {
@@ -81,7 +98,7 @@ namespace DevelopKit
                 tabPanel.Tag = new Hashtable
                 {
                     {"hide", false }
-                }; 
+                };
             }
 
             tabPanel.Height += rowHeight * properties.Count;
@@ -95,14 +112,25 @@ namespace DevelopKit
             }
         }
 
-        private static void HideTablePanelContent(TableLayoutPanel tabPanel, int rowHeight)
+        private static void HideTablePanelContent(TableLayoutPanel tabPanel)
         {
+            if (tabPanel.Tag == null || (bool)((Hashtable)tabPanel.Tag)["hide"] == true) //tabPanel 未初始化 
+                return;
+
             ((Hashtable)tabPanel.Tag)["hide"] = true;
-            tabPanel.Height -= (tabPanel.RowStyles.Count - 1) * rowHeight;
+            tabPanel.Height -= (int)((tabPanel.RowStyles.Count - 1) * (tabPanel.RowStyles[1].Height));
 
             for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
             {
                 tabPanel.RowStyles[rowIndex].Height = 0;
+            }
+        }
+
+        private static void HideTablePanels(params TableLayoutPanel[] tabPanels)
+        {
+            foreach (TableLayoutPanel panel in tabPanels)
+            {
+                HideTablePanelContent(panel);
             }
         }
 
@@ -178,7 +206,7 @@ namespace DevelopKit
                                     GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
                                 }
 
-                                MainImageUtil.CraeteDrawingBoard(tabPanel, property);
+                                CenterBoard.CraeteDrawingBoard(tabPanel, property);
                             }
                             catch (Exception)
                             { }

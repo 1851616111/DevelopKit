@@ -66,9 +66,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollectionUtil.cs" />
     <Compile Include="ByteUtil.cs" />
-    <Compile Include="MainImageUtil.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="CenterBoard.cs" />
+    <Compile Include="CarConfig.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
     <Compile Include="Form1_delegate.cs" />

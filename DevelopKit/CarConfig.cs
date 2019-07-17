@@ -134,38 +134,43 @@ namespace DevelopKit
     public class CarConfig
     {
         private List<Scene> scenes;
+        private Dictionary<int, Scene> sceneMapping;
+
         private List<Property> properties;
         private Dictionary<int, Group> groupMapping;
 
-        //sceneid : group_index : group 由于同一优先级的group会存在多个， 这里只存默认显示的一个
-        private SortedDictionary<int, SortedDictionary<int, Group>> defaultOrderedGroups;
+        private Dictionary<int, List<Group>> sceneIdToGroupsMapping;
 
-        private Dictionary<int, Property> propertyIdMapping;
+        //sceneid: group_layer_idx: group
+        private SortedDictionary<int, SortedDictionary<int, List<Group>>> groupLayerIndexMapping;
 
-        private Dictionary<int, Scene> sceneMapping;
+        private Dictionary<int, Property> propertyMapping;
         private Dictionary<int, List<Property>> groupIdToPropertyMapping;
 
         [XmlArray("scenes"), XmlArrayItem("item")]
         public List<Scene> Scenes { get => scenes; set { scenes = value; } }
         [XmlArray("properties"), XmlArrayItem("item")]
         public List<Property> Properties { get => properties; set { properties = value; } }
+
         [XmlIgnore]
-        public Dictionary<int, Property> PropertyIdMapping { get => propertyIdMapping; set => propertyIdMapping = value; }
+        public Dictionary<int, Property> PropertyIdMapping { get => propertyMapping; }
         [XmlIgnore]
-        SortedDictionary<int, SortedDictionary<int, Group>> DefaultOrderedGroups { get => defaultOrderedGroups; set => defaultOrderedGroups = value; }
+        public Dictionary<int, Group> GroupMapping { get => groupMapping; }
         [XmlIgnore]
-        public Dictionary<int, Group> GroupMapping  { get => groupMapping; set => groupMapping = value; }
+        public Dictionary<int, List<Property>> GroupIdToPropertyMapping { get => groupIdToPropertyMapping; }
         [XmlIgnore]
-        public Dictionary<int, List<Property>> GroupIdToPropertyMapping { get => groupIdToPropertyMapping; set => groupIdToPropertyMapping = value; }
+        public Dictionary<int, List<Group>> SceneIdToGroupsMapping { get => sceneIdToGroupsMapping; }
 
         public Scene GetSceneById(int id)
         {
             return sceneMapping[id];
         }
 
-        public List<Property> GetPropertiesByGroupId(int gid)
+        //sid scene id
+        //glid group layer id
+        public List<Group> ListGroupByLayerId(int sid, int glid)
         {
-            return GroupIdToPropertyMapping[gid];
+            return groupLayerIndexMapping[sid][glid];
         }
 
         // 按照组的优先级列出组内所有
@@ -173,87 +178,108 @@ namespace DevelopKit
         public List<Group> ListGroupsByIDAndIndex(int sid, int gid, int groupIndex)
         {
             List<Group> groups = new List<Group>();
-            if (groupIndex > 0)
-            {
-                for (int index = 0; index < groupIndex; index++)
-                {
-                    groups.Add(defaultOrderedGroups[sid][groupIndex]);
-                }
-                groups.Add(groupMapping[gid]);
-            }
-            else {
-                groups.Add(groupMapping[gid]);
-            }
+            //if (groupIndex > 0)
+            //{
+            //    for (int index = 0; index < groupIndex; index++)
+            //    {
+            //        groups.Add(groupLayerIndexMapping[sid][groupIndex]);
+            //    }
+            //    groups.Add(groupMapping[gid]);
+            //}
+            //else {
+            //    groups.Add(groupMapping[gid]);
+            //}
 
-            foreach (Group group in groups)
-            {
-                Console.WriteLine("--------group------>" + group.Id);
-            }
             return groups;
         }
 
         public void MakeMappingCache()
         {
-            if (propertyIdMapping == null)
-            {
-                propertyIdMapping = new Dictionary<int, Property>();
-                foreach (Property property in properties)
-                {
-                    propertyIdMapping[property.Id] = property;
-                }
-            }
-
             if (sceneMapping == null)
             {
                 sceneMapping = new Dictionary<int, Scene>();
-                foreach (Scene scene in scenes)
-                {
-                    sceneMapping[scene.Id] = scene;
-                }
+            }
+            if (groupMapping == null)
+            {
+                groupMapping = new Dictionary<int, Group>();
+            }
+            if (propertyMapping == null)
+            {
+                propertyMapping = new Dictionary<int, Property>();
+            }
+            if (groupLayerIndexMapping == null)
+            {
+                groupLayerIndexMapping = new SortedDictionary<int, SortedDictionary<int, List<Group>>>();
+            }
+            if (groupIdToPropertyMapping == null)
+            {
+                groupIdToPropertyMapping = new Dictionary<int, List<Property>>();
+            }
+            if (sceneIdToGroupsMapping == null)
+            {
+                sceneIdToGroupsMapping = new Dictionary<int, List<Group>>();
             }
 
-            if (GroupIdToPropertyMapping == null)
+
+            foreach (Scene scene in scenes)
             {
-                if (defaultOrderedGroups == null) {
-                    defaultOrderedGroups = new SortedDictionary<int, SortedDictionary<int, Group>>();
-                }
-                if (groupMapping == null)
+                sceneMapping[scene.Id] = scene;
+            }
+
+            foreach (Property property in properties)
+            {
+                propertyMapping[property.Id] = property;
+
+                if (!sceneIdToGroupsMapping.ContainsKey(property.SceneId))
                 {
-                    groupMapping = new Dictionary<int, Group>();
+                    sceneIdToGroupsMapping[property.SceneId] = new List<Group>();
+                }
+                if (!CollectionUtil.Contains(sceneIdToGroupsMapping[property.SceneId], property.GroupId))
+                {
+                    sceneIdToGroupsMapping[property.SceneId].Add(new Group
+                    {
+                        Id = property.GroupId,
+                        Name = property.GroupName,
+                        LayerIndex = property.GroupLayerIdx,
+                        Sceneid = property.SceneId
+                    });
                 }
 
-                GroupIdToPropertyMapping = new Dictionary<int, List<Property>>();
-                foreach (Property property in properties)
+                if (!groupMapping.ContainsKey(property.GroupId))
                 {
-                    if (!groupMapping.ContainsKey(property.GroupId))
+                    groupMapping.Add(property.GroupId, new Group
                     {
-                        groupMapping.Add(property.GroupId, new Group {
-                            Id = property.GroupId,
-                            Name = property.GroupName
-                        });
-                    }
+                        Id = property.GroupId,
+                        Name = property.GroupName,
+                        LayerIndex = property.GroupLayerIdx,
+                        Sceneid = property.SceneId
+                    });
+                }
 
-                    if (!defaultOrderedGroups.ContainsKey(property.SceneId))
-                    {
-                        defaultOrderedGroups.Add(property.SceneId, new SortedDictionary<int, Group>());
-                    }
+                if (!groupIdToPropertyMapping.ContainsKey(property.GroupId))
+                {
+                    groupIdToPropertyMapping.Add(property.GroupId, new List<Property>());
+                }
+                groupIdToPropertyMapping[property.GroupId].Add(property);
 
-                    if (!defaultOrderedGroups[property.SceneId].ContainsKey(property.GroupLayerIdx))
-                    {
-                        Console.WriteLine("----->" + property.GroupLayerIdx);
-                            
-                        defaultOrderedGroups[property.SceneId].Add(property.GroupLayerIdx, new Group
-                        {
-                            Id = property.GroupId,
-                            Name = property.GroupName
-                        });
-                    }
 
-                    if (!GroupIdToPropertyMapping.ContainsKey(property.GroupId))
+                if (!groupLayerIndexMapping.ContainsKey(property.SceneId))
+                {
+                    groupLayerIndexMapping[property.SceneId] = new SortedDictionary<int, List<Group>>();
+                }
+                if (!groupLayerIndexMapping[property.SceneId].ContainsKey(property.GroupLayerIdx))
+                {
+                    groupLayerIndexMapping[property.SceneId][property.GroupLayerIdx] = new List<Group>();
+                }
+                if (!CollectionUtil.Contains(groupLayerIndexMapping[property.SceneId][property.GroupLayerIdx], property.GroupId))
+                {
+                    groupLayerIndexMapping[property.SceneId][property.GroupLayerIdx].Add(new Group
                     {
-                        GroupIdToPropertyMapping.Add(property.GroupId, new List<Property>());
-                    }
-                    GroupIdToPropertyMapping[property.GroupId].Add(property);
+                        Id = property.GroupId,
+                        Name = property.GroupName,
+                        LayerIndex = property.GroupLayerIdx,
+                        Sceneid = property.SceneId
+                    });
                 }
             }
         }
@@ -311,7 +337,8 @@ namespace DevelopKit
             {
                 return null;
             }
-            else {
+            else
+            {
                 return new Location
                 {
                     X = Convert.ToInt32(ss[0]),
@@ -392,9 +419,6 @@ namespace DevelopKit
         private int id;
         private string name;
 
-        [XmlArray("groups"), XmlArrayItem("item")]
-        public List<Group> groups;
-
         [XmlElement("id")]
         public int Id { get => id; set => id = value; }
         [XmlElement("name")]
@@ -406,11 +430,17 @@ namespace DevelopKit
     {
         private int id;
         private string name;
+        private int layerIndex;
+        private int sceneid;
 
         [XmlElement("id")]
         public int Id { get => id; set => id = value; }
         [XmlElement("name")]
         public string Name { get => name; set => name = value; }
+        [XmlElement("layer_idx")]
+        public int LayerIndex { get => layerIndex; set => layerIndex = value; }
+        [XmlElement("scene_id")]
+        public int Sceneid { get => sceneid; set => sceneid = value; }
 
         public string GetTablePanelId()
         {

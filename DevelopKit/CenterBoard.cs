@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public static class MainImageUtil
+    public static class CenterBoard
     {
         public static void CraeteDrawingBoard(TableLayoutPanel panel, Property property)
         {
@@ -27,7 +27,6 @@ namespace DevelopKit
                 TableLayoutPanel tableLayout = (TableLayoutPanel)brotherTablePanel[0];
 
                 List<Property> groupProperties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
-                Console.WriteLine("-------------->" + group.Id + "-------->" + groupProperties.Count);
 
                 foreach (Property groupProperty in groupProperties)
                 {
@@ -48,7 +47,6 @@ namespace DevelopKit
                 }
             }
 
-            Console.WriteLine("-------------->" + mergeParams.Count + "-----" + mergeParams.Skip(1).ToArray());
             if (mergeParams.Count >= 2)
             {
                 GlobalConfig.MainPictureBox.Image = PngUtil.MergeImages2(mergeParams[0].Image, mergeParams[1]); 

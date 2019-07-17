@@ -640,7 +640,7 @@ namespace DevelopKit
             panel2.Controls.Add(flowLayoutPanel);
             
             bool setFlow = false;
-            foreach (Group group in scene.groups)
+            foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
             {
                 TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
                 flowLayoutPanel.Controls.Add(tableLayoutPanel);
@@ -651,7 +651,7 @@ namespace DevelopKit
                 }
 
                 Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
-                Form1_FlowPanel.LoadGroupTablePanelData(group.Name, tableLayoutPanel, GlobalConfig.Project.CarConfig.GetPropertiesByGroupId(group.Id), 50);
+                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], 50);
             }
         }
 
