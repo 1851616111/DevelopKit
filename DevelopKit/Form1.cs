@@ -29,6 +29,11 @@ namespace DevelopKit
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             HideOpenedProject();
             GlobalConfig.Project = null;
+
+            CenterBoardController.updateImageHandler = delegate (Image image)
+            {
+                pictureBox1.Image = image;
+            };
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -638,7 +643,7 @@ namespace DevelopKit
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
 
             panel2.Controls.Add(flowLayoutPanel);
-            
+
             bool setFlow = false;
             foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
             {
@@ -660,12 +665,17 @@ namespace DevelopKit
             Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
 
         }
+
+        private void ContextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+
+        }
     }
 
     public static class GlobalConfig
     {
         private static Project project;
-        private static PictureBox mainPicture;  
+        private static PictureBox mainPicture;
 
         public static Project Project { get => project; set => project = value; }
         public static PictureBox MainPictureBox { get => mainPicture; set => mainPicture = value; }

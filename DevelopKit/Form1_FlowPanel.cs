@@ -38,6 +38,7 @@ namespace DevelopKit
 
         public static void LoadGroupTablePanelData(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
         {
+
             Button titleBtn = new Button
             {
                 Font = new Font("微软雅黑", 12F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
@@ -52,31 +53,18 @@ namespace DevelopKit
                 if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
                     LoadGroups(tabPanel, properties, rowHeight);
+                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group.Sceneid, group.Id, group.LayerIndex);
                 }
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
-                    ShowTablePanelContent(tabPanel, rowHeight);
-
-                    //获取相同优先级的group
-                    List<Group> groups = GlobalConfig.Project.CarConfig.ListGroupByLayerId(group.Sceneid, group.LayerIndex);
-                    foreach (Group brotherGroup in groups)
-                    {
-                        if (brotherGroup.Id == group.Id)
-                            continue;
-
-                        Control[] tabControls = ((FlowLayoutPanel)tabPanel.Parent).Controls.Find(brotherGroup.GetTablePanelId(), true);
-                        if (tabControls.Length == 0)
-                        {
-                            Log.Error("Form1_FlowPanel", "获取优先级一致的兄弟组失败", "");
-                            continue;
-                        }
-
-                        HideTablePanelContent((TableLayoutPanel)tabControls[0]);
-                    }
+                    ShowGroupTablePanel(tabPanel, rowHeight);
+                    HideGroupBrotherTablePanel(tabPanel, group);
+                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group.Sceneid, group.Id, group.LayerIndex);
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
-                    HideTablePanelContent(tabPanel);
+                    HideGroupTablePanel(tabPanel);
+                    CenterBoardController.DrawSceneView(group.Sceneid, group.LayerIndex, null);
                 }
                 else
                 {
@@ -112,9 +100,29 @@ namespace DevelopKit
             }
         }
 
-        private static void HideTablePanelContent(TableLayoutPanel tabPanel)
+        private static void HideGroupBrotherTablePanel(TableLayoutPanel tabPanel, Group group)
         {
-            if (tabPanel.Tag == null || (bool)((Hashtable)tabPanel.Tag)["hide"] == true) //tabPanel 未初始化 
+            //获取相同优先级的group
+            List<Group> brotherGroups = GlobalConfig.Project.CarConfig.ListGroupByLayerId(group.Sceneid, group.LayerIndex);
+            foreach (Group brotherGroup in brotherGroups)
+            {
+                if (brotherGroup.Id == group.Id)
+                    continue;
+
+                Control[] tabControls = ((FlowLayoutPanel)tabPanel.Parent).Controls.Find(brotherGroup.GetTablePanelId(), true);
+                if (tabControls.Length == 0)
+                {
+                    Log.Error("Form1_FlowPanel", "获取优先级一致的兄弟组失败", "");
+                    continue;
+                }
+
+                HideGroupTablePanel((TableLayoutPanel)tabControls[0]);
+            }
+        }
+
+        private static void HideGroupTablePanel(TableLayoutPanel tabPanel)
+        {
+            if (Form1_Util.IsTablePanelHide(tabPanel)) //tabPanel 未初始化 
                 return;
 
             ((Hashtable)tabPanel.Tag)["hide"] = true;
@@ -126,15 +134,7 @@ namespace DevelopKit
             }
         }
 
-        private static void HideTablePanels(params TableLayoutPanel[] tabPanels)
-        {
-            foreach (TableLayoutPanel panel in tabPanels)
-            {
-                HideTablePanelContent(panel);
-            }
-        }
-
-        private static void ShowTablePanelContent(TableLayoutPanel tabPanel, int rowHeight)
+        private static void ShowGroupTablePanel(TableLayoutPanel tabPanel, int rowHeight)
         {
             ((Hashtable)tabPanel.Tag)["hide"] = false;
             tabPanel.Height += (tabPanel.RowStyles.Count - 1) * rowHeight;
@@ -142,21 +142,6 @@ namespace DevelopKit
             for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
             {
                 tabPanel.RowStyles[rowIndex].Height = rowHeight;
-            }
-        }
-
-        private static void UnloadGroups(TableLayoutPanel tabPanel, List<Property> properties, int propertyHeight)
-        {
-            if (tabPanel.RowCount == 1)
-            {
-                return;
-            }
-            tabPanel.Height -= propertyHeight * properties.Count;
-            tabPanel.RowCount -= properties.Count;
-            for (int i = 1; i <= properties.Count; i++)
-            {
-                tabPanel.Controls.RemoveAt(1);
-                tabPanel.RowStyles.RemoveAt(1);
             }
         }
 
@@ -174,21 +159,24 @@ namespace DevelopKit
                         {
                             Dock = DockStyle.Fill,
                         };
-
+                        Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory + @"Resources\project\" + property.Value);
                         PictureBox pictureBox = new PictureBox
                         {
                             Name = property.GetPictureBoxId(),
                             Size = new Size(50, 30),
-                            Image = Image.FromFile(@"D:\myprojects\DevelopKit\DevelopKit\Resources\project\ICU\KL30\background.png"),
+                          
+                            Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + @"Resources\project\" + property.Value),
                             SizeMode = PictureBoxSizeMode.Zoom,
                             BorderStyle = BorderStyle.FixedSingle,
                             Location = new Point(10, 5),
                         };
+
                         Button button = new Button
                         {
                             Text = "更换",
                             Location = new Point(80, 5),
                         };
+
                         panel.Controls.Add(pictureBox);
                         panel.Controls.Add(button);
 
@@ -206,7 +194,7 @@ namespace DevelopKit
                                     GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
                                 }
 
-                                CenterBoard.CraeteDrawingBoard(tabPanel, property);
+                                CenterBoardController.DrawGroupAndSceneView(tabPanel, property.SceneId, property.GroupId, property.GroupLayerIdx);
                             }
                             catch (Exception)
                             { }

@@ -9,6 +9,10 @@ namespace DevelopKit
 {
     public static class Form1_Util
     {
+        public static bool IsTablePanelHide(TableLayoutPanel tablePanel)
+        {
+            return tablePanel.Tag == null || (bool)((Hashtable)tablePanel.Tag)["hide"] == true;
+        }
 
         public static void OpenImageForm(string filepath, TabControl tabcontrol1, FormDelegate formDelegate)
         {

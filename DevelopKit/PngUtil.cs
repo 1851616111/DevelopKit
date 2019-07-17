@@ -174,8 +174,18 @@ namespace DevelopKit
         /// <param name="y">要叠加的图片位置的Y坐标</param>
         /// <param name="isSave"></param>
         /// <returns>生成图片的路径</returns>        
-        public static Image MergeImages2(Image imgPhoto, params MergeImageParams[] images)
+        public static Image MergeImageList(List<MergeImageParams> images)
         {
+            if (images.Count == 0)
+            {
+                return null;
+            }
+            else if (images.Count == 1)
+            {
+                return images[0].Image;
+            }
+
+            Image imgPhoto = (Image)images[0].Image;
             //create a image object containing the photograph to watermark
             int phWidth = imgPhoto.Width;
             int phHeight = imgPhoto.Height;
@@ -191,7 +201,7 @@ namespace DevelopKit
             //Set the rendering quality for this Graphics object
             grPhoto.SmoothingMode = SmoothingMode.AntiAlias;//清除锯齿的呈现
             //haix
-            for (int i = 0; i < images.Length; i++)
+            for (int i = 1; i < images.Count; i++)
             {
                 //Draws the photo Image object at original size to the graphics object.
                 grPhoto.DrawImage(
@@ -238,10 +248,10 @@ namespace DevelopKit
                 //Replace the original photgraphs bitmap with the new Bitmap
                 imgPhoto = bmWatermark;
 
-                grWatermark.Dispose();
-                imgWatermark.Dispose();
-                grPhoto.Dispose();                
-                bmWatermark.Dispose();
+                //grWatermark.Dispose();
+                //imgWatermark.Dispose();
+                //grPhoto.Dispose();                
+                //bmWatermark.Dispose();
             }
 
             return imgPhoto;

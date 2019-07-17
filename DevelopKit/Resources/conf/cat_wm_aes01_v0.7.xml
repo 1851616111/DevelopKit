@@ -165,7 +165,7 @@
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\30_charge_error.png</value>
       <location>0,0</location>
     </item>
     <item>
@@ -179,7 +179,7 @@
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\30_charge_frame_pro.png</value>
       <location>0,0</location>
     </item>
     <item>
@@ -193,7 +193,7 @@
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\30_charge_show.png</value>
       <location>0,0</location>
     </item>
     <item>
@@ -219,7 +219,7 @@
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\30_charge_frame_pro.png</value>
       <location>0,0</location>
     </item>
     <item>
@@ -245,7 +245,7 @@
       <in_group>false</in_group>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\30_charge_show.png</value>
       <location>0,0</location>
     </item>
     <item>

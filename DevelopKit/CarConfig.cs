@@ -351,6 +351,11 @@ namespace DevelopKit
         {
             return string.Format("pb_{0}_{1}_{2}", sceneId, groupId, id);
         }
+
+        public string GetCachedPictureBoxId()
+        {
+            return string.Format("pb_cache_{0}_{1}", sceneId, groupId);
+        }
     }
 
     public class Location
@@ -445,6 +450,11 @@ namespace DevelopKit
         public string GetTablePanelId()
         {
             return string.Format("tab_{0}", id);
+        }
+
+        public string GetCachedPictureBoxId()
+        {
+            return string.Format("pb_cache_{0}_{1}", sceneid, id);
         }
     }
 }

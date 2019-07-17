@@ -256,6 +256,15 @@
     <Content Include="Resources\conf\app.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\project\ICU\KL30\30_charge_error.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\ICU\KL30\30_charge_frame_pro.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\ICU\KL30\30_charge_show.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\project\ICU\KL30\background.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
