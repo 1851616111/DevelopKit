@@ -53,18 +53,18 @@ namespace DevelopKit
                 if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
                     LoadGroups(tabPanel, properties, rowHeight);
-                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group.Sceneid, group.Id, group.LayerIndex);
+                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group);
                 }
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
                     ShowGroupTablePanel(tabPanel, rowHeight);
                     HideGroupBrotherTablePanel(tabPanel, group);
-                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group.Sceneid, group.Id, group.LayerIndex);
+                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group);
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
                     HideGroupTablePanel(tabPanel);
-                    CenterBoardController.DrawSceneView(group.Sceneid, group.LayerIndex, null);
+                    CenterBoardController.DrawSceneView(group, null);
                 }
                 else
                 {
@@ -155,64 +155,21 @@ namespace DevelopKit
                 case PropertyType.Image:
                     if (property.Value.Length > 0)
                     {
-                        Panel panel = new Panel
-                        {
-                            Dock = DockStyle.Fill,
-                        };
-                        Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory + @"Resources\project\" + property.Value);
-                        PictureBox pictureBox = new PictureBox
-                        {
-                            Name = property.GetPictureBoxId(),
-                            Size = new Size(50, 30),
-                          
-                            Image = Image.FromFile(AppDomain.CurrentDomain.BaseDirectory + @"Resources\project\" + property.Value),
-                            SizeMode = PictureBoxSizeMode.Zoom,
-                            BorderStyle = BorderStyle.FixedSingle,
-                            Location = new Point(10, 5),
-                        };
+                        LoadImageProperty(tabPanel, property, index);
 
-                        Button button = new Button
-                        {
-                            Text = "更换",
-                            Location = new Point(80, 5),
-                        };
-
-                        panel.Controls.Add(pictureBox);
-                        panel.Controls.Add(button);
-
-                        button.Click += new EventHandler(delegate (object _, EventArgs b)
-                        {
-                            try
-                            {
-                                OpenFileDialog openFileDialog = new OpenFileDialog
-                                {
-                                    Filter = "Png|*.png|Jpg|*.jpg"
-                                };
-                                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                                {
-                                    pictureBox.Image = Image.FromFile(openFileDialog.FileName);
-                                    GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
-                                }
-
-                                CenterBoardController.DrawGroupAndSceneView(tabPanel, property.SceneId, property.GroupId, property.GroupLayerIdx);
-                            }
-                            catch (Exception)
-                            { }
-                        });
-                        tabPanel.Controls.Add(panel, 0, index);
                     }
-
                     break;
                 case PropertyType.TxtColor:
-                    Button btn2 = new Button();
-                    btn2.Text = "txt_color";
-                    tabPanel.Controls.Add(btn2, 0, index);
-
+                    if (property.Value.Length > 0)
+                    {
+                        LoadImageProperty(tabPanel, property, index);
+                    }
                     break;
                 case PropertyType.ImageAlpha:
-                    Button btn3 = new Button();
-                    btn3.Text = "txt_color";
-                    tabPanel.Controls.Add(btn3, 0, index);
+                    if (property.Value.Length > 0)
+                    {
+                        LoadImageProperty(tabPanel, property, index);
+                    }
                     break;
                 case PropertyType.Nil:
                     Button btn4 = new Button();
@@ -222,6 +179,57 @@ namespace DevelopKit
                 default:
                     break;
             }
+        }
+
+        private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index)
+        {
+
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill,
+            };
+            PictureBox pictureBox = new PictureBox
+            {
+                Name = property.GetPictureBoxId(),
+                Size = new Size(50, 30),
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
+                Image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new Point(10, 5),
+                BackColor = Color.Gray
+            };
+
+            Button button = new Button
+            {
+                Text = "更换",
+                Location = new Point(80, 5),
+            };
+
+            panel.Controls.Add(pictureBox);
+            panel.Controls.Add(button);
+
+            button.Click += new EventHandler(delegate (object _, EventArgs b)
+            {
+                try
+                {
+                    OpenFileDialog openFileDialog = new OpenFileDialog
+                    {
+                        Filter = "Png|*.png|Jpg|*.jpg"
+                    };
+                    if (openFileDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                        GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
+                    }
+
+                    CenterBoardController.DrawGroupAndSceneView(tabPanel, property.GetGroup());
+                }
+                catch (Exception)
+                { }
+            });
+            tabPanel.Controls.Add(panel, 0, index);
         }
     }
 }

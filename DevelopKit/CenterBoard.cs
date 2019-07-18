@@ -11,7 +11,7 @@ namespace DevelopKit
     public class GroupCache
     {
         public int GroupLayerId;
-        public PngUtil.MergeImageParams GroupImage;
+        public List<PngUtil.MergeImageParams> GroupPropertiesImages;
     }
 
     public delegate void UpdateHandler(Image image);
@@ -22,65 +22,152 @@ namespace DevelopKit
 
         private static Dictionary<int, SortedDictionary<int, GroupCache>> groupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
 
-        public static void DrawGroupAndSceneView(TableLayoutPanel tabPanel, int sid, int gid, int glid)
+        public static void DrawGroupAndSceneView(TableLayoutPanel tabPanel, Group group)
         {
-            Image image = DrawGroupView(tabPanel, gid);
-            DrawSceneView(sid, glid, image);
+            //Image image = DrawGroupView(tabPanel, group);
+            List<PngUtil.MergeImageParams> ps = ListGroupImages(tabPanel, group);
+            DrawSceneView(group, ps);
         }
+
 
         //若image为空，则为隐藏group组件
         //glid group layer idx
-        public static  void DrawSceneView(int sid, int glid, Image image)
+        public static void DrawSceneView(Group group, List<PngUtil.MergeImageParams> ps)
         {
-            if (!groupLayerCache.ContainsKey(sid))
+            if (!groupLayerCache.ContainsKey(group.Sceneid))
             {
-                groupLayerCache[sid] = new SortedDictionary<int, GroupCache>();
+                groupLayerCache[group.Sceneid] = new SortedDictionary<int, GroupCache>();
             }
 
-            if (image == null)
+            if (ps == null)
             {
-                groupLayerCache[sid].Remove(glid);
+                groupLayerCache[group.Sceneid].Remove(group.LayerIndex);
             }
             else
             {
-                groupLayerCache[sid][glid] = new GroupCache
+                groupLayerCache[group.Sceneid][group.LayerIndex] = new GroupCache
                 {
-                    GroupLayerId = glid,
-                    GroupImage = new PngUtil.MergeImageParams
-                    {
-                        Image = image,
-                        X = 0,
-                        Y = 0,
-                    },
+                    GroupLayerId = group.LayerIndex,
+                    GroupPropertiesImages = ps,
                 };
             }
 
-            if (groupLayerCache[sid].Count == 0)
+            if (groupLayerCache[group.Sceneid].Count == 0)
             {
                 updateImageHandler(null);
             }
-            else if (groupLayerCache[sid].Count == 1)
-            {
-                updateImageHandler(image);
-            }
             else
             {
-                List<PngUtil.MergeImageParams> ps = new List<PngUtil.MergeImageParams>();
-                foreach (GroupCache groupCache in groupLayerCache[sid].Values)
+                List<PngUtil.MergeImageParams> resultList = null;
+                foreach (GroupCache groupCache in groupLayerCache[group.Sceneid].Values)
                 {
-                    ps.Add(groupCache.GroupImage);
+                    if (resultList == null)
+                    {
+                        resultList = groupCache.GroupPropertiesImages;
+                    }
+                    else
+                    {
+                        resultList = resultList.Union(groupCache.GroupPropertiesImages).ToList();
+                    }   
                 }
-                updateImageHandler(PngUtil.MergeImageList(ps));
+                updateImageHandler(PngUtil.MergeImageList(resultList));
             }
         }
 
-        public static Image DrawGroupView(TableLayoutPanel tabPanel, int gid)
+
+        ////若image为空，则为隐藏group组件
+        ////glid group layer idx
+        //public static  void DrawSceneView(int sid, int glid, Image image)
+        //{
+        //    if (!groupLayerCache.ContainsKey(sid))
+        //    {
+        //        groupLayerCache[sid] = new SortedDictionary<int, GroupCache>();
+        //    }
+
+        //    if (image == null)
+        //    {
+        //        groupLayerCache[sid].Remove(glid);
+        //    }
+        //    else
+        //    {
+        //        groupLayerCache[sid][glid] = new GroupCache
+        //        {
+        //            GroupLayerId = glid,
+        //            GroupPropertiesImages = new PngUtil.MergeImageParams
+        //            {
+        //                Image = image,
+        //                X = 0,
+        //                Y = 0,
+        //            },
+        //        };
+        //    }
+
+        //    if (groupLayerCache[sid].Count == 0)
+        //    {
+        //        updateImageHandler(null);
+        //    }
+        //    else
+        //    {
+        //        List<PngUtil.MergeImageParams> ps = new List<PngUtil.MergeImageParams>();
+        //        foreach (GroupCache groupCache in groupLayerCache[sid].Values)
+        //        {
+        //            ps.Add(groupCache.GroupPropertiesImages);
+        //        }
+        //        updateImageHandler(PngUtil.MergeImageList(ps));
+        //    }
+        //}
+
+
+        ////若image为空，则为隐藏group组件
+        ////glid group layer idx
+        //public static void DrawSceneView(int sid, int glid, Image image)
+        //{
+        //    if (!groupLayerCache.ContainsKey(sid))
+        //    {
+        //        groupLayerCache[sid] = new SortedDictionary<int, GroupCache>();
+        //    }
+
+        //    if (image == null)
+        //    {
+        //        groupLayerCache[sid].Remove(glid);
+        //    }
+        //    else
+        //    {
+        //        groupLayerCache[sid][glid] = new GroupCache
+        //        {
+        //            GroupLayerId = glid,
+        //            GroupPropertiesImages = new PngUtil.MergeImageParams
+        //            {
+        //                Image = image,
+        //                X = 0,
+        //                Y = 0,
+        //            },
+        //        };
+        //    }
+
+        //    if (groupLayerCache[sid].Count == 0)
+        //    {
+        //        updateImageHandler(null);
+        //    }
+        //    else
+        //    {
+        //        List<PngUtil.MergeImageParams> ps = new List<PngUtil.MergeImageParams>();
+        //        foreach (GroupCache groupCache in groupLayerCache[sid].Values)
+        //        {
+        //            ps.Add(groupCache.GroupPropertiesImages);
+        //        }
+        //        updateImageHandler(PngUtil.MergeImageList(ps));
+        //    }
+        //}
+
+
+        public static Image DrawGroupView(TableLayoutPanel tabPanel, Group group)
         {
-            List<Property> properties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[gid];
+            List<Property> properties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
             foreach (Property property in properties)
             {
-                if (property.Type == PropertyType.Image)
+                if (property.Type == PropertyType.Image ||property.OptType == PropertyOperateType.FilterImageAlpha || property.OptType == PropertyOperateType.FilterImageColor)
                 {
                     Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
                     if (pbCtl.Length == 0)
@@ -96,60 +183,34 @@ namespace DevelopKit
                 }
             }
 
-            return PngUtil.MergeImageList(mergeParams);
+            return PngUtil.MergeImageList(mergeParams, group.Size.Width, group.Size.Height);
         }
 
-
-        //public static void CraeteDrawingBoard(TableLayoutPanel panel, Property property)
-        //{
-        //    FlowLayoutPanel parentPanel = (FlowLayoutPanel)panel.Parent;
-        //    List<Group> groups = GlobalConfig.Project.CarConfig.ListGroupsByIDAndIndex(property.SceneId, property.GroupId, property.GroupLayerIdx);
-
-        //    List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
-        //    foreach (Group group in groups)
-        //    {
-        //        Control[] brotherTablePanel = parentPanel.Controls.Find(group.GetTablePanelId(), true);
-        //        if (brotherTablePanel.Length == 0)
-        //        {
-        //            Console.WriteLine("Get brother table panel nil, group id={0}", group.Id);
-        //        }
-
-        //        TableLayoutPanel tableLayout = (TableLayoutPanel)brotherTablePanel[0];
-
-        //        List<Property> groupProperties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
-
-        //        foreach (Property groupProperty in groupProperties)
-        //        {
-        //            if (groupProperty.Type == PropertyType.Image)
-        //            {
-        //                Control[] pbCtl = tableLayout.Controls.Find(groupProperty.GetPictureBoxId(), true);
-        //                if (pbCtl.Length == 0)
-        //                {
-        //                    Console.WriteLine("Get group property picturebox nil, property id={0}", groupProperty.Id);
-        //                }
-        //                mergeParams.Add(new PngUtil.MergeImageParams
-        //                {
-        //                    Image = ((PictureBox)pbCtl[0]).Image,
-        //                    X = groupProperty.GetLocation().X,
-        //                    Y = groupProperty.GetLocation().Y,
-        //                });
-        //            }
-        //        }
-        //    }
-
-        //    if (mergeParams.Count >= 2)
-        //    {
-        //        //GlobalConfig.MainPictureBox.Image = PngUtil.MergeImageList(mergeParams);
-        //    }
-        //}
-
-
-        public class CenterImageTemplate
+        public static List<PngUtil.MergeImageParams> ListGroupImages(TableLayoutPanel tabPanel, Group group)
         {
-            public Image DrawImage()
+            List<Property> properties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
+            List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
+            foreach (Property property in properties)
             {
-                return null;
+                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.FilterImageAlpha || property.OptType == PropertyOperateType.FilterImageColor)
+                {
+                    Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
+                    if (pbCtl.Length == 0)
+                    {
+                        Console.WriteLine("Get group property picturebox nil, property id={0}", property.Id);
+                    }
+                    mergeParams.Add(new PngUtil.MergeImageParams
+                    {
+                        Image = ((PictureBox)pbCtl[0]).Image,
+                        X = property.GetLocation().X,
+                        Y = property.GetLocation().Y,
+                    });
+                }
             }
+
+            return mergeParams;
         }
+
+
     }
 }

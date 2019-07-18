@@ -99,6 +99,7 @@ namespace DevelopKit
         private string version;
         private string configFile;
         private int manufacturerId;
+        private string resourcesDir;
 
         [XmlElement("id")]
         public int Id { get => id; set => id = value; }
@@ -115,6 +116,9 @@ namespace DevelopKit
         [XmlElement("manufacturer_id")]
         public int ManufacturerId { get => manufacturerId; set => manufacturerId = value; }
 
+        [XmlElement("resources_dir")]
+        public string ResourcesDir { get => resourcesDir; set => resourcesDir = value; }
+
         public CarConfig GetCarConfig()
         {
             CarConfig carCfg = (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), configFile);
@@ -127,7 +131,6 @@ namespace DevelopKit
             return File.Exists(configFile);
         }
     }
-
 
     [Serializable]
     [XmlRoot("car_config")]
@@ -171,26 +174,6 @@ namespace DevelopKit
         public List<Group> ListGroupByLayerId(int sid, int glid)
         {
             return groupLayerIndexMapping[sid][glid];
-        }
-
-        // 按照组的优先级列出组内所有
-
-        public List<Group> ListGroupsByIDAndIndex(int sid, int gid, int groupIndex)
-        {
-            List<Group> groups = new List<Group>();
-            //if (groupIndex > 0)
-            //{
-            //    for (int index = 0; index < groupIndex; index++)
-            //    {
-            //        groups.Add(groupLayerIndexMapping[sid][groupIndex]);
-            //    }
-            //    groups.Add(groupMapping[gid]);
-            //}
-            //else {
-            //    groups.Add(groupMapping[gid]);
-            //}
-
-            return groups;
         }
 
         public void MakeMappingCache()
@@ -241,7 +224,8 @@ namespace DevelopKit
                         Id = property.GroupId,
                         Name = property.GroupName,
                         LayerIndex = property.GroupLayerIdx,
-                        Sceneid = property.SceneId
+                        Sceneid = property.SceneId,
+                        Size = property.GetGroupSize(),
                     });
                 }
 
@@ -252,7 +236,8 @@ namespace DevelopKit
                         Id = property.GroupId,
                         Name = property.GroupName,
                         LayerIndex = property.GroupLayerIdx,
-                        Sceneid = property.SceneId
+                        Sceneid = property.SceneId,
+                        Size = property.GetGroupSize(),
                     });
                 }
 
@@ -278,144 +263,12 @@ namespace DevelopKit
                         Id = property.GroupId,
                         Name = property.GroupName,
                         LayerIndex = property.GroupLayerIdx,
-                        Sceneid = property.SceneId
+                        Sceneid = property.SceneId,
+                        Size = property.GetGroupSize(),
                     });
                 }
             }
         }
-    }
-
-    [Serializable]
-    public class Property
-    {
-        private int id;
-        private int sceneId;
-        private string groupName;
-        private int groupId;
-        private string name;
-        private string type;
-        private bool inGroup;
-        private bool canEdit;
-        private int groupLayerIdx;
-        private int propertyLayerIdx;
-        private string value;
-        private string location;
-        //private Content content;
-
-        [XmlElement("id")]
-        public int Id { get => id; set => id = value; }
-        [XmlElement("scene_id")]
-        public int SceneId { get => sceneId; set => sceneId = value; }
-        [XmlElement("group_id")]
-        public int GroupId { get => groupId; set => groupId = value; }
-        [XmlElement("group_name")]
-        public string GroupName { get => groupName; set => groupName = value; }
-        [XmlElement("name")]
-        public string Name { get => name; set => name = value; }
-        [XmlElement("type")]
-        public string Type { get => type; set => type = value; }
-        [XmlElement("in_group")]
-        public bool InGroup { get => inGroup; set => inGroup = value; }
-        [XmlElement("can_edit")]
-        public bool CanEdit { get => canEdit; set => canEdit = value; }
-        [XmlElement("group_layer_idx")]
-        public int GroupLayerIdx { get => groupLayerIdx; set => groupLayerIdx = value; }
-        [XmlElement("property_layer_idx")]
-        public int PropertyLayerIdx { get => propertyLayerIdx; set => propertyLayerIdx = value; }
-        [XmlElement("value")]
-        public string Value { get => value; set => this.value = value; }
-        [XmlElement("location")]
-        public string Location { get => location; set => location = value; }
-
-        //[XmlElement("content")]
-        //public Content Content { get => content; set => content = value; }
-
-        public Location GetLocation()
-        {
-            string[] ss = location.Split(',');
-            if (ss.Length == 0 || ss.Length == 1)
-            {
-                return null;
-            }
-            else
-            {
-                return new Location
-                {
-                    X = Convert.ToInt32(ss[0]),
-                    Y = Convert.ToInt32(ss[1]),
-                };
-            }
-        }
-
-        public string GetPictureBoxId()
-        {
-            return string.Format("pb_{0}_{1}_{2}", sceneId, groupId, id);
-        }
-
-        public string GetCachedPictureBoxId()
-        {
-            return string.Format("pb_cache_{0}_{1}", sceneId, groupId);
-        }
-    }
-
-    public class Location
-    {
-        public int X;
-        public int Y;
-    }
-
-
-
-    //[Serializable]
-    //[XmlRoot("content")]
-    //public class Content
-    //{
-    //    private List<TextItem> texts;
-    //    private List<ImageItem> images;
-
-    //    [XmlArray("text"), XmlArrayItem("item")]
-    //    public List<TextItem> Texts { get => texts; set => texts = value; }
-
-    //    [XmlArray("image"), XmlArrayItem("item")]
-    //    public List<ImageItem> Images { get => images; set => images = value; }
-    //}
-
-    //[Serializable]
-    //public class TextItem
-    //{
-    //    private string font;
-    //    private string location;
-    //    private int size;
-    //    private string text;
-
-    //    [XmlElement("text")]
-    //    public string Text { get => text; set => text = value; }
-    //    [XmlElement("size")]
-    //    public int Size { get => size; set => size = value; }
-    //    [XmlElement("location")]
-    //    public string Location { get => location; set => location = value; }
-    //    [XmlElement("font")]
-    //    public string Font { get => font; set => font = value; }
-    //}
-
-    //[Serializable]
-    //public class ImageItem
-    //{
-    //    private string filepath;
-    //    private string location;
-
-    //    [XmlElement("filepath")]
-    //    public string Filepath { get => filepath; set => filepath = value; }
-    //    [XmlElement("location")]
-    //    public string Location { get => location; set => location = value; }
-    //}
-
-    public static class PropertyType
-    {
-        public const string Nil = "/";
-        public const string Image = "image";
-        public const string TxtColor = "txt_color";
-        public const string ImageAlpha = "alpha";
     }
 
     [Serializable]
@@ -437,6 +290,7 @@ namespace DevelopKit
         private string name;
         private int layerIndex;
         private int sceneid;
+        private GroupSize size;
 
         [XmlElement("id")]
         public int Id { get => id; set => id = value; }
@@ -446,6 +300,8 @@ namespace DevelopKit
         public int LayerIndex { get => layerIndex; set => layerIndex = value; }
         [XmlElement("scene_id")]
         public int Sceneid { get => sceneid; set => sceneid = value; }
+        [XmlElement("size")]
+        public GroupSize Size { get => size; set => size = value; }
 
         public string GetTablePanelId()
         {
@@ -456,5 +312,134 @@ namespace DevelopKit
         {
             return string.Format("pb_cache_{0}_{1}", sceneid, id);
         }
+    }
+
+    [Serializable]
+    public class Property
+    {
+        [XmlElement("id")]
+        public int Id;
+        [XmlElement("scene_id")]
+        public int SceneId;
+        [XmlElement("group_id")]
+        public int GroupId;
+        [XmlElement("group_name")]
+        public string GroupName;
+        [XmlElement("group_size")]
+        public string GroupSize;
+        [XmlElement("name")]
+        public string Name;
+        [XmlElement("type")]
+        public string Type;
+        [XmlElement("operate_type")]
+        public string OptType;
+        [XmlElement("in_group")]
+        public bool InGroup;
+        [XmlElement("can_edit")]
+        public bool CanEdit;
+        [XmlElement("group_layer_idx")]
+        public int GroupLayerIdx;
+        [XmlElement("property_layer_idx")]
+        public int PropertyLayerIdx;
+        [XmlElement("value")]
+        public string Value;
+        [XmlElement("size")]
+        public string Size;
+        [XmlElement("location")]
+        public string Location;
+        [XmlElement("display_type")]
+        public string DisplayType;
+        [XmlElement("display_content")]
+        public string DisplayContent;
+
+        public Group GetGroup()
+        {
+            return new Group
+            {
+                Id = GroupId,
+                Sceneid = SceneId,
+                Name = GroupName,
+                LayerIndex = GroupLayerIdx,
+                Size = GetGroupSize(),
+            };
+        }
+
+        public Location GetLocation()
+        {
+            string[] ss = Location.Split(',');
+            if (ss.Length == 0 || ss.Length == 1)
+            {
+                return null;
+            }
+            else
+            {
+                return new Location
+                {
+                    X = Convert.ToInt32(ss[0]),
+                    Y = Convert.ToInt32(ss[1]),
+                };
+            }
+        }
+
+        public GroupSize GetGroupSize()
+        {
+            string[] ss = GroupSize.Split('*');
+            if (ss.Length == 0 || ss.Length == 1)
+            {
+                return null;
+            }
+            else
+            {
+                return new GroupSize
+                {
+                    Width = Convert.ToInt32(ss[0]),
+                    Height = Convert.ToInt32(ss[1]),
+                };
+            }
+        }
+
+        public string GetPictureBoxId()
+        {
+            return string.Format("pb_{0}_{1}_{2}", SceneId, GroupId, Id);
+        }
+
+        public string GetCachedPictureBoxId()
+        {
+            return string.Format("pb_cache_{0}_{1}", SceneId, GroupId);
+        }
+    }
+
+    public static class DisplayType
+    {
+        public const string Image = "image";
+        public const string Text = "text";
+    }
+
+    public class GroupSize
+    {
+        public int Width;
+        public int Height;
+    }
+
+    public class Location
+    {
+        public int X;
+        public int Y;
+    }
+
+    public static class PropertyType
+    {
+        public const string Nil = "/";
+        public const string Image = "image";
+        public const string TxtColor = "txt_color";
+        public const string ImageAlpha = "alpha";
+    }
+
+    public static class PropertyOperateType
+    {
+        public const string Nil = "/";
+        public const string ReplaceImage = "image_replace";
+        public const string FilterImageColor = "image_filter_color";
+        public const string FilterImageAlpha = "image_filter_alpha";
     }
 }

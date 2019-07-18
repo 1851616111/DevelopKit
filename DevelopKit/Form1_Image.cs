@@ -38,6 +38,7 @@ namespace DevelopKit
             this.formDelegateHandler = delegateFn;
 
             pictureBox1.Image = image;
+            pictureBox1.BackColor = Color.Black;
             imageOriginalWidth = image.Width;
             imageOriginalHeight = image.Height;
             imageOriginalBitmap = (Bitmap)pictureBox1.Image.Clone();

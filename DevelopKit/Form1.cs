@@ -679,6 +679,11 @@ namespace DevelopKit
 
         public static Project Project { get => project; set => project = value; }
         public static PictureBox MainPictureBox { get => mainPicture; set => mainPicture = value; }
+
+        public static string GetProjectResourcesDir()
+        {
+            return AppDomain.CurrentDomain.BaseDirectory + Project.CarInfo.ResourcesDir;
+        }
     }
 }
 

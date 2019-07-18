@@ -174,7 +174,16 @@ namespace DevelopKit
                 {
                     MessageBox.Show("请输入合理的Y坐标", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-                //pictureBox3.Image = PngUtil.MergeImages2(pictureBox1.Image, img);
+
+                List<PngUtil.MergeImageParams> ps = new List<PngUtil.MergeImageParams>();
+                ps.Add(new PngUtil.MergeImageParams {
+                    Image = pictureBox1.Image,
+                    X = 0,
+                    Y = 0,
+                });
+                ps.Add(img);
+
+                pictureBox3.Image = PngUtil.MergeImageList(ps);
 
             }
             catch (ArgumentOutOfRangeException ex)

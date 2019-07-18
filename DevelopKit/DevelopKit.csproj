@@ -256,17 +256,47 @@
     <Content Include="Resources\conf\app.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\project\ICU\KL30\30_charge_error.png">
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\background.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\project\ICU\KL30\30_charge_frame_pro.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\project\ICU\KL30\30_charge_show.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_other_number.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\project\ICU\KL30\background.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_other_unit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_progress_number.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_progress_unit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_tip_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\car_door.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\charge_car.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\charge_error_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\charge_error_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\charge_error_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\charge_error_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\tt.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup />

@@ -13,206 +13,274 @@
       <scene_id>1</scene_id>
       <group_id>1</group_id>
       <group_name>背景</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>0</group_layer_idx>
       <name>背景图片</name>
       <type>image</type>
+      <operate_type>image_replace</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\background.png</value>
+      <value>ICU\KL30\background.jpg</value>
       <location>0,0</location>
+      <size>1920,720</size>
     </item>
     <item>
       <id>2</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>进度数值颜色</name>
       <type>txt_color</type>
+      <operate_type>image_filter_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL30\charge_progress_number.png</value>
+      <location>863,307</location>
+      <size>134,85</size>
     </item>
     <item>
       <id>3</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>进度数值透明度</name>
       <type>alpha</type>
+      <operate_type>image_filter_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL30\charge_progress_number.png</value>
+      <location>863,307</location>
+      <size>134,85</size>
     </item>
     <item>
       <id>4</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>进度单位颜色</name>
       <type>txt_color</type>
+      <operate_type>image_filter_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL30\charge_progress_unit.png</value>
+      <location>1030,371</location>
+      <size>22*19</size>
     </item>
     <item>
       <id>5</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>进度单位透明度</name>
       <type>alpha</type>
+      <operate_type>image_filter_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL30\charge_progress_unit.png</value>
+      <location>1030,371</location>
+      <size>22*19</size>
     </item>
     <item>
       <id>6</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
+      <operate_type>image_filter_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL30\charge_tip_text.png</value>
+      <location>875,547</location>
+      <size>173*31</size>
     </item>
     <item>
       <id>7</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本透明度</name>
       <type>alpha</type>
+      <operate_type>image_filter_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL30\charge_tip_text.png</value>
+      <location>875,547</location>
+      <size>173*31</size>
     </item>
     <item>
       <id>8</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流数值颜色</name>
       <type>txt_color</type>
+      <operate_type>image_filter_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL30\charge_other_number.png</value>
+      <location>549,614</location>
+      <size>835*25</size>
     </item>
     <item>
       <id>9</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流数值透明度</name>
       <type>alpha</type>
+      <operate_type>image_filter_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL30\charge_other_number.png</value>
+      <location>549,614</location>
+      <size>835*25</size>
     </item>
     <item>
       <id>10</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流单位颜色</name>
       <type>txt_color</type>
+      <operate_type>image_filter_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL30\charge_other_unit.png</value>
+      <location>535,622</location>
+      <size>859*52</size>
     </item>
     <item>
       <id>11</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流单位透明度</name>
       <type>alpha</type>
+      <operate_type>image_filter_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL30\charge_other_unit.png</value>
+      <location>535,622</location>
+      <size>859*52</size>
     </item>
     <item>
       <id>12</id>
       <scene_id>1</scene_id>
       <group_id>2</group_id>
       <group_name>充电界面</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
       <type>/</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
+      <value>noChange\ICU\KL30\charge_car.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
     </item>
     <item>
       <id>13</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
       <group_name>充电失败</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框背景图</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <value>ICU\KL30\30_charge_error.png</value>
-      <location>0,0</location>
+      <value>noChange\ICU\KL30\charge_error_frame.png</value>
+      <location>552,124</location>
+      <size>812*472</size>
     </item>
     <item>
       <id>14</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
       <group_name>充电失败</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框阴影图</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\30_charge_frame_pro.png</value>
+      <value>noChange\ICU\KL30\charge_error_shadow.png</value>
       <location>0,0</location>
+      <size>1920*720</size>
     </item>
     <item>
       <id>15</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
       <group_name>充电失败</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>2</group_layer_idx>
       <name>图标</name>
       <type>image</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
-      <value>ICU\KL30\30_charge_show.png</value>
-      <location>0,0</location>
+      <value>noChange\ICU\KL30\charge_error_icon.png</value>
+      <location>552,124</location>
+      <size>812*472</size>
     </item>
     <item>
       <id>16</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
       <group_name>充电失败</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>2</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
+      <value>noChange\ICU\KL30\charge_error_text.png</value>
+      <location>552,125</location>
+      <size>812*473</size>
     </item>
-    <item>
+    <!--<item>
       <id>17</id>
       <scene_id>1</scene_id>
       <group_id>4</group_id>
       <group_name>全屏报警</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>图标</name>
       <type>image</type>
@@ -227,18 +295,20 @@
       <scene_id>1</scene_id>
       <group_id>4</group_id>
       <group_name>全屏报警</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-    </item>
-    <item>
+    </item>-->
+    <!--<item>
       <id>19</id>
       <scene_id>1</scene_id>
       <group_id>4</group_id>
       <group_name>全屏报警</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>背景图片</name>
       <type>image</type>
@@ -247,30 +317,39 @@
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL30\30_charge_show.png</value>
       <location>0,0</location>
-    </item>
+      <size>1920*720</size>
+    </item>-->
     <item>
       <id>20</id>
       <scene_id>1</scene_id>
       <group_id>5</group_id>
       <group_name>门开报警</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
-      <type>/</type>
+      <type>image</type>
       <in_group>true</in_group>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
+      <value>noChange\ICU\KL30\car_door.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
     </item>
     <item>
       <id>21</id>
       <scene_id>1</scene_id>
       <group_id>6</group_id>
       <group_name>TT灯</group_name>
+      <group_size>1920*720</group_size>
       <group_layer_idx>3</group_layer_idx>
       <name>/</name>
-      <type>/</type>
+      <type>image</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
+      <value>noChange\ICU\KL30\tt.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
     </item>
   </properties>
 </car_config>
