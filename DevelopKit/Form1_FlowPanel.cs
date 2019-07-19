@@ -76,7 +76,6 @@ namespace DevelopKit
 
             int titleHeight = 30;
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, titleHeight));
-            tabPanel.RowCount++;
             tabPanel.Height += titleHeight;
             tabPanel.Controls.Add(titleBtn, 0, 0);
         }
@@ -91,14 +90,19 @@ namespace DevelopKit
                 };
             }
 
-            tabPanel.Height += rowHeight * properties.Count;
-            tabPanel.RowCount += properties.Count;
-
             int rowIndex = 1;
             foreach (Property property in properties)
             {
-                LoadProperty(tabPanel, rowIndex, property, rowHeight);
-                rowIndex++;
+                if (property.InGroup)
+                {
+                    tabPanel.Height += rowHeight;
+                    LoadProperty(tabPanel, rowIndex, property, rowHeight);
+                    rowIndex++;
+                }
+                else
+                {
+                    LoadProperty(tabPanel, rowIndex, property, rowHeight);
+                }
             }
         }
 
@@ -128,6 +132,11 @@ namespace DevelopKit
                 return;
 
             ((Hashtable)tabPanel.Tag)["hide"] = true;
+            if (tabPanel.RowStyles.Count == 1)
+            {
+                return;
+            }
+               
             tabPanel.Height -= (int)((tabPanel.RowStyles.Count - 1) * (tabPanel.RowStyles[1].Height));
 
             for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
@@ -150,26 +159,25 @@ namespace DevelopKit
         //为属性创建单独的pannel用于方便展开和收缩
         private static void LoadProperty(TableLayoutPanel tabPanel, int index, Property property, int propertyHeight)
         {
-            tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
 
             switch (property.Type)
             {
                 case PropertyType.Image:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index);
+                        LoadImageProperty(tabPanel, property, index, propertyHeight);
                     }
                     break;
                 case PropertyType.TxtColor:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index);
+                        LoadImageProperty(tabPanel, property, index, propertyHeight);
                     }
                     break;
                 case PropertyType.ImageAlpha:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index);
+                        LoadImageProperty(tabPanel, property, index, propertyHeight);
                     }
                     break;
                 case PropertyType.Nil:
@@ -182,15 +190,8 @@ namespace DevelopKit
             }
         }
 
-        private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index)
+        private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index, int propertyHeight)
         {
-
-            Panel panel = new Panel
-            {
-                Dock = DockStyle.Fill,
-            };
-            tabPanel.Controls.Add(panel, 0, index);
-
             PictureBox cachedPb;
             Image image;
             if (property.RefPropertyId > 0)
@@ -223,9 +224,24 @@ namespace DevelopKit
                 Location = new Point(0, 0),
                 BackColor = Color.Gray,
                 Visible = false,
+
             };
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
             CenterBoardCache.SetPictureBox(property.Id, pictureBox);
+
+            if (!property.InGroup)
+            {
+                tabPanel.Controls.Add(pictureBox, 0, 0);  //若property不现实标签， 则直接挂载到table的第0行中
+                return;
+            }
+
+            tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill,
+            };
+            tabPanel.Controls.Add(panel, 0, index);
+            panel.Controls.Add(pictureBox);
 
             Label label = new Label
             {
@@ -246,7 +262,6 @@ namespace DevelopKit
                 TextAlign = ContentAlignment.MiddleCenter
             };
 
-            panel.Controls.Add(pictureBox);
             panel.Controls.Add(label);
 
             if (property.OptType == PropertyOperateType.ReplaceImage)
