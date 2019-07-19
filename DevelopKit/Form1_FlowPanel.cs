@@ -53,18 +53,18 @@ namespace DevelopKit
                 if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
                     LoadGroups(tabPanel, properties, rowHeight);
-                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group);
+                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
                     ShowGroupTablePanel(tabPanel, rowHeight);
                     HideGroupBrotherTablePanel(tabPanel, group);
-                    CenterBoardController.DrawGroupAndSceneView(tabPanel, group);
+                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
                     HideGroupTablePanel(tabPanel);
-                    CenterBoardController.DrawSceneView(group, null);
+                    CenterBoardController.HideGroupOnCenterBoard(group, null);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace DevelopKit
                         GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
                     }
 
-                    CenterBoardController.DrawGroupAndSceneView(tabPanel, property.GetGroup());
+                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
                 }
                 catch (Exception)
                 { }

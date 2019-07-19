@@ -14,6 +14,9 @@ namespace DevelopKit
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
+        static private Size centerBoardImageSize;
+        static private int trackBar1CurrentValue;
+
 
         ParameterizedThreadStart pts;
         Thread t;
@@ -30,10 +33,10 @@ namespace DevelopKit
             HideOpenedProject();
             GlobalConfig.Project = null;
 
-            CenterBoardController.updateImageHandler = delegate (Image image)
-            {
-                pictureBox1.Image = image;
-            };
+            trackBar1.Visible = false;
+            trackbarLabel.Visible = false;
+            centerBoardStatusStrip.Visible = false;
+            CenterBoardController.SetCenterBoardImageHandler = new UpdateHandler(CenterBoardPictureBoxOnChange);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,7 +53,7 @@ namespace DevelopKit
                 project.Status = ProjectStatus.StartOpenProject;
             }
             GlobalConfig.Project = project;
-            GlobalConfig.MainPictureBox = pictureBox1;
+            GlobalConfig.MainPictureBox = centerBoardPictuerBox;
 
             ProjectStatusHandler(GlobalConfig.Project);
         }
@@ -666,8 +669,50 @@ namespace DevelopKit
 
         }
 
-        private void ContextMenuStrip1_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private  void CenterBoardPictureBoxOnChange(Image image) 
         {
+            if (image != null)
+            {
+                trackBar1.Visible = true;
+                trackbarLabel.Visible = true;
+                centerBoardStatusStrip.Visible = true;
+
+                if (trackBar1CurrentValue == 0)
+                {
+                    centerBoardImageSize = image.Size;
+                    int percent = (tabPage1.Width * 100 / centerBoardImageSize.Width);
+                    trackBar1.Value = percent;
+                    trackBar1CurrentValue = percent;
+                    trackBar1.Minimum = percent;
+                    trackBar1.Maximum = 100;
+
+                    trackbarLabel.Location = new Point(trackBar1.Location.X + trackBar1.Width + 20, trackBar1.Location.Y);
+                    trackbarLabel.Text = percent.ToString("#") + "%";
+                    trackBar1.Value = (int)((percent / 100F) * trackBar1.Maximum);
+                    centerBoardPictuerBox.Width = tabPage1.Width;
+                }
+                else
+                {
+                    trackBar1.Value = trackBar1CurrentValue;
+                    centerBoardPictuerBox.Width = (int)((trackBar1CurrentValue / 100F) * centerBoardImageSize.Width);
+                }
+                centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
+            }
+            else
+            {
+                trackBar1.Visible = false;
+                trackbarLabel.Visible = false;
+                centerBoardStatusStrip.Visible = false;
+            }
+            centerBoardPictuerBox.Image = image;
+        }
+
+        private void TrackBar1_Scroll(object sender, EventArgs e)
+        {
+            centerBoardPictuerBox.Width = (int)(centerBoardImageSize.Width * (trackBar1.Value / 100F));
+            trackbarLabel.Text = trackBar1.Value.ToString() + "%";
+            trackBar1CurrentValue = trackBar1.Value;
+            centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
 
         }
     }

@@ -70,8 +70,11 @@
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.hScrollBar1 = new System.Windows.Forms.HScrollBar();
+            this.centerBoardStatusStrip = new System.Windows.Forms.StatusStrip();
+            this.centerBoardToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
+            this.trackbarLabel = new System.Windows.Forms.Label();
+            this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel2 = new System.Windows.Forms.Panel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -83,7 +86,9 @@
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.centerBoardStatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.centerBoardPictuerBox)).BeginInit();
             this.SuspendLayout();
             // 
             // toolStripMenuItem1
@@ -375,7 +380,7 @@
             this.splitter1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitter1.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.splitter1.Location = new System.Drawing.Point(200, 82);
-            this.splitter1.Margin = new System.Windows.Forms.Padding(6);
+            this.splitter1.Margin = new System.Windows.Forms.Padding(0);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(7, 957);
             this.splitter1.TabIndex = 20;
@@ -388,7 +393,7 @@
             this.splitter2.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
             this.splitter2.Location = new System.Drawing.Point(1547, 82);
-            this.splitter2.Margin = new System.Windows.Forms.Padding(6);
+            this.splitter2.Margin = new System.Windows.Forms.Padding(0);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(7, 957);
             this.splitter2.TabIndex = 21;
@@ -400,7 +405,7 @@
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabControl1.Location = new System.Drawing.Point(207, 82);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(6);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl1.SelectedIndex = 0;
@@ -411,34 +416,68 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
-            this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.hScrollBar1);
+            this.tabPage1.Controls.Add(this.centerBoardStatusStrip);
+            this.tabPage1.Controls.Add(this.trackBar1);
+            this.tabPage1.Controls.Add(this.trackbarLabel);
+            this.tabPage1.Controls.Add(this.centerBoardPictuerBox);
             this.tabPage1.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabPage1.Size = new System.Drawing.Size(1332, 924);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "流程面板";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // pictureBox1
+            // centerBoardStatusStrip
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(0, 0);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(1920, 720);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
+            this.centerBoardStatusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.centerBoardToolStripStatusLabel});
+            this.centerBoardStatusStrip.Location = new System.Drawing.Point(0, 881);
+            this.centerBoardStatusStrip.Name = "centerBoardStatusStrip";
+            this.centerBoardStatusStrip.Size = new System.Drawing.Size(1920, 26);
+            this.centerBoardStatusStrip.TabIndex = 5;
+            this.centerBoardStatusStrip.Text = "statusStrip2";
             // 
-            // hScrollBar1
+            // centerBoardToolStripStatusLabel
             // 
-            this.hScrollBar1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.hScrollBar1.Location = new System.Drawing.Point(3, 887);
-            this.hScrollBar1.Name = "hScrollBar1";
-            this.hScrollBar1.Size = new System.Drawing.Size(1914, 17);
-            this.hScrollBar1.TabIndex = 0;
+            this.centerBoardToolStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.centerBoardToolStripStatusLabel.Image = global::DevelopKit.Properties.Resources.img_size;
+            this.centerBoardToolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.centerBoardToolStripStatusLabel.Name = "centerBoardToolStripStatusLabel";
+            this.centerBoardToolStripStatusLabel.Size = new System.Drawing.Size(151, 21);
+            this.centerBoardToolStripStatusLabel.Text = "toolStripStatusLabel2";
+            this.centerBoardToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // trackBar1
+            // 
+            this.trackBar1.Location = new System.Drawing.Point(516, 0);
+            this.trackBar1.Margin = new System.Windows.Forms.Padding(0);
+            this.trackBar1.Maximum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(200, 45);
+            this.trackBar1.TabIndex = 4;
+            this.trackBar1.TickFrequency = 5;
+            this.trackBar1.Scroll += new System.EventHandler(this.TrackBar1_Scroll);
+            // 
+            // trackbarLabel
+            // 
+            this.trackbarLabel.AutoSize = true;
+            this.trackbarLabel.Location = new System.Drawing.Point(860, 20);
+            this.trackbarLabel.Name = "trackbarLabel";
+            this.trackbarLabel.Size = new System.Drawing.Size(0, 25);
+            this.trackbarLabel.TabIndex = 3;
+            // 
+            // centerBoardPictuerBox
+            // 
+            this.centerBoardPictuerBox.Location = new System.Drawing.Point(0, 45);
+            this.centerBoardPictuerBox.Margin = new System.Windows.Forms.Padding(0);
+            this.centerBoardPictuerBox.Name = "centerBoardPictuerBox";
+            this.centerBoardPictuerBox.Size = new System.Drawing.Size(1920, 720);
+            this.centerBoardPictuerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.centerBoardPictuerBox.TabIndex = 1;
+            this.centerBoardPictuerBox.TabStop = false;
             // 
             // panel2
             // 
@@ -456,7 +495,6 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
-            this.contextMenuStrip1.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuStrip1_Opening);
             // 
             // Form1
             // 
@@ -494,7 +532,11 @@
             this.tabPage3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.tabPage1.PerformLayout();
+            this.centerBoardStatusStrip.ResumeLayout(false);
+            this.centerBoardStatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.centerBoardPictuerBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -537,10 +579,13 @@
         private System.Windows.Forms.ToolStripMenuItem closeprojectToolStripMenuItem;
         private System.Windows.Forms.ImageList treeviewImageList;
         private System.Windows.Forms.TreeView treeView2;
-        private System.Windows.Forms.HScrollBar hScrollBar1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox centerBoardPictuerBox;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.Label trackbarLabel;
+        private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.StatusStrip centerBoardStatusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel centerBoardToolStripStatusLabel;
     }
 }
 

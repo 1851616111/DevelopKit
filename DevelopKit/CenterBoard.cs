@@ -18,21 +18,21 @@ namespace DevelopKit
 
     public static class CenterBoardController
     {
-        public static UpdateHandler updateImageHandler;
+        public static UpdateHandler SetCenterBoardImageHandler;
 
         private static Dictionary<int, SortedDictionary<int, GroupCache>> groupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
 
-        public static void DrawGroupAndSceneView(TableLayoutPanel tabPanel, Group group)
+        public static void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
         {
             //Image image = DrawGroupView(tabPanel, group);
             List<PngUtil.MergeImageParams> ps = ListGroupImages(tabPanel, group);
-            DrawSceneView(group, ps);
+            HideGroupOnCenterBoard(group, ps);
         }
 
 
         //若image为空，则为隐藏group组件
         //glid group layer idx
-        public static void DrawSceneView(Group group, List<PngUtil.MergeImageParams> ps)
+        public static void HideGroupOnCenterBoard(Group group, List<PngUtil.MergeImageParams> ps)
         {
             if (!groupLayerCache.ContainsKey(group.Sceneid))
             {
@@ -54,7 +54,7 @@ namespace DevelopKit
 
             if (groupLayerCache[group.Sceneid].Count == 0)
             {
-                updateImageHandler(null);
+                SetCenterBoardImageHandler(null);
             }
             else
             {
@@ -70,7 +70,7 @@ namespace DevelopKit
                         resultList = resultList.Union(groupCache.GroupPropertiesImages).ToList();
                     }   
                 }
-                updateImageHandler(PngUtil.MergeImageList(resultList));
+                SetCenterBoardImageHandler(PngUtil.MergeImageList(resultList));
             }
         }
 
