@@ -333,8 +333,8 @@ namespace DevelopKit
         public string Type;
         [XmlElement("operate_type")]
         public string OptType;
-        [XmlElement("in_group")]
-        public bool InGroup;
+        [XmlElement("show_label")]
+        public bool ShowLabel;
         [XmlElement("can_edit")]
         public bool CanEdit;
         [XmlElement("group_layer_idx")]

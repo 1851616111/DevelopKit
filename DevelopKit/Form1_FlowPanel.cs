@@ -93,7 +93,7 @@ namespace DevelopKit
             int rowIndex = 1;
             foreach (Property property in properties)
             {
-                if (property.InGroup)
+                if (property.ShowLabel)
                 {
                     tabPanel.Height += rowHeight;
                     LoadProperty(tabPanel, rowIndex, property, rowHeight);
@@ -229,7 +229,7 @@ namespace DevelopKit
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
             CenterBoardCache.SetPictureBox(property.Id, pictureBox);
 
-            if (!property.InGroup)
+            if (!property.ShowLabel)
             {
                 tabPanel.Controls.Add(pictureBox, 0, 0);  //若property不现实标签， 则直接挂载到table的第0行中
                 return;

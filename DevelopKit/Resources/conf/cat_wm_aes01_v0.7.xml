@@ -18,7 +18,7 @@
       <name>背景图片</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL30\background.jpg</value>
@@ -35,7 +35,7 @@
       <name>进度数值颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
       <value>ICU\KL30\charge_progress_number.png</value>
@@ -52,7 +52,7 @@
       <name>进度数值透明度(0-255)</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
       <ref_property_id>2</ref_property_id>
@@ -70,7 +70,7 @@
       <name>进度单位颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
       <value>ICU\KL30\charge_progress_unit.png</value>
@@ -87,7 +87,7 @@
       <name>进度单位透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
       <ref_property_id>4</ref_property_id>
@@ -105,7 +105,7 @@
       <name>提示文本颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
       <value>ICU\KL30\charge_tip_text.png</value>
@@ -122,7 +122,7 @@
       <name>提示文本透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
       <ref_property_id>6</ref_property_id>
@@ -140,7 +140,7 @@
       <name>时间功率电压电流数值颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
       <value>ICU\KL30\charge_other_number.png</value>
@@ -157,7 +157,7 @@
       <name>时间功率电压电流数值透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
       <ref_property_id>8</ref_property_id>
@@ -175,7 +175,7 @@
       <name>时间功率电压电流单位颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
       <value>ICU\KL30\charge_other_unit.png</value>
@@ -192,7 +192,7 @@
       <name>时间功率电压电流单位透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
       <value>ICU\KL30\charge_other_unit.png</value>
@@ -209,7 +209,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
       <type>image</type>
-      <in_group>false</in_group>
+      <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>noChange\ICU\KL30\charge_car.png</value>
@@ -225,7 +225,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框背景图</name>
       <type>image</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
       <value>noChange\ICU\KL30\charge_error_frame.png</value>
@@ -241,7 +241,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框阴影图</name>
       <type>image</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>noChange\ICU\KL30\charge_error_shadow.png</value>
@@ -257,7 +257,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>图标</name>
       <type>image</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
       <value>noChange\ICU\KL30\charge_error_icon.png</value>
@@ -273,7 +273,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
       <value>noChange\ICU\KL30\charge_error_text.png</value>
@@ -289,7 +289,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>图标</name>
       <type>image</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL30\30_charge_frame_pro.png</value>
@@ -304,7 +304,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
     </item>-->
@@ -317,7 +317,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>背景图片</name>
       <type>image</type>
-      <in_group>false</in_group>
+      <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL30\30_charge_show.png</value>
@@ -334,7 +334,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
       <type>image</type>
-      <in_group>true</in_group>
+      <show_label>true</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>noChange\ICU\KL30\car_door.png</value>
@@ -350,7 +350,7 @@
       <group_layer_idx>3</group_layer_idx>
       <name>/</name>
       <type>image</type>
-      <in_group>false</in_group>
+      <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>noChange\ICU\KL30\tt.png</value>
