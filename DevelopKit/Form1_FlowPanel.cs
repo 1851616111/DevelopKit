@@ -11,6 +11,8 @@ namespace DevelopKit
 {
     public static class Form1_FlowPanel
     {
+        private static int propertyLabelMargin = 50;
+
         public static void LoadFlowPanelConfig(FlowLayoutPanel flowPanel)
         {
             flowPanel.Padding = new Padding(0, 0, 0, 0);
@@ -53,18 +55,18 @@ namespace DevelopKit
                 if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
                     LoadGroups(tabPanel, properties, rowHeight);
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
+                    CenterBoardCache.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
                     ShowGroupTablePanel(tabPanel, rowHeight);
                     HideGroupBrotherTablePanel(tabPanel, group);
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
+                    CenterBoardCache.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
                     HideGroupTablePanel(tabPanel);
-                    CenterBoardController.HideGroupOnCenterBoard(group, null);
+                    CenterBoardCache.HideGroupOnCenterBoard(group, null);
                 }
                 else
                 {
@@ -156,7 +158,6 @@ namespace DevelopKit
                     if (property.Value.Length > 0)
                     {
                         LoadImageProperty(tabPanel, property, index);
-
                     }
                     break;
                 case PropertyType.TxtColor:
@@ -188,48 +189,146 @@ namespace DevelopKit
             {
                 Dock = DockStyle.Fill,
             };
+            tabPanel.Controls.Add(panel, 0, index);
+
+            PictureBox cachedPb;
+            Image image;
+            if (property.RefPropertyId > 0)
+            {
+                cachedPb = CenterBoardCache.GetPictureBox(property.RefPropertyId);
+                if (cachedPb != null)
+                {
+                    image = cachedPb.Image;
+                }
+                else
+                {
+                    Log.Error("Flow1_FlowPanel", "LoadImageProperty", string.Format("property id={0} Get picture box nil", property.Id));
+                    image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value);
+                }
+            }
+            else
+            {
+                image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value);
+            }
+
             PictureBox pictureBox = new PictureBox
             {
                 Name = property.GetPictureBoxId(),
-                Size = new Size(50, 30),
+                Size = new Size(0, 0),
                 Margin = new Padding(0, 0, 0, 0),
                 Padding = new Padding(0, 0, 0, 0),
-                Image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value),
+                Image = image,
                 SizeMode = PictureBoxSizeMode.Zoom,
                 BorderStyle = BorderStyle.FixedSingle,
-                Location = new Point(10, 5),
-                BackColor = Color.Gray
+                Location = new Point(0, 0),
+                BackColor = Color.Gray,
+                Visible = false,
+            };
+            //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
+            CenterBoardCache.SetPictureBox(property.Id, pictureBox);
+
+            Label label = new Label
+            {
+                Text = property.Name,
+                Location = new Point(0, 0),
+                Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                Height = 20,
+                Width = 180,
+                TextAlign = ContentAlignment.MiddleLeft,
             };
 
             Button button = new Button
             {
-                Text = "更换",
-                Location = new Point(80, 5),
+                Location = new Point(panel.Width - 100, 0),
+                Width = 100,
+                Height = 26,
+                Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                TextAlign = ContentAlignment.MiddleCenter
             };
 
             panel.Controls.Add(pictureBox);
-            panel.Controls.Add(button);
+            panel.Controls.Add(label);
 
-            button.Click += new EventHandler(delegate (object _, EventArgs b)
+            if (property.OptType == PropertyOperateType.ReplaceImage)
             {
-                try
+                button.Text = "更换图片";
+                button.Click += new EventHandler(delegate (object _, EventArgs b)
                 {
-                    OpenFileDialog openFileDialog = new OpenFileDialog
+                    try
                     {
-                        Filter = "Png|*.png|Jpg|*.jpg"
-                    };
-                    if (openFileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        pictureBox.Image = Image.FromFile(openFileDialog.FileName);
-                        GlobalConfig.Project.SetPropertyValueById(property.Id, openFileDialog.FileName);
+                        OpenFileDialog openFileDialog = new OpenFileDialog
+                        {
+                            Filter = "Png|*.png|Jpg|*.jpg"
+                        };
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                            pictureBox.Refresh();
+                        }
+                        CenterBoardCache.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
                     }
+                    catch (Exception)
+                    { }
+                });
+                panel.Controls.Add(button);
+            }
+            else if (property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
+            {
+                TextBox text = new TextBox
+                {
+                    AutoSize = false,
+                    Width = 35,
+                    Height = 25,
+                    Location = new Point(label.Width + propertyLabelMargin, 0),
+                    Margin = new Padding(0, 0, 0, 0),
+                    BorderStyle = BorderStyle.FixedSingle,
+                };
 
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
-                }
-                catch (Exception)
-                { }
-            });
-            tabPanel.Controls.Add(panel, 0, index);
+                button.Text = "设置颜色";
+                button.Click += new EventHandler(delegate (object _, EventArgs b)
+                {
+                    ColorDialog dialog = new ColorDialog();
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        PngUtil.SetAlphaWhilteImage((Bitmap)image, dialog.Color);
+                        text.BackColor = dialog.Color;
+                        pictureBox.Refresh();
+                    }
+                    CenterBoardCache.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+
+                });
+                panel.Controls.Add(text);
+                panel.Controls.Add(button);
+            }
+            else if (property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha)
+            {
+                TextBox text = new TextBox
+                {
+                    Text = "255",
+                    Width = 35,
+                    Location = new Point(label.Width + propertyLabelMargin, 0),
+                    Height = 20,
+                    Margin = new Padding(0, 0, 0, 0),
+                    Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                };
+
+                button.Text = "确定";
+                button.Click += new EventHandler(delegate (object _, EventArgs b)
+                {
+                    try
+                    {
+                        int alphaValue = Convert.ToInt32(text.Text);
+                        PngUtil.SetAlphaWhilteImage((Bitmap)image, alphaValue);
+                        pictureBox.Refresh();
+                        CenterBoardCache.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                    }
+                    catch (Exception)
+                    {}
+                });
+                panel.Controls.Add(button);
+                panel.Controls.Add(text);
+            }
         }
     }
 }
+

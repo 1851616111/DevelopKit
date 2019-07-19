@@ -16,6 +16,7 @@ namespace DevelopKit
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
         static private Size centerBoardImageSize;
         static private int trackBar1CurrentValue;
+        static private readonly int propertyRowHeight = 35;
 
 
         ParameterizedThreadStart pts;
@@ -36,7 +37,7 @@ namespace DevelopKit
             trackBar1.Visible = false;
             trackbarLabel.Visible = false;
             centerBoardStatusStrip.Visible = false;
-            CenterBoardController.SetCenterBoardImageHandler = new UpdateHandler(CenterBoardPictureBoxOnChange);
+            CenterBoardCache.SetCenterBoardImageHandler = new UpdateHandler(CenterBoardPictureBoxOnChange);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -659,7 +660,7 @@ namespace DevelopKit
                 }
 
                 Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
-                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], 50);
+                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], propertyRowHeight);
             }
         }
 

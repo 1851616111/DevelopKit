@@ -343,6 +343,8 @@ namespace DevelopKit
         public int PropertyLayerIdx;
         [XmlElement("value")]
         public string Value;
+        [XmlElement("ref_property_id")]
+        public int RefPropertyId;
         [XmlElement("size")]
         public string Size;
         [XmlElement("location")]
@@ -439,7 +441,8 @@ namespace DevelopKit
     {
         public const string Nil = "/";
         public const string ReplaceImage = "image_replace";
-        public const string FilterImageColor = "image_filter_color";
-        public const string FilterImageAlpha = "image_filter_alpha";
+        public const string AlphaWhiteImageSetColor = "alpha_white_image_set_color";
+        public const string AlphaWhiteImageSetAlpha = "alpha_white_image_set_alpha";
+        public const string ImageFilterColor = "image_filter_color";
     }
 }

@@ -380,6 +380,57 @@ namespace DevelopKit
             return bm;
         }
 
+
+        //Png图片， RGB=255， Alpha为不为0时为白色部分
+        public static void SetAlphaWhilteImage(Bitmap bm, Color targetColor)
+        {
+            int x, y;
+
+            for (x = 0; x < bm.Width; x++)
+            {
+                for (y = 0; y < bm.Height; y++)
+                {
+
+                    Color pixel = bm.GetPixel(x, y);//获取当前坐标的像素值
+
+                    if (pixel.A == 0)
+                    {
+                        continue;
+                    }
+
+                    bm.SetPixel(x, y, Color.FromArgb(pixel.A, targetColor.R, targetColor.G, targetColor.B));
+                }
+            }
+        }
+        
+        //Png图片， RGB=255， Alpha为不为0时为白色部分
+        public static void SetAlphaWhilteImage(Bitmap bm, int alpha)
+        {
+            if (alpha < 0 || alpha > 255)
+            {
+                return;
+            }
+
+            int x, y;
+
+            for (x = 0; x < bm.Width; x++)
+            {
+                for (y = 0; y < bm.Height; y++)
+                {
+
+                    Color pixel = bm.GetPixel(x, y);//获取当前坐标的像素值
+
+                    if (pixel.A == 0)
+                    {
+                        continue;
+                    }
+
+                    bm.SetPixel(x, y, Color.FromArgb(alpha, pixel.R, pixel.G, pixel.B));
+                }
+            }
+        }
+
+
         public static Bitmap ChangeWhiteColor(Bitmap mybm, Color targetColor)
         {
             Bitmap bm = (Bitmap)mybm.Clone();//初始化一个记录滤色效果的图片对象

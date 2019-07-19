@@ -34,7 +34,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>进度数值颜色</name>
       <type>txt_color</type>
-      <operate_type>image_filter_color</operate_type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -49,12 +49,13 @@
       <group_name>充电界面</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
-      <name>进度数值透明度</name>
+      <name>进度数值透明度(0-255)</name>
       <type>alpha</type>
-      <operate_type>image_filter_alpha</operate_type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
+      <ref_property_id>2</ref_property_id>
       <value>ICU\KL30\charge_progress_number.png</value>
       <location>863,307</location>
       <size>134,85</size>
@@ -68,7 +69,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>进度单位颜色</name>
       <type>txt_color</type>
-      <operate_type>image_filter_color</operate_type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
@@ -85,10 +86,11 @@
       <group_layer_idx>1</group_layer_idx>
       <name>进度单位透明度</name>
       <type>alpha</type>
-      <operate_type>image_filter_alpha</operate_type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <ref_property_id>4</ref_property_id>
       <value>ICU\KL30\charge_progress_unit.png</value>
       <location>1030,371</location>
       <size>22*19</size>
@@ -102,7 +104,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
-      <operate_type>image_filter_color</operate_type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
@@ -119,10 +121,11 @@
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本透明度</name>
       <type>alpha</type>
-      <operate_type>image_filter_alpha</operate_type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>3</property_layer_idx>
+      <ref_property_id>6</ref_property_id>
       <value>ICU\KL30\charge_tip_text.png</value>
       <location>875,547</location>
       <size>173*31</size>
@@ -136,7 +139,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流数值颜色</name>
       <type>txt_color</type>
-      <operate_type>image_filter_color</operate_type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
@@ -153,10 +156,11 @@
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流数值透明度</name>
       <type>alpha</type>
-      <operate_type>image_filter_alpha</operate_type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>4</property_layer_idx>
+      <ref_property_id>8</ref_property_id>
       <value>ICU\KL30\charge_other_number.png</value>
       <location>549,614</location>
       <size>835*25</size>
@@ -170,7 +174,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流单位颜色</name>
       <type>txt_color</type>
-      <operate_type>image_filter_color</operate_type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
@@ -187,11 +191,12 @@
       <group_layer_idx>1</group_layer_idx>
       <name>时间功率电压电流单位透明度</name>
       <type>alpha</type>
-      <operate_type>image_filter_alpha</operate_type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
       <in_group>true</in_group>
       <can_edit>true</can_edit>
       <property_layer_idx>5</property_layer_idx>
       <value>ICU\KL30\charge_other_unit.png</value>
+      <ref_property_id>10</ref_property_id>
       <location>535,622</location>
       <size>859*52</size>
     </item>
@@ -203,7 +208,7 @@
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
-      <type>/</type>
+      <type>image</type>
       <in_group>false</in_group>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -316,6 +321,7 @@
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL30\30_charge_show.png</value>
+      <ref_property_id>1</ref_property_id>
       <location>0,0</location>
       <size>1920*720</size>
     </item>-->

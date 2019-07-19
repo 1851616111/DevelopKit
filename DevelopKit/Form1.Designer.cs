@@ -392,7 +392,7 @@
             this.splitter2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.splitter2.Cursor = System.Windows.Forms.Cursors.SizeWE;
             this.splitter2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.splitter2.Location = new System.Drawing.Point(1547, 82);
+            this.splitter2.Location = new System.Drawing.Point(1497, 82);
             this.splitter2.Margin = new System.Windows.Forms.Padding(0);
             this.splitter2.Name = "splitter2";
             this.splitter2.Size = new System.Drawing.Size(7, 957);
@@ -410,7 +410,7 @@
             this.tabControl1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.ShowToolTips = true;
-            this.tabControl1.Size = new System.Drawing.Size(1340, 957);
+            this.tabControl1.Size = new System.Drawing.Size(1290, 957);
             this.tabControl1.TabIndex = 15;
             // 
             // tabPage1
@@ -425,7 +425,7 @@
             this.tabPage1.Margin = new System.Windows.Forms.Padding(0);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tabPage1.Size = new System.Drawing.Size(1332, 924);
+            this.tabPage1.Size = new System.Drawing.Size(1282, 924);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "流程面板";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -483,12 +483,12 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(1554, 82);
+            this.panel2.Location = new System.Drawing.Point(1504, 82);
             this.panel2.Margin = new System.Windows.Forms.Padding(0);
-            this.panel2.MaximumSize = new System.Drawing.Size(370, 0);
-            this.panel2.MinimumSize = new System.Drawing.Size(370, 0);
+            this.panel2.MaximumSize = new System.Drawing.Size(420, 0);
+            this.panel2.MinimumSize = new System.Drawing.Size(420, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(370, 957);
+            this.panel2.Size = new System.Drawing.Size(420, 957);
             this.panel2.TabIndex = 18;
             // 
             // contextMenuStrip1
