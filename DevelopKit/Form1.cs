@@ -681,21 +681,22 @@ namespace DevelopKit
                 if (trackBar1CurrentValue == 0)
                 {
                     centerBoardImageSize = image.Size;
-                    int percent = (tabPage1.Width * 100 / centerBoardImageSize.Width);
-                    trackBar1.Value = percent;
-                    trackBar1CurrentValue = percent;
-                    trackBar1.Minimum = percent;
-                    trackBar1.Maximum = 100;
-
+                    int percent100 = (int)(tabPage1.Width * 10000F / image.Width);
+                    trackBar1.Minimum = percent100;
+                    trackBar1.Maximum = 10000;
+                    trackBar1.Value = percent100;
+                    trackBar1.TickFrequency = 500;
+                    trackBar1CurrentValue = percent100;
+                  
                     trackbarLabel.Location = new Point(trackBar1.Location.X + trackBar1.Width + 20, trackBar1.Location.Y);
-                    trackbarLabel.Text = percent.ToString("#") + "%";
-                    trackBar1.Value = (int)((percent / 100F) * trackBar1.Maximum);
+                    trackbarLabel.Text = (percent100 / 100F).ToString("#") + "%";
+                    trackBar1.Value = trackBar1.Minimum;
                     centerBoardPictuerBox.Width = tabPage1.Width;
                 }
                 else
                 {
-                    trackBar1.Value = trackBar1CurrentValue;
-                    centerBoardPictuerBox.Width = (int)((trackBar1CurrentValue / 100F) * centerBoardImageSize.Width);
+                    trackBar1.Value = (int)trackBar1CurrentValue;
+                    centerBoardPictuerBox.Width = (int)((trackBar1CurrentValue / 10000F) * centerBoardImageSize.Width);
                 }
                 centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
             }
@@ -710,8 +711,8 @@ namespace DevelopKit
 
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
-            centerBoardPictuerBox.Width = (int)(centerBoardImageSize.Width * (trackBar1.Value / 100F));
-            trackbarLabel.Text = trackBar1.Value.ToString() + "%";
+            centerBoardPictuerBox.Width = (int)(centerBoardImageSize.Width * (trackBar1.Value / 10000F));
+            trackbarLabel.Text = (trackBar1.Value/100).ToString() + "%";
             trackBar1CurrentValue = trackBar1.Value;
             centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
 

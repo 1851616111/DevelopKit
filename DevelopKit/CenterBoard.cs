@@ -11,6 +11,7 @@ namespace DevelopKit
     public class GroupCache
     {
         public int GroupLayerId;
+        public GroupSize GroupSize;
         public List<PngUtil.MergeImageParams> GroupPropertiesImages;
     }
 
@@ -61,6 +62,7 @@ namespace DevelopKit
                 groupLayerCache[group.Sceneid][group.LayerIndex] = new GroupCache
                 {
                     GroupLayerId = group.LayerIndex,
+                    GroupSize = group.Size,
                     GroupPropertiesImages = ps,
                 };
             }
@@ -72,9 +74,14 @@ namespace DevelopKit
             else
             {
                 List<PngUtil.MergeImageParams> resultList = null;
+                GroupSize maxGroupSize = null;
                 foreach (GroupCache groupCache in groupLayerCache[group.Sceneid].Values)
                 {
-                    if (resultList == null)
+                    if (maxGroupSize == null || groupCache.GroupSize.Width > maxGroupSize.Width)
+                    {
+                        maxGroupSize = groupCache.GroupSize;
+                    } 
+                        if (resultList == null)
                     {
                         resultList = groupCache.GroupPropertiesImages;
                     }
@@ -82,8 +89,9 @@ namespace DevelopKit
                     {
                         resultList = resultList.Union(groupCache.GroupPropertiesImages).ToList();
                     }   
+
                 }
-                SetCenterBoardImageHandler(PngUtil.MergeImageList(resultList));
+                SetCenterBoardImageHandler(PngUtil.MergeImageList(resultList, maxGroupSize.Width, maxGroupSize.Height));
             }
         }
 
@@ -93,7 +101,7 @@ namespace DevelopKit
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
             foreach (Property property in properties)
             {
-                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha || property.OptType == PropertyOperateType.ImageFilterColor)
+                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
                 {
                     Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
                     if (pbCtl.Length == 0)

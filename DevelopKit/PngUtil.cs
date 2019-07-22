@@ -174,179 +174,37 @@ namespace DevelopKit
         /// <param name="y">要叠加的图片位置的Y坐标</param>
         /// <param name="isSave"></param>
         /// <returns>生成图片的路径</returns>        
-        public static Image MergeImageList(List<MergeImageParams> images)
-        {
-            if (images.Count == 0)
-            {
-                return null;
-            }
-            else if (images.Count == 1)
-            {
-                return images[0].Image;
-            }
-
-            Image imgPhoto = (Image)images[0].Image;
-            //create a image object containing the photograph to watermark
-            int phWidth = imgPhoto.Width;
-            int phHeight = imgPhoto.Height;
-
-            //create a Bitmap the Size of the original photograph
-            Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format24bppRgb);
-
-            //设置此 Bitmap 的分辨率。 
-            bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
-
-            //load the Bitmap into a Graphics object 
-            Graphics grPhoto = Graphics.FromImage(bmPhoto);
-            //Set the rendering quality for this Graphics object
-            grPhoto.SmoothingMode = SmoothingMode.AntiAlias;//清除锯齿的呈现
-            //haix
-            for (int i = 1; i < images.Count; i++)
-            {
-                //Draws the photo Image object at original size to the graphics object.
-                grPhoto.DrawImage(
-                    imgPhoto,                               // Photo Image object
-                    new Rectangle(0, 0, phWidth, phHeight), // Rectangle structure
-                    0,                                      // x-coordinate of the portion of the source image to draw. 
-                    0,                                      // y-coordinate of the portion of the source image to draw. 
-                    phWidth,                                // Width of the portion of the source image to draw. 
-                    phHeight,                               // Height of the portion of the source image to draw. 
-                    GraphicsUnit.Pixel);                    // Units of measure 
-
-
-                //------------------------------------------------------------
-                //Step #2 - Insert Property image,For example:hair,skirt,shoes etc.
-                //------------------------------------------------------------
-                //create a image object containing the watermark
-                Image imgWatermark = new Bitmap(images[i].Image);
-                int wmWidth = imgWatermark.Width;
-                int wmHeight = imgWatermark.Height;
-
-
-                //Create a Bitmap based on the previously modified photograph Bitmap
-                Bitmap bmWatermark = new Bitmap(bmPhoto);
-                //bmWatermark.MakeTransparent(); //使默认的透明颜色对此 Bitmap 透明。
-
-                //bmWatermark.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
-                //Load this Bitmap into a new Graphic Object
-                Graphics grWatermark = Graphics.FromImage(bmWatermark);
-
-
-                int xPosOfWm = images[i].X;
-                int yPosOfWm = images[i].Y;
-
-                //叠加
-                grWatermark.DrawImage(imgWatermark, new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight),  //Set the detination Position
-                0,                  // x-coordinate of the portion of the source image to draw. 
-                0,                  // y-coordinate of the portion of the source image to draw. 
-                wmWidth,            // Watermark Width
-                wmHeight,		    // Watermark Height
-                GraphicsUnit.Pixel, // Unit of measurment
-                null);   //ImageAttributes Object
-
-
-                //Replace the original photgraphs bitmap with the new Bitmap
-                imgPhoto = bmWatermark;
-
-                //grWatermark.Dispose();
-                //imgWatermark.Dispose();
-                //grPhoto.Dispose();                
-                //bmWatermark.Dispose();
-            }
-
-            return imgPhoto;
-        }
-
-        /// <summary>
-        /// 生成水印
-        /// </summary>
-
-        /// <param name="Child">要叠加的图片路径</param>
-        /// <param name="x">要叠加的图片位置的X坐标</param>
-        /// <param name="y">要叠加的图片位置的Y坐标</param>
-        /// <param name="isSave"></param>
-        /// <returns>生成图片的路径</returns>        
         public static Image MergeImageList(List<MergeImageParams> images, int width, int height)
         {
             if (images.Count == 0)
             {
                 return null;
             }
-            else if (images.Count == 1)
-            {
-                return images[0].Image;
-            }
-
-            Image imgPhoto = (Image)images[0].Image;
-            //create a image object containing the photograph to watermark
-            int phWidth = width;
-            int phHeight = height;
 
             //create a Bitmap the Size of the original photograph
-            Bitmap bmPhoto = new Bitmap(phWidth, phHeight, PixelFormat.Format32bppArgb);
-
+            Bitmap bmPhoto = new Bitmap(width, height, PixelFormat.Format32bppArgb);
             //设置此 Bitmap 的分辨率。 
-            bmPhoto.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
 
             //load the Bitmap into a Graphics object 
             Graphics grPhoto = Graphics.FromImage(bmPhoto);
             //Set the rendering quality for this Graphics object
             grPhoto.SmoothingMode = SmoothingMode.AntiAlias;//清除锯齿的呈现
-            //haix
-            for (int i = 1; i < images.Count; i++)
+
+            foreach (MergeImageParams ps in images)
             {
-                //Draws the photo Image object at original size to the graphics object.
+                //bmPhoto.SetResolution(ps.Image.HorizontalResolution, ps.Image.VerticalResolution);
+
                 grPhoto.DrawImage(
-                    imgPhoto,                               // Photo Image object
-                    new Rectangle(0, 0, phWidth, phHeight), // Rectangle structure
-                    0,                                      // x-coordinate of the portion of the source image to draw. 
-                    0,                                      // y-coordinate of the portion of the source image to draw. 
-                    phWidth,                                // Width of the portion of the source image to draw. 
-                    phHeight,                               // Height of the portion of the source image to draw. 
-                    GraphicsUnit.Pixel);                    // Units of measure 
-
-
-                //------------------------------------------------------------
-                //Step #2 - Insert Property image,For example:hair,skirt,shoes etc.
-                //------------------------------------------------------------
-                //create a image object containing the watermark
-                Image imgWatermark = new Bitmap(images[i].Image);
-                int wmWidth = imgWatermark.Width;
-                int wmHeight = imgWatermark.Height;
-
-
-                //Create a Bitmap based on the previously modified photograph Bitmap
-                Bitmap bmWatermark = new Bitmap(bmPhoto);
-                //bmWatermark.MakeTransparent(); //使默认的透明颜色对此 Bitmap 透明。
-
-                //bmWatermark.SetResolution(imgPhoto.HorizontalResolution, imgPhoto.VerticalResolution);
-                //Load this Bitmap into a new Graphic Object
-                Graphics grWatermark = Graphics.FromImage(bmWatermark);
-
-
-                int xPosOfWm = images[i].X;
-                int yPosOfWm = images[i].Y;
-
-                //叠加
-                grWatermark.DrawImage(imgWatermark, new Rectangle(xPosOfWm, yPosOfWm, wmWidth, wmHeight),  //Set the detination Position
-                0,                  // x-coordinate of the portion of the source image to draw. 
-                0,                  // y-coordinate of the portion of the source image to draw. 
-                wmWidth,            // Watermark Width
-                wmHeight,		    // Watermark Height
-                GraphicsUnit.Pixel, // Unit of measurment
-                null);   //ImageAttributes Object
-
-
-                //Replace the original photgraphs bitmap with the new Bitmap
-                imgPhoto = bmWatermark;
-
-                //grWatermark.Dispose();
-                //imgWatermark.Dispose();
-                //grPhoto.Dispose();                
-                //bmWatermark.Dispose();
+                 ps.Image,                               // Photo Image object
+                 new Rectangle(ps.X, ps.Y, ps.Image.Width, ps.Image.Height), // Rectangle structure
+                 0,                                      // x-coordinate of the portion of the source image to draw. 
+                 0,                                      // y-coordinate of the portion of the source image to draw. 
+                 ps.Image.Width,                                // Width of the portion of the source image to draw. 
+                 ps.Image.Height,                               // Height of the portion of the source image to draw. 
+                 GraphicsUnit.Pixel);                    // Units of measure 
             }
 
-            return imgPhoto;
+            return (Image)bmPhoto;
         }
 
         public static Bitmap FilPic(Bitmap mybm, Color targetColor)

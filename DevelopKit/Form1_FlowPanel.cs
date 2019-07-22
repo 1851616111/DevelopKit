@@ -252,6 +252,7 @@ namespace DevelopKit
                 Width = 180,
                 TextAlign = ContentAlignment.MiddleLeft,
             };
+            panel.Controls.Add(label);
 
             Button button = new Button
             {
@@ -261,8 +262,6 @@ namespace DevelopKit
                 Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
                 TextAlign = ContentAlignment.MiddleCenter
             };
-
-            panel.Controls.Add(label);
 
             if (property.OptType == PropertyOperateType.ReplaceImage)
             {

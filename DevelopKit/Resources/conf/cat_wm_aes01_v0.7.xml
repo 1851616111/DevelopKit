@@ -225,6 +225,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框背景图</name>
       <type>image</type>
+       <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -241,6 +242,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框阴影图</name>
       <type>image</type>
+      <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -257,6 +259,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>图标</name>
       <type>image</type>
+      <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
@@ -264,7 +267,7 @@
       <location>552,124</location>
       <size>812*472</size>
     </item>
-    <item>
+     <item>
       <id>16</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
@@ -273,13 +276,15 @@
       <group_layer_idx>2</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>4</property_layer_idx>
+      <property_layer_idx>3</property_layer_idx>
       <value>noChange\ICU\KL30\charge_error_text.png</value>
-      <location>552,125</location>
-      <size>812*473</size>
+      <location>552,124</location>
+      <size>812*472</size>
     </item>
+   
     <!--<item>
       <id>17</id>
       <scene_id>1</scene_id>
