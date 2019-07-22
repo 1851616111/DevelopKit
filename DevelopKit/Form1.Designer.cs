@@ -416,6 +416,7 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.centerBoardStatusStrip);
             this.tabPage1.Controls.Add(this.trackBar1);
             this.tabPage1.Controls.Add(this.trackbarLabel);
@@ -428,7 +429,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1282, 924);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "流程面板";
-            this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // centerBoardStatusStrip
             // 
@@ -471,6 +471,7 @@
             // 
             // centerBoardPictuerBox
             // 
+            this.centerBoardPictuerBox.BackColor = System.Drawing.Color.LightSkyBlue;
             this.centerBoardPictuerBox.Location = new System.Drawing.Point(0, 45);
             this.centerBoardPictuerBox.Margin = new System.Windows.Forms.Padding(0);
             this.centerBoardPictuerBox.Name = "centerBoardPictuerBox";

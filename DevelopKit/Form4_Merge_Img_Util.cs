@@ -183,7 +183,7 @@ namespace DevelopKit
                 });
                 ps.Add(img);
 
-                pictureBox3.Image = PngUtil.MergeImageList(ps);
+                pictureBox3.Image = PngUtil.MergeImageList(ps, pictureBox1.Image.Width, pictureBox1.Image.Height);
 
             }
             catch (ArgumentOutOfRangeException ex)
