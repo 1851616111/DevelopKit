@@ -6,6 +6,10 @@
       <id>1</id>
       <name>KL30</name>
     </item>
+      <item>
+      <id>2</id>
+      <name>KL15</name>
+    </item>
   </scenes>
   <properties>
     <item>
@@ -356,6 +360,62 @@
       <name>/</name>
       <type>image</type>
       <show_label>false</show_label>
+      <can_edit>false</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>noChange\ICU\KL30\tt.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
+    </item>
+  
+
+  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
+
+  
+    <item>
+      <id>22</id>
+      <scene_id>2</scene_id>
+      <group_id>7</group_id>
+      <group_name>TT灯2</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>aaaaa</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>false</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>noChange\ICU\KL30\tt.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
+    </item>
+    <item>
+      <id>23</id>
+      <scene_id>2</scene_id>
+      <group_id>7</group_id>
+      <group_name>TT灯2</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>bbbbb</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>false</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>noChange\ICU\KL30\charge_error_icon.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
+    </item>
+    <item>
+      <id>24</id>
+      <scene_id>2</scene_id>
+      <group_id>8</group_id>
+      <group_name>TT灯</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>sdfsdfs</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>noChange\ICU\KL30\tt.png</value>

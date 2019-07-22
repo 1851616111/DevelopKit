@@ -250,7 +250,6 @@
             this.toolBar1.ShowToolTips = true;
             this.toolBar1.Size = new System.Drawing.Size(1924, 45);
             this.toolBar1.TabIndex = 9;
-            this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBar1_ButtonClick);
             // 
             // toolBarButton1
             // 
@@ -319,7 +318,6 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
             this.tabControl2.TabIndex = 1;
-            this.tabControl2.SelectedIndexChanged += new System.EventHandler(this.TabControl2_SelectedIndexChanged);
             // 
             // tabPage2
             // 

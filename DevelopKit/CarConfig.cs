@@ -32,7 +32,6 @@ namespace DevelopKit
                     return car;
                 }
             }
-
             return null;
         }
 

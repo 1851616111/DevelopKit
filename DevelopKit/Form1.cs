@@ -14,10 +14,9 @@ namespace DevelopKit
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
-        static private Size centerBoardImageSize;
-        static private int trackBar1CurrentValue;
         static private readonly int propertyRowHeight = 35;
-
+        static private Dictionary<int, FlowLayoutPanel> sceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
+        static private int lastOpenedSceneId;
 
         ParameterizedThreadStart pts;
         Thread t;
@@ -31,13 +30,11 @@ namespace DevelopKit
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
+            CenterBoardController.NewCenterBoardController(tabPage1);
             HideOpenedProject();
             GlobalConfig.Project = null;
 
-            trackBar1.Visible = false;
-            trackbarLabel.Visible = false;
-            centerBoardStatusStrip.Visible = false;
-            CenterBoardCache.SetCenterBoardImageHandler = new UpdateHandler(CenterBoardPictureBoxOnChange);
+            CenterBoardController.SetVisible(false);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -58,6 +55,7 @@ namespace DevelopKit
 
             ProjectStatusHandler(GlobalConfig.Project);
         }
+
 
         private void ProjectStatusHandler(Project project)
         {
@@ -178,167 +176,6 @@ namespace DevelopKit
             else
             {
                 Form1_Util.OpenTxtForm(GlobalConfig.Project.GetUserSpaceDir(), filepath, tabControl1, Form_Request_Handler);
-            }
-        }
-
-        //保存当前Tabpage页的图片 ,由form1 自上而下发起保存图片请求
-        private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-            TabPage selectedTabTage = tabControl1.SelectedTab;
-            if (selectedTabTage == null)
-            {
-                return;
-            }
-            SaveFileInTabPage(selectedTabTage);
-        }
-
-        private void SaveImageInTabPage(TabPage tabpage)
-        {
-            if (tabpage.Tag == null)
-            {
-                return;
-            }
-
-            Hashtable tag = (Hashtable)(tabpage.Tag);
-
-            if (tag["filetype"].GetType() != typeof(FileType))
-            {
-                return;
-            }
-
-            string filename = (string)tag["filename"];
-            string filepath = (string)tag["filepath"];
-            FileType filetype = (FileType)tag["filetype"];
-
-            if (StringUtil.isFileSafed(tabpage.Text))
-            {
-                toolStripStatusLabel1.Text = string.Format("图片{0}已保存到项目中", filename);
-                return; //已保存暂时不做处理
-            }
-
-            foreach (Control control in tabpage.Controls)  //
-            {
-                if (control.GetType() != typeof(Form1_Image))
-                {
-                    continue;
-                }
-
-                foreach (Control childControl in control.Controls)
-                {
-                    if (childControl.GetType() != typeof(PictureBox))  //保存图片
-                    {
-                        continue;
-                    }
-
-                    SaveFileDialog fileDialog = new SaveFileDialog
-                    {
-                        Filter = "PNG|*.png|所有文件|*.*",
-                        FilterIndex = 1,
-                        RestoreDirectory = true,
-                        InitialDirectory = GlobalConfig.Project.GetUserSpaceDir()
-
-                    };
-                    if (fileDialog.ShowDialog() == DialogResult.OK)
-                    {
-                        try
-                        {
-                            ((PictureBox)childControl).Image.Save(fileDialog.FileName);
-                            ChangeFileWindowsTextAsSaved(filepath);
-
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("保存文件失败");
-                            Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
-                        }
-                    }
-                }
-            }
-        }
-
-        private void SaveFileInTabPage(TabPage tabpage)
-        {
-            //if (tabpage.Tag == null)
-            //{
-            //    return;
-            //}
-
-            //Hashtable tag = (Hashtable)(tabpage.Tag);
-
-            //if (tag["filetype"].GetType() != typeof(FileType))
-            //{
-            //    return;
-            //}
-
-            //string filename = (string)tag["filename"];
-            //string filepath = (string)tag["filepath"];
-            //FileType filetype = (FileType)tag["filetype"];
-
-
-            //foreach (Control control in tabpage.Controls)  //
-            //{
-            //    foreach (Control childControl in control.Controls)
-            //    {
-            //        if (filetype == FileType.Image && childControl.GetType() == typeof(PictureBox))  //保存图片
-            //        {
-            //            SaveFileDialog fileDialog = new SaveFileDialog
-            //            {
-            //                Filter = "PNG|*.png|所有文件|*.*",
-            //                FilterIndex = 1,
-            //                RestoreDirectory = true,
-            //                InitialDirectory = GlobalProject.GetUserSpaceDir()
-
-            //            };
-            //            if (fileDialog.ShowDialog() == DialogResult.OK)
-            //            {
-            //                try
-            //                {
-            //                    ((PictureBox)childControl).Image.Save(fileDialog.FileName);
-            //                    ChangeFileWindowsTextAsSaved(filepath);
-
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    MessageBox.Show("保存文件失败");
-            //                    Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
-            //                }
-            //            }
-
-            //        }
-            //        else if (filetype == FileType.Txt && childControl.GetType() == typeof(RichTextBox))
-            //        {
-
-            //            fileDialog.Filter = "Text|*.txt|所有文件|*.*";
-
-            //            if (fileDialog.ShowDialog() == DialogResult.OK)
-            //            {
-            //                try
-            //                {
-
-            //                    ((RichTextBox)childControl).SaveFile(fileDialog.FileName);
-            //                    ChangeFileWindowsTextAsSaved(filepath);
-
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    MessageBox.Show("保存文件失败");
-            //                    Log.Error("Form1 SaveImageInTabPage()", "保存文件失败", ex.ToString());
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-        }
-
-        private void TabControl2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-            if (tabControl2.SelectedIndex == 0)
-            {
-                TreeView1_LoadCurrentProject(GlobalConfig.Project.GetUserSpaceDir());
-            }
-            else
-            {
             }
         }
 
@@ -634,14 +471,41 @@ namespace DevelopKit
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int sceneId = Convert.ToInt32(e.Node.Name);
-            //加载右侧菜单页
-            LoadFlowPanel(sceneId);
+            if (sceneId == lastOpenedSceneId)
+            {
+                return;
+            }
 
-            //按照layer绘制中央区域
-            LoadCenterImage(sceneId);
+            //隐藏上一次打开的场景
+            if (lastOpenedSceneId > 0 )
+            {
+                if (sceneFlowLayoutPanelMap.ContainsKey(lastOpenedSceneId)) {
+                    sceneFlowLayoutPanelMap[lastOpenedSceneId].Visible = false;
+                    sceneFlowLayoutPanelMap[lastOpenedSceneId].Enabled = false;
+                    CenterBoardController.SetVisible(false);
+                    centerBoardPictuerBox.Image = null;
+                    centerBoardPictuerBox.Refresh();
+                }
+            }
+
+            if (!sceneFlowLayoutPanelMap.ContainsKey(sceneId))
+            {
+
+                //首次加载右侧菜单页
+                sceneFlowLayoutPanelMap.Add(sceneId, LoadSceneFlowLayoutPanel(sceneId));
+            }
+            else {
+
+                //二次显示
+                sceneFlowLayoutPanelMap[sceneId].Visible = true;
+                sceneFlowLayoutPanelMap[sceneId].Enabled = true;
+                CenterBoardController.ShowCenterBoard(sceneId);
+            }
+
+            lastOpenedSceneId = sceneId;
         }
 
-        private void LoadFlowPanel(int sceneId)
+        private FlowLayoutPanel LoadSceneFlowLayoutPanel(int sceneId)
         {
             Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
@@ -662,60 +526,13 @@ namespace DevelopKit
                 Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
                 Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], propertyRowHeight);
             }
-        }
 
-        private void LoadCenterImage(int sceneId)
-        {
-            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
-
-        }
-
-        private  void CenterBoardPictureBoxOnChange(Image image) 
-        {
-            if (image != null)
-            {
-                trackBar1.Visible = true;
-                trackbarLabel.Visible = true;
-                centerBoardStatusStrip.Visible = true;
-
-                if (trackBar1CurrentValue == 0)
-                {
-                    centerBoardImageSize = image.Size;
-                    int percent100 = (int)(tabPage1.Width * 10000F / image.Width);
-                    trackBar1.Minimum = percent100;
-                    trackBar1.Maximum = 10000;
-                    trackBar1.Value = percent100;
-                    trackBar1.TickFrequency = 500;
-                    trackBar1CurrentValue = percent100;
-                  
-                    trackbarLabel.Location = new Point(trackBar1.Location.X + trackBar1.Width + 20, trackBar1.Location.Y);
-                    trackbarLabel.Text = (percent100 / 100F).ToString("#") + "%";
-                    trackBar1.Value = trackBar1.Minimum;
-                    centerBoardPictuerBox.Width = tabPage1.Width;
-                }
-                else
-                {
-                    trackBar1.Value = (int)trackBar1CurrentValue;
-                    centerBoardPictuerBox.Width = (int)((trackBar1CurrentValue / 10000F) * centerBoardImageSize.Width);
-                }
-                centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
-            }
-            else
-            {
-                trackBar1.Visible = false;
-                trackbarLabel.Visible = false;
-                centerBoardStatusStrip.Visible = false;
-            }
-            centerBoardPictuerBox.Image = image;
+            return flowLayoutPanel;
         }
 
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
-            centerBoardPictuerBox.Width = (int)(centerBoardImageSize.Width * (trackBar1.Value / 10000F));
-            trackbarLabel.Text = (trackBar1.Value/100).ToString() + "%";
-            trackBar1CurrentValue = trackBar1.Value;
-            centerBoardToolStripStatusLabel.Text = string.Format("{0}*{1}", centerBoardPictuerBox.Width, centerBoardPictuerBox.Height);
-
+           CenterBoardController.CenterBoardBarOnScroll();
         }
     }
 
