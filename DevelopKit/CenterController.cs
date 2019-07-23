@@ -27,20 +27,21 @@ namespace DevelopKit
     public static class CenterBoardController
     {
         private static int OpenedSceneId;
-
+        private static Panel CenterBoardPenel;
         private static TabPage CenterBoardTabPage;
         private static PictureBox CenterBoardPictureBox;
         private static TrackBar CenterBoardTrackBar;
         private static Label CenterBoardLabel;
         private static StatusStrip CenterBoardToolStrip;
 
+        private static Dictionary<int, FlowLayoutPanel> sceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
         private static Dictionary<int, CenterBoardData> SceneCenterBoardData = new Dictionary<int, CenterBoardData>();
-
         private static Dictionary<int, PictureBox> PictureBoxCache = new Dictionary<int, PictureBox>();         //注意PictureBox的声明周期，若无限绑定内存可能会溢出
         private static Dictionary<int, SortedDictionary<int, GroupCache>> groupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
 
-        public static void NewCenterBoardController(TabPage tabPage)
+        public static void NewCenterBoardController(Panel centerPenel, TabPage tabPage)
         {
+            CenterBoardPenel = centerPenel;
             CenterBoardTabPage = tabPage;
 
             foreach (Control control in tabPage.Controls)
@@ -64,21 +65,73 @@ namespace DevelopKit
             }
         }
 
+        public static void DoubleClickScene(int newSceneID)
+        {
+            if (newSceneID == OpenedSceneId)
+                return;
+
+            //隐藏上一次打开的场景
+            if (OpenedSceneId > 0 && sceneFlowLayoutPanelMap.ContainsKey(OpenedSceneId))
+            {
+                sceneFlowLayoutPanelMap[OpenedSceneId].Visible = false;
+                sceneFlowLayoutPanelMap[OpenedSceneId].Enabled = false;
+                CenterBoardPictureBox.Image = null;
+                CenterBoardPictureBox.Refresh();
+                CenterBoardController.ResetCenterBoard(false);
+            }
+
+            if (sceneFlowLayoutPanelMap.ContainsKey(newSceneID))
+            {
+                sceneFlowLayoutPanelMap[newSceneID].Visible = true;
+                sceneFlowLayoutPanelMap[newSceneID].Enabled = true;
+                CenterBoardController.ShowCenterBoard(newSceneID);
+            }
+            else
+            {
+                sceneFlowLayoutPanelMap.Add(newSceneID, loadSceneFlowLayoutPanel(newSceneID));
+            }
+
+            OpenedSceneId = newSceneID;
+        }
+
+        private static FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId)
+        {
+            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
+            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
+
+            CenterBoardPenel.Controls.Add(flowLayoutPanel);
+
+            bool setFlow = false;
+            foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
+            {
+                TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
+                flowLayoutPanel.Controls.Add(tableLayoutPanel);
+                if (!setFlow)
+                {
+                    Form1_FlowPanel.LoadFlowPanelConfig(flowLayoutPanel);
+                    setFlow = true;
+                }
+
+                Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
+                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], GlobalConfig.UiConfig.PropertyRowHeight);
+            }
+
+            return flowLayoutPanel;
+        }
+
         public static void ShowCenterBoard(int sceneID)
         {
             if (!SceneCenterBoardData.ContainsKey(sceneID))
-            {
                 return;
-            }
 
-            SetVisible(true);
+            ResetCenterBoard(true);
             CenterBoardPictureBox.Image = SceneCenterBoardData[sceneID].PictureBoxImage;
             CenterBoardTrackBar.Maximum = SceneCenterBoardData[sceneID].TrackBarMaxValue;
             CenterBoardTrackBar.Minimum = SceneCenterBoardData[sceneID].TrackBarMinValue;
             CenterBoardTrackBar.Value = SceneCenterBoardData[sceneID].TrackBarValue;
             CenterBoardLabel.Text = (CenterBoardTrackBar.Value / 100F).ToString("#") + "%";
             CenterBoardToolStrip.Items[0].Text = string.Format("{0}*{1}",
-                  (int)(SceneCenterBoardData[sceneID].PictureBoxImage.Width * SceneCenterBoardData[sceneID].TrackBarValue /10000F),
+                  (int)(SceneCenterBoardData[sceneID].PictureBoxImage.Width * SceneCenterBoardData[sceneID].TrackBarValue / 10000F),
                   (int)(SceneCenterBoardData[sceneID].PictureBoxImage.Height * SceneCenterBoardData[sceneID].TrackBarValue / 10000F));
         }
 
@@ -86,7 +139,7 @@ namespace DevelopKit
         {
             if (image != null)
             {
-                SetVisible(true);
+                ResetCenterBoard(true);
 
                 if (!SceneCenterBoardData.ContainsKey(sceneID))
                 {
@@ -124,7 +177,7 @@ namespace DevelopKit
             }
             else
             {
-                SetVisible(false);
+                ResetCenterBoard(false);
             }
             CenterBoardPictureBox.Image = image;
             OpenedSceneId = sceneID;
@@ -140,7 +193,7 @@ namespace DevelopKit
 
         }
 
-        public static void SetVisible(bool visible)
+        public static void ResetCenterBoard(bool visible)
         {
             CenterBoardTrackBar.Visible = visible;
             CenterBoardLabel.Visible = visible;
@@ -167,7 +220,6 @@ namespace DevelopKit
 
         public static void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
         {
-            //Image image = DrawGroupView(tabPanel, group);
             List<PngUtil.MergeImageParams> ps = ListGroupImages(tabPanel, group);
             HideGroupOnCenterBoard(group, ps);
         }

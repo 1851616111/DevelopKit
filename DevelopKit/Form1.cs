@@ -14,9 +14,6 @@ namespace DevelopKit
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
-        static private readonly int propertyRowHeight = 35;
-        static private Dictionary<int, FlowLayoutPanel> sceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
-        static private int lastOpenedSceneId;
 
         ParameterizedThreadStart pts;
         Thread t;
@@ -30,11 +27,11 @@ namespace DevelopKit
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
-            CenterBoardController.NewCenterBoardController(tabPage1);
+            CenterBoardController.NewCenterBoardController(panel2, tabPage1);
             HideOpenedProject();
             GlobalConfig.Project = null;
 
-            CenterBoardController.SetVisible(false);
+            CenterBoardController.ResetCenterBoard(false);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -471,63 +468,7 @@ namespace DevelopKit
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int sceneId = Convert.ToInt32(e.Node.Name);
-            if (sceneId == lastOpenedSceneId)
-            {
-                return;
-            }
-
-            //隐藏上一次打开的场景
-            if (lastOpenedSceneId > 0 )
-            {
-                if (sceneFlowLayoutPanelMap.ContainsKey(lastOpenedSceneId)) {
-                    sceneFlowLayoutPanelMap[lastOpenedSceneId].Visible = false;
-                    sceneFlowLayoutPanelMap[lastOpenedSceneId].Enabled = false;
-                    CenterBoardController.SetVisible(false);
-                    centerBoardPictuerBox.Image = null;
-                    centerBoardPictuerBox.Refresh();
-                }
-            }
-
-            if (!sceneFlowLayoutPanelMap.ContainsKey(sceneId))
-            {
-
-                //首次加载右侧菜单页
-                sceneFlowLayoutPanelMap.Add(sceneId, LoadSceneFlowLayoutPanel(sceneId));
-            }
-            else {
-
-                //二次显示
-                sceneFlowLayoutPanelMap[sceneId].Visible = true;
-                sceneFlowLayoutPanelMap[sceneId].Enabled = true;
-                CenterBoardController.ShowCenterBoard(sceneId);
-            }
-
-            lastOpenedSceneId = sceneId;
-        }
-
-        private FlowLayoutPanel LoadSceneFlowLayoutPanel(int sceneId)
-        {
-            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
-            FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
-
-            panel2.Controls.Add(flowLayoutPanel);
-
-            bool setFlow = false;
-            foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
-            {
-                TableLayoutPanel tableLayoutPanel = new TableLayoutPanel();
-                flowLayoutPanel.Controls.Add(tableLayoutPanel);
-                if (!setFlow)
-                {
-                    Form1_FlowPanel.LoadFlowPanelConfig(flowLayoutPanel);
-                    setFlow = true;
-                }
-
-                Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
-                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], propertyRowHeight);
-            }
-
-            return flowLayoutPanel;
+            CenterBoardController.DoubleClickScene(sceneId);
         }
 
         private void TrackBar1_Scroll(object sender, EventArgs e)
@@ -540,14 +481,21 @@ namespace DevelopKit
     {
         private static Project project;
         private static PictureBox mainPicture;
+        private static UIConfig uiConfig = new UIConfig { PropertyRowHeight = 35 };
 
         public static Project Project { get => project; set => project = value; }
         public static PictureBox MainPictureBox { get => mainPicture; set => mainPicture = value; }
+        public static UIConfig UiConfig { get => uiConfig; set => uiConfig = value; }
 
         public static string GetProjectResourcesDir()
         {
             return AppDomain.CurrentDomain.BaseDirectory + Project.CarInfo.ResourcesDir;
         }
     }
+
+    public class UIConfig
+    {
+        public int PropertyRowHeight;
+    }    
 }
 

@@ -68,7 +68,7 @@
   <ItemGroup>
     <Compile Include="CollectionUtil.cs" />
     <Compile Include="ByteUtil.cs" />
-    <Compile Include="CenterBoard.cs" />
+    <Compile Include="CenterController.cs" />
     <Compile Include="CarConfig.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
