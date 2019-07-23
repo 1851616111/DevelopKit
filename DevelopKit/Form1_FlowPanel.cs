@@ -55,18 +55,18 @@ namespace DevelopKit
                 if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
                 {
                     LoadGroups(tabPanel, properties, rowHeight);
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
+                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
                 {
                     ShowGroupTablePanel(tabPanel, rowHeight);
                     HideGroupBrotherTablePanel(tabPanel, group);
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, group);
+                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
                 }
                 else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
                 {
                     HideGroupTablePanel(tabPanel);
-                    CenterBoardController.HideGroupOnCenterBoard(group, null);
+                    GlobalConfig.Controller.HideGroupOnCenterBoard(group, null);
                 }
                 else
                 {
@@ -196,7 +196,7 @@ namespace DevelopKit
             Image image;
             if (property.RefPropertyId > 0)
             {
-                cachedPb = CenterBoardController.GetPictureBox(property.RefPropertyId);
+                cachedPb = GlobalConfig.Controller.GetPictureBox(property.RefPropertyId);
                 if (cachedPb != null)
                 {
                     image = cachedPb.Image;
@@ -227,7 +227,7 @@ namespace DevelopKit
 
             };
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
-            CenterBoardController.SetPictureBox(property.Id, pictureBox);
+            GlobalConfig.Controller.SetPictureBox(property.Id, pictureBox);
 
             if (!property.ShowLabel)
             {
@@ -279,7 +279,7 @@ namespace DevelopKit
                             pictureBox.Image = Image.FromFile(openFileDialog.FileName);
                             pictureBox.Refresh();
                         }
-                        CenterBoardController.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                        GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
                     }
                     catch (Exception)
                     { }
@@ -308,7 +308,7 @@ namespace DevelopKit
                         text.BackColor = dialog.Color;
                         pictureBox.Refresh();
                     }
-                    CenterBoardController.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
 
                 });
                 panel.Controls.Add(text);
@@ -334,7 +334,7 @@ namespace DevelopKit
                         int alphaValue = Convert.ToInt32(text.Text);
                         PngUtil.SetAlphaWhilteImage((Bitmap)image, alphaValue);
                         pictureBox.Refresh();
-                        CenterBoardController.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                        GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
                     }
                     catch (Exception)
                     {}

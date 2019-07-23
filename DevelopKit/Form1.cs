@@ -14,7 +14,6 @@ namespace DevelopKit
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
-
         ParameterizedThreadStart pts;
         Thread t;
         private static readonly Hashtable treeViewLeafNodeTag = new Hashtable
@@ -27,11 +26,10 @@ namespace DevelopKit
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
-            CenterBoardController.NewCenterBoardController(panel2, tabPage1);
             HideOpenedProject();
+       
             GlobalConfig.Project = null;
-
-            CenterBoardController.ResetCenterBoard(false);
+           
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -47,7 +45,9 @@ namespace DevelopKit
             {
                 project.Status = ProjectStatus.StartOpenProject;
             }
+
             GlobalConfig.Project = project;
+            GlobalConfig.Controller = new CenterBoardController(panel2, tabPage1);
             GlobalConfig.MainPictureBox = centerBoardPictuerBox;
 
             ProjectStatusHandler(GlobalConfig.Project);
@@ -468,24 +468,23 @@ namespace DevelopKit
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int sceneId = Convert.ToInt32(e.Node.Name);
-            CenterBoardController.DoubleClickScene(sceneId);
+            GlobalConfig.Controller.DoubleClickScene(sceneId);
         }
 
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
-           CenterBoardController.CenterBoardBarOnScroll();
+            GlobalConfig.Controller.CenterBoardBarOnScroll();
         }
     }
 
     public static class GlobalConfig
     {
-        private static Project project;
-        private static PictureBox mainPicture;
-        private static UIConfig uiConfig = new UIConfig { PropertyRowHeight = 35 };
+        public static Project Project;
+        private static CenterBoardController controller;
+        public static PictureBox MainPictureBox;
+        public static UIConfig UiConfig = new UIConfig {PropertyRowHeight =  35 };
 
-        public static Project Project { get => project; set => project = value; }
-        public static PictureBox MainPictureBox { get => mainPicture; set => mainPicture = value; }
-        public static UIConfig UiConfig { get => uiConfig; set => uiConfig = value; }
+        public static CenterBoardController Controller { get => controller; set => controller = value; }
 
         public static string GetProjectResourcesDir()
         {

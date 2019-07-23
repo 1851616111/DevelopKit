@@ -8,41 +8,32 @@ using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public class GroupCache
+    public class CenterBoardController
     {
-        public int GroupLayerId;
-        public GroupSize GroupSize;
-        public List<PngUtil.MergeImageParams> GroupPropertiesImages;
-    }
+        public int OpenedSceneId;
 
-    public class CenterBoardData
-    {
-        public int TrackBarMaxValue;
-        public int TrackBarMinValue;
-        public int TrackBarValue;
-        public int PictureBoxWidth;
-        public Image PictureBoxImage;
-    }
+        private Panel CenterBoardPenel;
+        private TabPage CenterBoardTabPage;
+        private PictureBox CenterBoardPictureBox;
+        private TrackBar CenterBoardTrackBar;
+        private Label CenterBoardLabel;
+        private StatusStrip CenterBoardToolStrip;
 
-    public static class CenterBoardController
-    {
-        private static int OpenedSceneId;
-        private static Panel CenterBoardPenel;
-        private static TabPage CenterBoardTabPage;
-        private static PictureBox CenterBoardPictureBox;
-        private static TrackBar CenterBoardTrackBar;
-        private static Label CenterBoardLabel;
-        private static StatusStrip CenterBoardToolStrip;
+        private Dictionary<int, PictureBox> PropertyPictureBoxCache;
+        private Dictionary<int, FlowLayoutPanel> SceneFlowLayoutPanelMap;
+        private Dictionary<int, CenterBoardData> SceneCenterBoardDataMap;
+        private Dictionary<int, SortedDictionary<int, GroupCache>> GroupLayerCache;
 
-        private static Dictionary<int, FlowLayoutPanel> sceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
-        private static Dictionary<int, CenterBoardData> SceneCenterBoardData = new Dictionary<int, CenterBoardData>();
-        private static Dictionary<int, PictureBox> PictureBoxCache = new Dictionary<int, PictureBox>();         //注意PictureBox的声明周期，若无限绑定内存可能会溢出
-        private static Dictionary<int, SortedDictionary<int, GroupCache>> groupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
-
-        public static void NewCenterBoardController(Panel centerPenel, TabPage tabPage)
+        public CenterBoardController() { }
+        public CenterBoardController(Panel centerPenel, TabPage tabPage)
         {
+
             CenterBoardPenel = centerPenel;
             CenterBoardTabPage = tabPage;
+            PropertyPictureBoxCache = new Dictionary<int, PictureBox>();
+            SceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
+            SceneCenterBoardDataMap = new Dictionary<int, CenterBoardData>();
+            GroupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
 
             foreach (Control control in tabPage.Controls)
             {
@@ -63,38 +54,62 @@ namespace DevelopKit
                     CenterBoardToolStrip = (StatusStrip)control;
                 }
             }
+
+            ResetCenterBoard(false);
         }
 
-        public static void DoubleClickScene(int newSceneID)
+        ~CenterBoardController()
+        {
+            Console.WriteLine("------------------> finish");
+        }
+
+        public class GroupCache
+        {
+            public int GroupLayerId;
+            public GroupSize GroupSize;
+            public List<PngUtil.MergeImageParams> GroupPropertiesImages;
+        }
+
+        public class CenterBoardData
+        {
+            public int TrackBarMaxValue;
+            public int TrackBarMinValue;
+            public int TrackBarValue;
+            public int PictureBoxWidth;
+            public Image PictureBoxImage;
+        }
+
+        public void DoubleClickScene(int newSceneID)
         {
             if (newSceneID == OpenedSceneId)
                 return;
 
             //隐藏上一次打开的场景
-            if (OpenedSceneId > 0 && sceneFlowLayoutPanelMap.ContainsKey(OpenedSceneId))
+            if (OpenedSceneId > 0 && SceneFlowLayoutPanelMap.ContainsKey(OpenedSceneId))
             {
-                sceneFlowLayoutPanelMap[OpenedSceneId].Visible = false;
-                sceneFlowLayoutPanelMap[OpenedSceneId].Enabled = false;
+                SceneFlowLayoutPanelMap[OpenedSceneId].Visible = false;
+                SceneFlowLayoutPanelMap[OpenedSceneId].Enabled = false;
                 CenterBoardPictureBox.Image = null;
                 CenterBoardPictureBox.Refresh();
-                CenterBoardController.ResetCenterBoard(false);
+                ResetCenterBoard(false);
             }
 
-            if (sceneFlowLayoutPanelMap.ContainsKey(newSceneID))
+            if (SceneFlowLayoutPanelMap.ContainsKey(newSceneID))
             {
-                sceneFlowLayoutPanelMap[newSceneID].Visible = true;
-                sceneFlowLayoutPanelMap[newSceneID].Enabled = true;
-                CenterBoardController.ShowCenterBoard(newSceneID);
+                SceneFlowLayoutPanelMap[newSceneID].Visible = true;
+                SceneFlowLayoutPanelMap[newSceneID].Enabled = true;
+                ShowCenterBoard(newSceneID);
             }
             else
             {
-                sceneFlowLayoutPanelMap.Add(newSceneID, loadSceneFlowLayoutPanel(newSceneID));
+                Console.WriteLine("-------------new sceneid" + newSceneID);
+                SceneFlowLayoutPanelMap.Add(newSceneID, loadSceneFlowLayoutPanel(newSceneID));
             }
 
             OpenedSceneId = newSceneID;
         }
 
-        private static FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId)
+        private FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId)
         {
             Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
@@ -111,7 +126,6 @@ namespace DevelopKit
                     Form1_FlowPanel.LoadFlowPanelConfig(flowLayoutPanel);
                     setFlow = true;
                 }
-
                 Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
                 Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], GlobalConfig.UiConfig.PropertyRowHeight);
             }
@@ -119,29 +133,29 @@ namespace DevelopKit
             return flowLayoutPanel;
         }
 
-        public static void ShowCenterBoard(int sceneID)
+        public void ShowCenterBoard(int sceneID)
         {
-            if (!SceneCenterBoardData.ContainsKey(sceneID))
+            if (!SceneCenterBoardDataMap.ContainsKey(sceneID))
                 return;
 
             ResetCenterBoard(true);
-            CenterBoardPictureBox.Image = SceneCenterBoardData[sceneID].PictureBoxImage;
-            CenterBoardTrackBar.Maximum = SceneCenterBoardData[sceneID].TrackBarMaxValue;
-            CenterBoardTrackBar.Minimum = SceneCenterBoardData[sceneID].TrackBarMinValue;
-            CenterBoardTrackBar.Value = SceneCenterBoardData[sceneID].TrackBarValue;
+            CenterBoardPictureBox.Image = SceneCenterBoardDataMap[sceneID].PictureBoxImage;
+            CenterBoardTrackBar.Maximum = SceneCenterBoardDataMap[sceneID].TrackBarMaxValue;
+            CenterBoardTrackBar.Minimum = SceneCenterBoardDataMap[sceneID].TrackBarMinValue;
+            CenterBoardTrackBar.Value = SceneCenterBoardDataMap[sceneID].TrackBarValue;
             CenterBoardLabel.Text = (CenterBoardTrackBar.Value / 100F).ToString("#") + "%";
             CenterBoardToolStrip.Items[0].Text = string.Format("{0}*{1}",
-                  (int)(SceneCenterBoardData[sceneID].PictureBoxImage.Width * SceneCenterBoardData[sceneID].TrackBarValue / 10000F),
-                  (int)(SceneCenterBoardData[sceneID].PictureBoxImage.Height * SceneCenterBoardData[sceneID].TrackBarValue / 10000F));
+                  (int)(SceneCenterBoardDataMap[sceneID].PictureBoxImage.Width * SceneCenterBoardDataMap[sceneID].TrackBarValue / 10000F),
+                  (int)(SceneCenterBoardDataMap[sceneID].PictureBoxImage.Height * SceneCenterBoardDataMap[sceneID].TrackBarValue / 10000F));
         }
 
-        private static void UpdateCenterBoard(int sceneID, Image image)
+        private void UpdateCenterBoard(int sceneID, Image image)
         {
             if (image != null)
             {
                 ResetCenterBoard(true);
 
-                if (!SceneCenterBoardData.ContainsKey(sceneID))
+                if (!SceneCenterBoardDataMap.ContainsKey(sceneID))
                 {
                     int percent100 = (int)(CenterBoardTabPage.Width * 10000F / image.Width);
                     CenterBoardTrackBar.Maximum = 10000;
@@ -152,7 +166,7 @@ namespace DevelopKit
                     CenterBoardLabel.Text = (CenterBoardTrackBar.Value / 100F).ToString("#") + "%";
                     CenterBoardPictureBox.Width = CenterBoardTabPage.Width;
 
-                    SceneCenterBoardData.Add(sceneID, new CenterBoardData
+                    SceneCenterBoardDataMap.Add(sceneID, new CenterBoardData
                     {
                         PictureBoxImage = CenterBoardPictureBox.Image,
                         PictureBoxWidth = CenterBoardTabPage.Width,
@@ -163,13 +177,13 @@ namespace DevelopKit
                 }
                 else
                 {
-                    CenterBoardTrackBar.Maximum = SceneCenterBoardData[sceneID].TrackBarMaxValue;
-                    CenterBoardTrackBar.Minimum = SceneCenterBoardData[sceneID].TrackBarMinValue;
-                    CenterBoardTrackBar.Value = SceneCenterBoardData[sceneID].TrackBarValue;
+                    CenterBoardTrackBar.Maximum = SceneCenterBoardDataMap[sceneID].TrackBarMaxValue;
+                    CenterBoardTrackBar.Minimum = SceneCenterBoardDataMap[sceneID].TrackBarMinValue;
+                    CenterBoardTrackBar.Value = SceneCenterBoardDataMap[sceneID].TrackBarValue;
                     CenterBoardLabel.Text = (CenterBoardTrackBar.Value / 100F).ToString("#") + "%";
                 }
 
-                SceneCenterBoardData[sceneID].PictureBoxImage = image;
+                SceneCenterBoardDataMap[sceneID].PictureBoxImage = image;
                 CenterBoardPictureBox.Width = (int)((CenterBoardTrackBar.Value / 10000F) * image.Width);
                 CenterBoardToolStrip.Items[0].Text = string.Format("{0}*{1}",
                     CenterBoardPictureBox.Width,
@@ -183,17 +197,16 @@ namespace DevelopKit
             OpenedSceneId = sceneID;
         }
 
-        public static void CenterBoardBarOnScroll()
+        public void CenterBoardBarOnScroll()
         {
             CenterBoardPictureBox.Width = (int)(CenterBoardPictureBox.Image.Width * (CenterBoardTrackBar.Value / 10000F));
             int imageHeight = (int)(CenterBoardPictureBox.Image.Height * (CenterBoardTrackBar.Value / 10000F));
             CenterBoardLabel.Text = (CenterBoardTrackBar.Value / 100).ToString() + "%";
-            SceneCenterBoardData[OpenedSceneId].TrackBarValue = CenterBoardTrackBar.Value;
+            SceneCenterBoardDataMap[OpenedSceneId].TrackBarValue = CenterBoardTrackBar.Value;
             CenterBoardToolStrip.Items[0].Text = string.Format("{0}*{1}", CenterBoardPictureBox.Width, imageHeight);
-
         }
 
-        public static void ResetCenterBoard(bool visible)
+        public void ResetCenterBoard(bool visible)
         {
             CenterBoardTrackBar.Visible = visible;
             CenterBoardLabel.Visible = visible;
@@ -201,16 +214,16 @@ namespace DevelopKit
         }
 
 
-        public static void SetPictureBox(int key, PictureBox pb)
+        public void SetPictureBox(int key, PictureBox pb)
         {
-            PictureBoxCache[key] = pb;
+            PropertyPictureBoxCache[key] = pb;
         }
 
-        public static PictureBox GetPictureBox(int key)
+        public PictureBox GetPictureBox(int key)
         {
-            if (PictureBoxCache.ContainsKey(key))
+            if (PropertyPictureBoxCache.ContainsKey(key))
             {
-                return PictureBoxCache[key];
+                return PropertyPictureBoxCache[key];
             }
             else
             {
@@ -218,26 +231,26 @@ namespace DevelopKit
             }
         }
 
-        public static void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
+        public void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
         {
             List<PngUtil.MergeImageParams> ps = ListGroupImages(tabPanel, group);
             HideGroupOnCenterBoard(group, ps);
         }
 
-        public static void HideGroupOnCenterBoard(Group group, List<PngUtil.MergeImageParams> ps)
+        public void HideGroupOnCenterBoard(Group group, List<PngUtil.MergeImageParams> ps)
         {
-            if (!groupLayerCache.ContainsKey(group.Sceneid))
+            if (!GroupLayerCache.ContainsKey(group.Sceneid))
             {
-                groupLayerCache[group.Sceneid] = new SortedDictionary<int, GroupCache>();
+                GroupLayerCache[group.Sceneid] = new SortedDictionary<int, GroupCache>();
             }
 
             if (ps == null)
             {
-                groupLayerCache[group.Sceneid].Remove(group.LayerIndex);
+                GroupLayerCache[group.Sceneid].Remove(group.LayerIndex);
             }
             else
             {
-                groupLayerCache[group.Sceneid][group.LayerIndex] = new GroupCache
+                GroupLayerCache[group.Sceneid][group.LayerIndex] = new GroupCache
                 {
                     GroupLayerId = group.LayerIndex,
                     GroupSize = group.Size,
@@ -245,7 +258,7 @@ namespace DevelopKit
                 };
             }
 
-            if (groupLayerCache[group.Sceneid].Count == 0)
+            if (GroupLayerCache[group.Sceneid].Count == 0)
             {
                 UpdateCenterBoard(group.Sceneid, null);
             }
@@ -253,7 +266,7 @@ namespace DevelopKit
             {
                 List<PngUtil.MergeImageParams> resultList = null;
                 GroupSize maxGroupSize = null;
-                foreach (GroupCache groupCache in groupLayerCache[group.Sceneid].Values)
+                foreach (GroupCache groupCache in GroupLayerCache[group.Sceneid].Values)
                 {
                     if (maxGroupSize == null || groupCache.GroupSize.Width > maxGroupSize.Width)
                     {
@@ -273,7 +286,7 @@ namespace DevelopKit
             }
         }
 
-        private static List<PngUtil.MergeImageParams> ListGroupImages(TableLayoutPanel tabPanel, Group group)
+        private List<PngUtil.MergeImageParams> ListGroupImages(TableLayoutPanel tabPanel, Group group)
         {
             List<Property> properties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
@@ -294,7 +307,6 @@ namespace DevelopKit
                     });
                 }
             }
-
             return mergeParams;
         }
     }
