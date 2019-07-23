@@ -1,6 +1,6 @@
 ﻿namespace DevelopKit
 {
-    partial class Form1
+    partial class Form_Main
     {
         /// <summary>
         /// 必需的设计器变量。
@@ -35,7 +35,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openProjectToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -190,6 +190,7 @@
             this.toolBar1.ShowToolTips = true;
             this.toolBar1.Size = new System.Drawing.Size(1924, 45);
             this.toolBar1.TabIndex = 9;
+            this.toolBar1.ButtonClick += new System.Windows.Forms.ToolBarButtonClickEventHandler(this.ToolBar1_ButtonClick);
             // 
             // toolBarButton1
             // 
@@ -411,7 +412,7 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // Form1
+            // Form_Main
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(15F, 29F);
@@ -433,7 +434,7 @@
             this.KeyPreview = true;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(8, 7, 8, 7);
-            this.Name = "Form1";
+            this.Name = "Form_Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "DevelopKit";
             this.Load += new System.EventHandler(this.Form1_Load);

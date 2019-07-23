@@ -69,24 +69,24 @@
     <Compile Include="CollectionUtil.cs" />
     <Compile Include="ByteUtil.cs" />
     <Compile Include="CenterController.cs" />
-    <Compile Include="CarConfig.cs" />
+    <Compile Include="Config_Car.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
     <Compile Include="Errors.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="MathUtil.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Form_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Form_Create.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <Compile Include="Form_Create.Designer.cs">
+      <DependentUpon>Form_Create.cs</DependentUpon>
     </Compile>
     <Compile Include="PngUtil.cs" />
     <Compile Include="Program.cs" />
@@ -99,11 +99,11 @@
     </Compile>
     <Compile Include="StringUtil.cs" />
     <Compile Include="ProjectSyncTools.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form2.resx">
-      <DependentUpon>Form2.cs</DependentUpon>
+    <EmbeddedResource Include="Form_Create.resx">
+      <DependentUpon>Form_Create.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -137,31 +137,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\add_128px_1200959_easyicon.net_wps图片.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\treeview_file.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\treeview_folder.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\treeview_xml.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\treeview_image.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\cross.png">

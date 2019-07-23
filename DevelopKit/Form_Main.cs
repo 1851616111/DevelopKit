@@ -9,14 +9,14 @@ using System.Threading;
 
 namespace DevelopKit
 {
-    public partial class Form1 : Form
+    public partial class Form_Main : Form
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
         ParameterizedThreadStart pts;
         Thread t;
       
-        public Form1()
+        public Form_Main()
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
@@ -83,7 +83,6 @@ namespace DevelopKit
                 {
                     Name = scene.Id.ToString(),
                     Text = scene.Name
-
                 };
 
                 treeview.Nodes.Add(sceneNode);
@@ -99,16 +98,17 @@ namespace DevelopKit
             splitter1.Visible = false;
             splitter2.Visible = false;
             openImageToolStripMenuItem.Enabled = false;
-
+            treeView2.Nodes.Clear();
             GlobalConfig.Project = null;
+            GlobalConfig.Controller = null;
         }
 
         //创建项目
         private void ProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 form2 = new Form2();
+            Form_Create form2 = new Form_Create();
             form2.updateGlobalProjectHandler += SetGlobalProject;
-            form2.SetDesktopBounds(Form1.displayWidth / 4, 80, Form1.displayWidth / 2, Form1.displayHeight / 2 + 150);
+            form2.SetDesktopBounds(Form_Main.displayWidth / 4, 80, Form_Main.displayWidth / 2, Form_Main.displayHeight / 2 + 150);
             form2.StartPosition = FormStartPosition.Manual;
             form2.Show();
             form2.Activate();
@@ -169,6 +169,12 @@ namespace DevelopKit
         private void TrackBar1_Scroll(object sender, EventArgs e)
         {
             GlobalConfig.Controller.CenterBoardBarOnScroll();
+        }
+
+        //保存
+        private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
+        {
+
         }
     }
 }

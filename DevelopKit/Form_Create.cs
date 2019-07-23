@@ -11,11 +11,11 @@ using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public partial class Form2 : Form
+    public partial class Form_Create : Form
     {
         private App appConfig;
 
-        public Form2()
+        public Form_Create()
         {
             InitializeComponent();
             appConfig = (App)FileUtil.DeserializeObjectFromFile(typeof(App), @"Resources\conf\app.xml");
