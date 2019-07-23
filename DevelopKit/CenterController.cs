@@ -58,11 +58,6 @@ namespace DevelopKit
             ResetCenterBoard(false);
         }
 
-        ~CenterBoardController()
-        {
-            Console.WriteLine("------------------> finish");
-        }
-
         public class GroupCache
         {
             public int GroupLayerId;
@@ -102,7 +97,6 @@ namespace DevelopKit
             }
             else
             {
-                Console.WriteLine("-------------new sceneid" + newSceneID);
                 SceneFlowLayoutPanelMap.Add(newSceneID, loadSceneFlowLayoutPanel(newSceneID));
             }
 

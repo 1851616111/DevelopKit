@@ -46,12 +46,6 @@
             this.closeprojectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolBar1 = new System.Windows.Forms.ToolBar();
             this.toolBarButton1 = new System.Windows.Forms.ToolBarButton();
             this.toolBarButton2 = new System.Windows.Forms.ToolBarButton();
@@ -61,11 +55,9 @@
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.treeView2 = new System.Windows.Forms.TreeView();
+            this.treeviewImageList = new System.Windows.Forms.ImageList(this.components);
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.splitter2 = new System.Windows.Forms.Splitter();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -82,7 +74,6 @@
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.tabControl2.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -100,7 +91,6 @@
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(73, 25);
             this.toolStripMenuItem1.Text = "文件(F)";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.ToolStripMenuItem1_Click);
             // 
             // openToolStripMenuItem
             // 
@@ -129,7 +119,6 @@
             | System.Windows.Forms.Keys.O)));
             this.openImageToolStripMenuItem.Size = new System.Drawing.Size(254, 26);
             this.openImageToolStripMenuItem.Text = "图片";
-            this.openImageToolStripMenuItem.Click += new System.EventHandler(this.OpenImageToolStripMenuItem_Click);
             // 
             // createToolStripMenuItem
             // 
@@ -176,9 +165,7 @@
             this.menuStrip1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(16, 48);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.debugToolStripMenuItem,
-            this.helpToolStripMenuItem});
+            this.toolStripMenuItem1});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Margin = new System.Windows.Forms.Padding(0, 0, 38, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -187,53 +174,6 @@
             this.menuStrip1.Size = new System.Drawing.Size(1924, 37);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // debugToolStripMenuItem
-            // 
-            this.debugToolStripMenuItem.Name = "debugToolStripMenuItem";
-            this.debugToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
-            this.debugToolStripMenuItem.Text = "调试";
-            // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ToolStripMenuItem,
-            this.ToolStripMenuItem2,
-            this.ToolStripMenuItem3,
-            this.ToolStripMenuItem4});
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.ShortcutKeyDisplayString = "";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(73, 25);
-            this.helpToolStripMenuItem.Text = "工具(T)";
-            // 
-            // ToolStripMenuItem
-            // 
-            this.ToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.ToolStripMenuItem.Name = "ToolStripMenuItem";
-            this.ToolStripMenuItem.Size = new System.Drawing.Size(176, 26);
-            this.ToolStripMenuItem.Text = "图片叠加";
-            this.ToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
-            // 
-            // ToolStripMenuItem2
-            // 
-            this.ToolStripMenuItem2.Name = "ToolStripMenuItem2";
-            this.ToolStripMenuItem2.Size = new System.Drawing.Size(176, 26);
-            this.ToolStripMenuItem2.Text = "图片写字";
-            this.ToolStripMenuItem2.Click += new System.EventHandler(this.ToolStripMenuItem2_Click);
-            // 
-            // ToolStripMenuItem3
-            // 
-            this.ToolStripMenuItem3.Name = "ToolStripMenuItem3";
-            this.ToolStripMenuItem3.Size = new System.Drawing.Size(176, 26);
-            this.ToolStripMenuItem3.Text = "图片批量滤色";
-            this.ToolStripMenuItem3.Click += new System.EventHandler(this.ToolStripMenuItem3_Click);
-            // 
-            // ToolStripMenuItem4
-            // 
-            this.ToolStripMenuItem4.Name = "ToolStripMenuItem4";
-            this.ToolStripMenuItem4.Size = new System.Drawing.Size(176, 26);
-            this.ToolStripMenuItem4.Text = "图片单张滤色";
-            this.ToolStripMenuItem4.Click += new System.EventHandler(this.ToolStripMenuItem4_Click);
             // 
             // toolBar1
             // 
@@ -307,7 +247,6 @@
             // tabControl2
             // 
             this.tabControl2.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Controls.Add(this.tabPage3);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -318,38 +257,6 @@
             this.tabControl2.SelectedIndex = 0;
             this.tabControl2.Size = new System.Drawing.Size(200, 957);
             this.tabControl2.TabIndex = 1;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.treeView1);
-            this.tabPage2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.tabPage2.Location = new System.Drawing.Point(32, 4);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(164, 949);
-            this.tabPage2.TabIndex = 0;
-            this.tabPage2.Text = "目录";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.treeviewImageList;
-            this.treeView1.Location = new System.Drawing.Point(3, 3);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.Size = new System.Drawing.Size(158, 943);
-            this.treeView1.TabIndex = 0;
-            // 
-            // treeviewImageList
-            // 
-            this.treeviewImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeviewImageList.ImageStream")));
-            this.treeviewImageList.TransparentColor = System.Drawing.Color.Transparent;
-            this.treeviewImageList.Images.SetKeyName(0, "treeview_file.png");
-            this.treeviewImageList.Images.SetKeyName(1, "treeview_folder.png");
-            this.treeviewImageList.Images.SetKeyName(2, "treeview_image.png");
-            this.treeviewImageList.Images.SetKeyName(3, "treeview_xml.png");
             // 
             // tabPage3
             // 
@@ -371,6 +278,15 @@
             this.treeView2.Size = new System.Drawing.Size(158, 943);
             this.treeView2.TabIndex = 0;
             this.treeView2.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView2_NodeMouseDoubleClick);
+            // 
+            // treeviewImageList
+            // 
+            this.treeviewImageList.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("treeviewImageList.ImageStream")));
+            this.treeviewImageList.TransparentColor = System.Drawing.Color.Transparent;
+            this.treeviewImageList.Images.SetKeyName(0, "treeview_file.png");
+            this.treeviewImageList.Images.SetKeyName(1, "treeview_folder.png");
+            this.treeviewImageList.Images.SetKeyName(2, "treeview_image.png");
+            this.treeviewImageList.Images.SetKeyName(3, "treeview_xml.png");
             // 
             // splitter1
             // 
@@ -527,7 +443,6 @@
             this.statusStrip1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
-            this.tabPage2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -545,8 +460,6 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolBar toolBar1;
         private System.Windows.Forms.ToolBarButton toolBarButton1;
@@ -554,10 +467,6 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
         private Sunisoft.IrisSkin.SkinEngine skinEngine1;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem2;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.Splitter splitter2;
@@ -570,9 +479,7 @@
         private System.Windows.Forms.ToolStripMenuItem openImageToolStripMenuItem;
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabControl tabControl2;
-        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem closeprojectToolStripMenuItem;

@@ -9,34 +9,26 @@ using System.Threading;
 
 namespace DevelopKit
 {
-
     public partial class Form1 : Form
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
         ParameterizedThreadStart pts;
         Thread t;
-        private static readonly Hashtable treeViewLeafNodeTag = new Hashtable
-        {
-            ["is_leaf_node"] = true
-        };
-
+      
         public Form1()
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             HideOpenedProject();
-       
             GlobalConfig.Project = null;
-           
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.ControlBox = true;
             this.SetBounds(0, 0, displayWidth, displayHeight);
-            this.menuStrip1.Items[0].MouseHover += new EventHandler(ToolStripMenuItem1_MouseOver);
         }
 
         public void SetGlobalProject(Project project)
@@ -48,11 +40,9 @@ namespace DevelopKit
 
             GlobalConfig.Project = project;
             GlobalConfig.Controller = new CenterBoardController(panel2, tabPage1);
-            GlobalConfig.MainPictureBox = centerBoardPictuerBox;
 
             ProjectStatusHandler(GlobalConfig.Project);
         }
-
 
         private void ProjectStatusHandler(Project project)
         {
@@ -76,13 +66,29 @@ namespace DevelopKit
             splitter1.Visible = true;
             splitter2.Visible = true;
             openImageToolStripMenuItem.Enabled = true;
-            tabControl2.SelectedIndex = 1;
-            InstallTreeView();
-            Form1_Car_Config.LoadScene(treeView2, GlobalConfig.Project.CarConfig);
+            loadScene(treeView2, GlobalConfig.Project.CarConfig);
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
             t.Start(this);
+        }
+
+        private void loadScene(TreeView treeview, CarConfig carConfig)
+        {
+
+            treeview.BeginUpdate();
+            foreach (Scene scene in carConfig.Scenes)
+            {
+                TreeNode sceneNode = new TreeNode
+                {
+                    Name = scene.Id.ToString(),
+                    Text = scene.Name
+
+                };
+
+                treeview.Nodes.Add(sceneNode);
+            }
+            treeview.EndUpdate();
         }
 
         private void HideOpenedProject()
@@ -106,197 +112,6 @@ namespace DevelopKit
             form2.StartPosition = FormStartPosition.Manual;
             form2.Show();
             form2.Activate();
-        }
-
-        private void OpenImageToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                bool ok = GlobalConfig.Project.NewOpenFile(openFileDialog.FileName, out string error);
-                if (!ok)
-                {
-                    MessageBox.Show(Errors.ProjectFileAlreadyExist, "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.Error("Form1 OpenImageToolStripMenuItem_Click()", "GlobalProject.NewOpenImage()", error);
-                    return;
-                }
-
-                Form1_Util.OpenImageForm(openFileDialog.FileName, tabControl1, Form_Request_Handler);
-            }
-        }
-
-        //Form_Image的所有操作请求均通过此函数出发 相应操作
-        public void Form_Request_Handler(Object requestObj)
-        {
-            if (requestObj.GetType() != typeof(FormRequest))
-            {
-                return;
-            }
-
-            FormRequest request = (FormRequest)requestObj;
-            switch (request.RequestType)
-            {
-                case RequestType.MarkFileAsChanged:
-                    FormRequest_ChangeStatus(request);
-                    break;
-                case RequestType.MarkFileAsSaved:
-                    FormRequest_ChangeStatus(request);
-                    break;
-                case RequestType.Close:
-                    FormRequest_CloseImage(request);
-                    break;
-            }
-        }
-
-        //文件保存成功后， 需要移除*， 向用户标识该文件已经同步
-        private bool ChangeFileWindowsTextAsSaved(string filePath)
-        {
-            foreach (TabPage tabpage in tabControl1.TabPages)
-            {
-                if (tabpage.Name == filePath)
-                {
-                    tabpage.Text = StringUtil.markFileAsSaved(tabpage.Text);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private void OpenFile(string filepath)
-        {
-
-            if (FileUtil.IsFileImage(filepath))
-            {
-                Form1_Util.OpenImageForm(filepath, tabControl1, Form_Request_Handler);
-            }
-            else
-            {
-                Form1_Util.OpenTxtForm(GlobalConfig.Project.GetUserSpaceDir(), filepath, tabControl1, Form_Request_Handler);
-            }
-        }
-
-        private void InstallTreeView()
-        {
-            tabControl1.SelectedIndex = 0;
-
-            TreeView1_LoadCurrentProject(GlobalConfig.Project.GetUserSpaceDir());
-        }
-
-
-        private void TreeView1_LoadCurrentProject(string projectdir)
-        {
-            Directory.SetCurrentDirectory(projectdir);
-
-            string projectDir = GlobalConfig.Project.GetUserSpaceDir();
-            string[] dirs = Directory.GetDirectories(projectdir);
-
-            treeView1.Nodes.Clear();
-
-            string[] files = Directory.GetFiles(projectdir);
-            foreach (string longfile in files)
-            {
-                string relativePath = longfile.Remove(0, projectDir.Length + 1);
-                treeView1.Nodes.Add(longfile, relativePath, (int)FileUtil.GetImageIndexByFileName(relativePath));
-            }
-
-            //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
-            foreach (TreeNode node in treeView1.Nodes)
-            {
-                node.Tag = treeViewLeafNodeTag;
-            }
-
-            foreach (string dir in dirs)
-            {
-                string relativePath = dir.Remove(0, projectDir.Length + 1);
-                if (relativePath == ".kit")
-                {
-                    continue;
-                }
-                treeView1.Nodes.Add(dir, relativePath, (int)FileUtil.ImageListIndexOfTreeView.Directory);
-            }
-
-            //防止单机图片抖动
-            foreach (var node in treeView1.Nodes)
-            {
-                var Node = node as TreeNode;
-                Node.SelectedImageIndex = Node.ImageIndex;
-            }
-        }
-
-        private void TreeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Tag != null && ((Hashtable)(e.Node.Tag))["is_leaf_node"] != null)
-            {
-                if (!GlobalConfig.Project.NewOpenFile(e.Node.Name, out string error))
-                {
-                    MessageBox.Show("打开文件失败: " + error, "错误", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Log.Error("Form1.treeView1_NodeMouseDoubleClick()", "GlobalProject.NewOpenImag() " + e.Node.Name, error);
-                    return;
-                }
-
-                OpenFile(e.Node.Name);
-            }
-            else
-            {
-                ReadDir(e);
-            }
-        }
-
-        private void ReadDir(TreeNodeMouseClickEventArgs e)
-        {
-            if (e.Node.Nodes.Count > 0)
-            {
-                if (e.Node.IsSelected)
-                {
-                    return;
-                }
-                if (e.Node.IsExpanded)
-                {
-                    e.Node.Collapse();
-                }
-                else
-                {
-                    e.Node.Expand();
-                }
-            }
-            else
-            {
-                if (Directory.Exists(e.Node.Name))
-                {
-                    try
-                    {
-                        string[] allFiles = Directory.GetFiles(e.Node.Name);
-                        foreach (string longfile in allFiles)
-                        {
-                            e.Node.Nodes.Add(longfile, longfile.Remove(0, e.Node.Name.Length + 1), (int)FileUtil.GetImageIndexByFileName(longfile));
-                        }
-
-                        //为每个新增的文件节点增加Tag， 用于点击相应双击事件的标识
-                        foreach (TreeNode node in e.Node.Nodes)
-                        {
-                            node.Tag = treeViewLeafNodeTag;
-                        }
-
-                        string[] allDirectory = Directory.GetDirectories(e.Node.Name);
-                        foreach (string dir in allDirectory)
-                        {
-                            e.Node.Nodes.Add(dir, dir.Remove(0, e.Node.Name.Length + 1), (int)FileUtil.ImageListIndexOfTreeView.Directory);
-                        }
-
-                        //防止单机图片抖动
-                        foreach (var node in e.Node.Nodes)
-                        {
-                            var Node = node as TreeNode;
-                            Node.SelectedImageIndex = Node.ImageIndex;
-                        }
-                    }
-                    catch
-                    {
-                    }
-                }
-                e.Node.Expand();
-            }
         }
 
         //打开已存在的项目
@@ -335,133 +150,13 @@ namespace DevelopKit
                 }
 
                 SetGlobalProject((Project)projectProject);
-
-                foreach (ProjectFile pf in GlobalConfig.Project.filesEditer.projectFileList)
-                {
-                    OpenFile(pf.filePath);
-                }
             }
         }
 
         //关闭项目
         private void CloseprojectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //清除左侧treewiew1
-
-            treeView1.Nodes.Clear();
-
-            //清除中间tabcontrol
-            int start = 0;
-            foreach (TabPage tabpage in tabControl1.TabPages)
-            {
-                if (start != 0)
-                {
-                    tabControl1.TabPages.Remove(tabpage);
-                    start++;
-                }
-                else
-                {
-                    start++;
-                    continue;
-                }
-            }
-
             HideOpenedProject();
-            GlobalConfig.Project = null;
-        }
-
-
-        private void ToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            toolBar1.Show();
-        }
-        private void ToolStripMenuItem1_MouseOver(object sender, EventArgs e)
-        {
-            toolBar1.Visible = true;
-            //this.menuStrip1.Items[0].BackColor = Color.Black;
-        }
-
-        private void ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Form4_Merge_Img_Util form4 = new Form4_Merge_Img_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            Form4_Write_Img_Util form4 = new Form4_Write_Img_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem3_Click(object sender, EventArgs e)
-        {
-            Form4_Filter_Color_Util form4 = new Form4_Filter_Color_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-        private void ToolStripMenuItem4_Click(object sender, EventArgs e)
-        {
-            Form4_Filter_Color2_Util form4 = new Form4_Filter_Color2_Util();
-            form4.BringToFront();
-            form4.Show();
-        }
-
-
-        //Form请求修改文件状态为已修改
-        private void FormRequest_ChangeStatus(FormRequest request)
-        {
-            foreach (TabPage tabPage in tabControl1.TabPages)
-            {
-                if (tabPage.Name == request.FilePath)
-                {
-                    if (StringUtil.isFileSafed(tabPage.Text) && request.RequestType == RequestType.MarkFileAsChanged)
-                    {
-                        tabPage.Text = StringUtil.markFileAsUnsafed(tabPage.Text);
-                    }
-                    if (StringUtil.isFileUnSafed(tabPage.Text) && request.RequestType == RequestType.MarkFileAsSaved)
-                    {
-                        tabPage.Text = StringUtil.markFileAsSaved(tabPage.Text);
-                    }
-                    return;
-                }
-            }
-        }
-
-        //Form请求关闭图片
-        private void FormRequest_CloseImage(FormRequest request)
-        {
-            foreach (TabPage tabpage in tabControl1.TabPages)
-            {
-                if (tabpage.Name == request.FilePath)
-                {
-                    int index = tabControl1.TabPages.IndexOf(tabpage);
-                    int newSelectIndex;
-
-                    if (tabControl1.TabPages.Count == 1) //如果只有一个
-                    {
-                        tabControl1.TabPages.Remove(tabpage);
-                        return;
-                    }
-
-                    if (index == tabControl1.TabPages.Count - 1)    //如果需要删除的tabpage是最后一个打开的
-                    {
-                        newSelectIndex = tabControl1.TabPages.Count - 2;
-                    }
-                    else
-                    {
-                        newSelectIndex = tabControl1.TabPages.Count;
-                    }
-
-                    tabControl1.SelectedIndex = newSelectIndex;
-                    tabControl1.TabPages.Remove(tabpage);
-                    tabpage.Dispose();
-
-                    GlobalConfig.Project.CloseFile(request.FilePath);
-                }
-            }
         }
 
         //双击流程场景后在FlowLayout进行动态填充以及隐藏
@@ -476,25 +171,5 @@ namespace DevelopKit
             GlobalConfig.Controller.CenterBoardBarOnScroll();
         }
     }
-
-    public static class GlobalConfig
-    {
-        public static Project Project;
-        private static CenterBoardController controller;
-        public static PictureBox MainPictureBox;
-        public static UIConfig UiConfig = new UIConfig {PropertyRowHeight =  35 };
-
-        public static CenterBoardController Controller { get => controller; set => controller = value; }
-
-        public static string GetProjectResourcesDir()
-        {
-            return AppDomain.CurrentDomain.BaseDirectory + Project.CarInfo.ResourcesDir;
-        }
-    }
-
-    public class UIConfig
-    {
-        public int PropertyRowHeight;
-    }    
 }
 

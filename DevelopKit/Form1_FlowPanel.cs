@@ -11,8 +11,6 @@ namespace DevelopKit
 {
     public static class Form1_FlowPanel
     {
-        private static int propertyLabelMargin = 50;
-
         public static void LoadFlowPanelConfig(FlowLayoutPanel flowPanel)
         {
             flowPanel.Padding = new Padding(0, 0, 0, 0);
@@ -74,9 +72,8 @@ namespace DevelopKit
                 }
             });
 
-            int titleHeight = 30;
-            tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, titleHeight));
-            tabPanel.Height += titleHeight;
+            tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, GlobalConfig.UiConfig.PropertyTitleHeight));
+            tabPanel.Height += GlobalConfig.UiConfig.PropertyTitleHeight;
             tabPanel.Controls.Add(titleBtn, 0, 0);
         }
 
@@ -128,7 +125,7 @@ namespace DevelopKit
 
         private static void HideGroupTablePanel(TableLayoutPanel tabPanel)
         {
-            if (Form1_Util.IsTablePanelHide(tabPanel)) //tabPanel 未初始化 
+            if (tabPanel.Tag == null || (bool)((Hashtable)(tabPanel.Tag))["hide"] == true) //tabPanel 未初始化 
                 return;
 
             ((Hashtable)tabPanel.Tag)["hide"] = true;
@@ -293,7 +290,7 @@ namespace DevelopKit
                     AutoSize = false,
                     Width = 35,
                     Height = 25,
-                    Location = new Point(label.Width + propertyLabelMargin, 0),
+                    Location = new Point(label.Width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
                     Margin = new Padding(0, 0, 0, 0),
                     BorderStyle = BorderStyle.FixedSingle,
                 };
@@ -320,7 +317,7 @@ namespace DevelopKit
                 {
                     Text = "255",
                     Width = 35,
-                    Location = new Point(label.Width + propertyLabelMargin, 0),
+                    Location = new Point(label.Width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
                     Height = 20,
                     Margin = new Padding(0, 0, 0, 0),
                     Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),

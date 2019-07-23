@@ -35,9 +35,6 @@ namespace DevelopKit
         [XmlIgnore]
         public ProjectStatus Status; //项目状态
 
-        [XmlElement(ElementName = "files_editer")]
-        public RecordFile filesEditer; // 文件编辑器
-
         public Project()
         {
         }
@@ -50,7 +47,6 @@ namespace DevelopKit
             ProjectPath = path;
             Developer = dev;
             Status = ProjectStatus.StartCreateProject;
-            filesEditer = new RecordFile();
         }
 
         public void SetStatusOpen()
@@ -107,7 +103,6 @@ namespace DevelopKit
             if (error != null)
             {
                 Log.Error("Project core", "Save to xml file " + GetConfigXml(), error.Message);
-                Console.WriteLine("-------------? write xml file err " + error.Message );
             }
         }
 
@@ -141,26 +136,6 @@ namespace DevelopKit
         public string GetConfigXml()
         {
             return GetRuntimeConfigDir() + @"\" + RuntimeConfigXmlName;
-        }
-
-
-        // 菜单 --> 文件 --> 打开 --> 图片
-        public bool NewOpenFile(string filepath, out string error)
-        {
-            error = "";
-            //若已在项目中， 返回错误
-            if (filesEditer.IsFileInProjectDir(filepath))
-            {
-                error = Errors.ProjectFileAlreadyExist;
-                return false;
-            }
-            filesEditer.AddOpenedFile(filepath);
-            return true;
-        }
-
-        public bool CloseFile(string filepath)
-        {
-            return filesEditer.CloseOpenedFile(filepath);
         }
 
         //初始化项目目录
