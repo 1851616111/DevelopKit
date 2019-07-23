@@ -133,7 +133,7 @@ namespace DevelopKit
             {
                 return;
             }
-               
+
             tabPanel.Height -= (int)((tabPanel.RowStyles.Count - 1) * (tabPanel.RowStyles[1].Height));
 
             for (int rowIndex = 1; rowIndex <= tabPanel.RowStyles.Count - 1; rowIndex++)
@@ -275,8 +275,20 @@ namespace DevelopKit
                         {
                             pictureBox.Image = Image.FromFile(openFileDialog.FileName);
                             pictureBox.Refresh();
+
+                            if (openFileDialog.FileName != property.Value)
+                            {
+                                Property propertyCopy = property.Clone();
+                                propertyCopy.Value = openFileDialog.FileName;
+                                GlobalConfig.Project.Editer.Add(property.Id, propertyCopy);
+                            }
+                            else
+                            {
+                                GlobalConfig.Project.Editer.Remove(property.Id);
+                            }
                         }
                         GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+
                     }
                     catch (Exception)
                     { }
@@ -295,12 +307,34 @@ namespace DevelopKit
                     BorderStyle = BorderStyle.FixedSingle,
                 };
 
+                if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+                {
+                    try
+                    {
+                        text.BackColor = RGB(Convert.ToInt32(property.DefaultValue, 16));
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+                }
+
                 button.Text = "设置颜色";
                 button.Click += new EventHandler(delegate (object _, EventArgs b)
                 {
                     ColorDialog dialog = new ColorDialog();
                     if (dialog.ShowDialog() == DialogResult.OK)
                     {
+                        if (dialog.Color.ToArgb() != text.BackColor.ToArgb())
+                        {
+                            Property propertyCopy = property.Clone();
+                            propertyCopy.DefaultValue = "Ox" + Convert.ToString(dialog.Color.ToArgb(), 16);
+                            GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
+                        }
+                        else
+                        {
+                            GlobalConfig.Project.Editer.Remove(property.Id);
+                        }
+
                         PngUtil.SetAlphaWhilteImage((Bitmap)image, dialog.Color);
                         text.BackColor = dialog.Color;
                         pictureBox.Refresh();
@@ -322,10 +356,24 @@ namespace DevelopKit
                     Margin = new Padding(0, 0, 0, 0),
                     Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
                 };
+                if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+                {
+                    text.Text = property.DefaultValue;
+                }
 
+                string oldText = text.Text;
                 button.Text = "确定";
                 button.Click += new EventHandler(delegate (object _, EventArgs b)
                 {
+                    if (oldText != text.Text)
+                    {
+                        Property propertyCopy = property.Clone();
+                        propertyCopy.DefaultValue = text.Text;
+                        GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
+                    }
+                    else {
+                        GlobalConfig.Project.Editer.Remove(property.Id);
+                    }
                     try
                     {
                         int alphaValue = Convert.ToInt32(text.Text);
@@ -334,12 +382,27 @@ namespace DevelopKit
                         GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
                     }
                     catch (Exception)
-                    {}
+                    { }
                 });
                 panel.Controls.Add(button);
                 panel.Controls.Add(text);
             }
         }
+
+        public static uint ParseRGB(Color color)
+        {
+            return (uint)(((uint)color.B << 16) | (ushort)(((ushort)color.G << 8) | color.R));
+        }
+
+
+        private static Color RGB(int color)
+        {
+            int r = 0xFF & color;
+            int g = 0xFF00 & color;
+            g >>= 8;
+            int b = 0xFF0000 & color;
+            b >>= 16;
+            return Color.FromArgb(r, g, b);
+        }
     }
 }
-

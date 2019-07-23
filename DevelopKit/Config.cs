@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Schema;
+using System.Xml.Serialization;
 
 namespace DevelopKit
 {
@@ -11,6 +10,7 @@ namespace DevelopKit
     {
         public static Project Project;
         public static CenterBoardController Controller;
+  
         public static UIConfig UiConfig = new UIConfig {
             PropertyLabelMargin = 50,
             PropertyRowHeight = 35,

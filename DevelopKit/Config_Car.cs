@@ -181,6 +181,10 @@ namespace DevelopKit
             {
                 sceneMapping = new Dictionary<int, Scene>();
             }
+            else
+            {
+                return;
+            }
             if (groupMapping == null)
             {
                 groupMapping = new Dictionary<int, Group>();
@@ -342,6 +346,8 @@ namespace DevelopKit
         public int PropertyLayerIdx;
         [XmlElement("value")]
         public string Value;
+        [XmlElement("default_value")]
+        public string DefaultValue;
         [XmlElement("ref_property_id")]
         public int RefPropertyId;
         [XmlElement("size")]
@@ -353,6 +359,30 @@ namespace DevelopKit
         [XmlElement("display_content")]
         public string DisplayContent;
 
+        public Property Clone()
+        {
+            return new Property
+            {
+                Id = Id,
+                SceneId = SceneId,
+                GroupId = GroupId,
+                GroupName = GroupName,
+                GroupSize = GroupSize,
+                Name = Name,
+                Type = Type,
+                OptType = OptType,
+                ShowLabel = ShowLabel,
+                CanEdit = CanEdit,
+                GroupLayerIdx = GroupLayerIdx,
+                PropertyLayerIdx = PropertyLayerIdx,
+                Value = Value,
+                RefPropertyId = RefPropertyId,
+                Size = Size,
+                Location = Location,
+                DisplayType = DisplayType,
+                DisplayContent = DisplayContent
+            };
+        }
         public Group GetGroup()
         {
             return new Group

@@ -9,7 +9,7 @@ namespace DevelopKit
 {
     public static class ProjectSyncTools
     {
-        public static void Sync(Object form1Obj)
+        public static void Sync(Object obj)
         {
         ParameterizedThreadStart:
 
@@ -20,6 +20,7 @@ namespace DevelopKit
                 Thread.Sleep(1000 * 5);
                 goto restart;
             }
+
 
             try
             {

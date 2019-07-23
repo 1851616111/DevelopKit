@@ -422,5 +422,42 @@
       <location>0,0</location>
       <size>1920*720</size>
     </item>
+    <item>
+      <id>25</id>
+      <scene_id>2</scene_id>
+      <group_id>9</group_id>
+      <group_name>TT灯</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>进度数值颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL30\charge_progress_number.png</value>
+      <default_value>0x101010</default_value>
+      <location>863,307</location>
+      <size>134,85</size>
+    </item>
+    <item>
+      <id>26</id>
+      <scene_id>2</scene_id>
+      <group_id>10</group_id>
+      <group_name>TT灯</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>进度数值透明度(0-255)</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <ref_property_id>2</ref_property_id>
+      <value>ICU\KL30\charge_progress_number.png</value>
+      <default_value>100</default_value>
+      <location>863,307</location>
+      <size>134,85</size>
+    </item>
   </properties>
 </car_config>

@@ -97,6 +97,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="PropertiesEditer.cs" />
     <Compile Include="StringUtil.cs" />
     <Compile Include="ProjectSyncTools.cs" />
     <EmbeddedResource Include="Form_Main.resx">

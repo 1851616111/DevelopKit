@@ -36,6 +36,7 @@ namespace DevelopKit
             if (project.Status == 0)
             {
                 project.Status = ProjectStatus.StartOpenProject;
+                project.CarConfig.MakeMappingCache();
             }
 
             GlobalConfig.Project = project;
@@ -156,7 +157,15 @@ namespace DevelopKit
         //关闭项目
         private void CloseprojectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HideOpenedProject();
+            if (GlobalConfig.Project.Editer.Count > 0)
+            {
+                DialogResult dialogResult = MessageBox.Show(string.Format("存在{0}个已修改的属性未保存，是否关闭", GlobalConfig.Project.Editer.Count),  "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (dialogResult == DialogResult.Yes)
+                    HideOpenedProject();
+            }
+            else {
+                HideOpenedProject();
+            }
         }
 
         //双击流程场景后在FlowLayout进行动态填充以及隐藏

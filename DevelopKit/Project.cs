@@ -32,6 +32,9 @@ namespace DevelopKit
         [XmlElement(ElementName = "developer")]
         public string Developer;    //开发者
 
+        [XmlElement(ElementName = "editer")]
+        public PropertyiesEditer<int, Property> Editer;
+
         [XmlIgnore]
         public ProjectStatus Status; //项目状态
 
@@ -47,6 +50,7 @@ namespace DevelopKit
             ProjectPath = path;
             Developer = dev;
             Status = ProjectStatus.StartCreateProject;
+            Editer = new PropertyiesEditer<int, Property>();
         }
 
         public void SetStatusOpen()
