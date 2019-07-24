@@ -160,6 +160,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\close_project.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\close_project1.png" />
     <Content Include="Resources\conf\cat_wm_aes01_v0.7.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

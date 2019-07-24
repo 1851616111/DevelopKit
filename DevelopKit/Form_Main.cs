@@ -189,6 +189,21 @@ namespace DevelopKit
         {
 
         }
+
+        private void CloseProjectPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            CloseProjectPictureBox.BackColor = Color.White;
+        }
+
+        private void CloseProjectPictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            CloseProjectPictureBox.BackColor = Color.Transparent;
+        }
+
+        private void CloseProjectPictureBox_Click(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
+        }
     }
 }
 

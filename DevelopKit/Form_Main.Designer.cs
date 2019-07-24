@@ -63,13 +63,15 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.centerBoardStatusStrip = new System.Windows.Forms.StatusStrip();
-            this.centerBoardToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.trackbarLabel = new System.Windows.Forms.Label();
-            this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.panel2 = new System.Windows.Forms.Panel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CloseProjectPictureBox = new System.Windows.Forms.PictureBox();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.centerBoardToolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -79,6 +81,8 @@
             this.tabPage1.SuspendLayout();
             this.centerBoardStatusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseProjectPictureBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.centerBoardPictuerBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -169,7 +173,7 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Margin = new System.Windows.Forms.Padding(0, 0, 38, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(3, 6, 0, 6);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(36, 6, 6, 6);
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.menuStrip1.Size = new System.Drawing.Size(1924, 37);
             this.menuStrip1.TabIndex = 0;
@@ -355,16 +359,6 @@
             this.centerBoardStatusStrip.TabIndex = 5;
             this.centerBoardStatusStrip.Text = "statusStrip2";
             // 
-            // centerBoardToolStripStatusLabel
-            // 
-            this.centerBoardToolStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
-            this.centerBoardToolStripStatusLabel.Image = global::DevelopKit.Properties.Resources.img_size;
-            this.centerBoardToolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.centerBoardToolStripStatusLabel.Name = "centerBoardToolStripStatusLabel";
-            this.centerBoardToolStripStatusLabel.Size = new System.Drawing.Size(151, 21);
-            this.centerBoardToolStripStatusLabel.Text = "toolStripStatusLabel2";
-            this.centerBoardToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // trackBar1
             // 
             this.trackBar1.Location = new System.Drawing.Point(516, 0);
@@ -384,17 +378,6 @@
             this.trackbarLabel.Size = new System.Drawing.Size(0, 25);
             this.trackbarLabel.TabIndex = 3;
             // 
-            // centerBoardPictuerBox
-            // 
-            this.centerBoardPictuerBox.BackColor = System.Drawing.Color.LightSkyBlue;
-            this.centerBoardPictuerBox.Location = new System.Drawing.Point(0, 45);
-            this.centerBoardPictuerBox.Margin = new System.Windows.Forms.Padding(0);
-            this.centerBoardPictuerBox.Name = "centerBoardPictuerBox";
-            this.centerBoardPictuerBox.Size = new System.Drawing.Size(1920, 720);
-            this.centerBoardPictuerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.centerBoardPictuerBox.TabIndex = 1;
-            this.centerBoardPictuerBox.TabStop = false;
-            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.White;
@@ -412,6 +395,54 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // CloseProjectPictureBox
+            // 
+            this.CloseProjectPictureBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CloseProjectPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.CloseProjectPictureBox.Image = global::DevelopKit.Properties.Resources.close_project;
+            this.CloseProjectPictureBox.Location = new System.Drawing.Point(1883, 0);
+            this.CloseProjectPictureBox.Margin = new System.Windows.Forms.Padding(0);
+            this.CloseProjectPictureBox.Name = "CloseProjectPictureBox";
+            this.CloseProjectPictureBox.Size = new System.Drawing.Size(36, 36);
+            this.CloseProjectPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.CloseProjectPictureBox.TabIndex = 24;
+            this.CloseProjectPictureBox.TabStop = false;
+            this.CloseProjectPictureBox.Click += new System.EventHandler(this.CloseProjectPictureBox_Click);
+            this.CloseProjectPictureBox.MouseLeave += new System.EventHandler(this.CloseProjectPictureBox_MouseLeave);
+            this.CloseProjectPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CloseProjectPictureBox_MouseMove);
+            // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.BackColor = System.Drawing.Color.Transparent;
+            this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
+            this.LogoPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(36, 36);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LogoPictureBox.TabIndex = 23;
+            this.LogoPictureBox.TabStop = false;
+            // 
+            // centerBoardToolStripStatusLabel
+            // 
+            this.centerBoardToolStripStatusLabel.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
+            this.centerBoardToolStripStatusLabel.Image = global::DevelopKit.Properties.Resources.img_size;
+            this.centerBoardToolStripStatusLabel.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.centerBoardToolStripStatusLabel.Name = "centerBoardToolStripStatusLabel";
+            this.centerBoardToolStripStatusLabel.Size = new System.Drawing.Size(151, 21);
+            this.centerBoardToolStripStatusLabel.Text = "toolStripStatusLabel2";
+            this.centerBoardToolStripStatusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // centerBoardPictuerBox
+            // 
+            this.centerBoardPictuerBox.BackColor = System.Drawing.Color.LightSkyBlue;
+            this.centerBoardPictuerBox.Location = new System.Drawing.Point(0, 45);
+            this.centerBoardPictuerBox.Margin = new System.Windows.Forms.Padding(0);
+            this.centerBoardPictuerBox.Name = "centerBoardPictuerBox";
+            this.centerBoardPictuerBox.Size = new System.Drawing.Size(1920, 720);
+            this.centerBoardPictuerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.centerBoardPictuerBox.TabIndex = 1;
+            this.centerBoardPictuerBox.TabStop = false;
+            // 
             // Form_Main
             // 
             this.AllowDrop = true;
@@ -420,6 +451,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1924, 1061);
+            this.Controls.Add(this.CloseProjectPictureBox);
+            this.Controls.Add(this.LogoPictureBox);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.splitter2);
             this.Controls.Add(this.splitter1);
@@ -429,6 +462,7 @@
             this.Controls.Add(this.toolBar1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("宋体", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.IsMdiContainer = true;
             this.KeyPreview = true;
@@ -451,6 +485,8 @@
             this.centerBoardStatusStrip.ResumeLayout(false);
             this.centerBoardStatusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.CloseProjectPictureBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.centerBoardPictuerBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -493,6 +529,8 @@
         private System.Windows.Forms.TrackBar trackBar1;
         private System.Windows.Forms.StatusStrip centerBoardStatusStrip;
         private System.Windows.Forms.ToolStripStatusLabel centerBoardToolStripStatusLabel;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
+        private System.Windows.Forms.PictureBox CloseProjectPictureBox;
     }
 }
 
