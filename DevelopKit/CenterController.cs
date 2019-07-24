@@ -188,6 +188,7 @@ namespace DevelopKit
                 ResetCenterBoard(false);
             }
             CenterBoardPictureBox.Image = image;
+            CenterBoardPictureBox.Refresh();
             OpenedSceneId = sceneID;
         }
 
