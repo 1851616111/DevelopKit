@@ -35,8 +35,9 @@ namespace DevelopKit
         {
             if (project.Status == 0)
             {
-                project.Status = ProjectStatus.StartOpenProject;
+                project.RestoreEditedProperties(project.CarConfig.Properties);
                 project.CarConfig.MakeMappingCache();
+                project.Status = ProjectStatus.StartOpenProject;
             }
 
             GlobalConfig.Project = project;
@@ -100,6 +101,9 @@ namespace DevelopKit
             splitter2.Visible = false;
             openImageToolStripMenuItem.Enabled = false;
             treeView2.Nodes.Clear();
+            centerBoardPictuerBox.Image = null;
+            panel2.Controls.Clear();
+
             GlobalConfig.Project = null;
             GlobalConfig.Controller = null;
         }

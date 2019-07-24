@@ -12,7 +12,7 @@
       <name>aes01</name>
       <version>v0.7</version>
       <config_file>Resources/conf/cat_wm_aes01_v0.7.xml</config_file>
-      <resources_dir>Resources/project/cat_wm_aes01_v0.7/</resources_dir>
+      <resources_dir>Resources\project\cat_wm_aes01_v0.7\</resources_dir>
     </item>
   </car_info_list>
 </app>

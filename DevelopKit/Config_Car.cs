@@ -93,41 +93,56 @@ namespace DevelopKit
     [Serializable]
     public class CarInfo
     {
-        private int id;
-        private string name;
-        private string version;
-        private string configFile;
-        private int manufacturerId;
-        private string resourcesDir;
-
         [XmlElement("id")]
-        public int Id { get => id; set => id = value; }
+        public int Id;
 
         [XmlElement("name")]
-        public string Name { get => name; set => name = value; }
+        public string Name;
 
         [XmlElement("version")]
-        public string Version { get => version; set => version = value; }
+        public string Version;
 
         [XmlElement("config_file")]
-        public string ConfigFile { get => configFile; set => configFile = value; }
+        public string ConfigFile;
 
         [XmlElement("manufacturer_id")]
-        public int ManufacturerId { get => manufacturerId; set => manufacturerId = value; }
+        public int ManufacturerId;
+
+        private string resourcesDir;
 
         [XmlElement("resources_dir")]
-        public string ResourcesDir { get => resourcesDir; set => resourcesDir = value; }
+        public string ResourcesDir
+        {
+            get
+            {
+                return resourcesDir;
+            }
+            set
+            {
+                if (value[value.Length - 1] == '\\' || value[value.Length - 1] == '/')
+                    resourcesDir = value.Remove(value.Length - 1, 1);
+                else
+                    resourcesDir = value;
+            }
+        }
+
+        public string GetResourcesDir()
+        {
+            if (ResourcesDir[ResourcesDir.Length - 1] == '\\' || ResourcesDir[ResourcesDir.Length - 1] == '/')
+                ResourcesDir = ResourcesDir.Remove(ResourcesDir.Length - 1, 1);
+            return ResourcesDir;
+        }
 
         public CarConfig GetCarConfig()
         {
-            CarConfig carCfg = (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), configFile);
+            CarConfig carCfg = (CarConfig)FileUtil.DeserializeObjectFromFile(typeof(CarConfig), ConfigFile);
             carCfg.MakeMappingCache();
             return carCfg;
         }
 
         public bool Validate()
         {
-            return File.Exists(configFile);
+            return File.Exists(ConfigFile);
         }
     }
 

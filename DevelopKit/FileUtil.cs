@@ -8,6 +8,51 @@ namespace DevelopKit
 {
     public static class FileUtil
     {
+        public static Error CopyDir(string src, string dst, string rename)
+        {
+            int lastIndexOfSeperator = src.LastIndexOf("\\");
+            string srcFolderName = src.Substring(lastIndexOfSeperator + 1, src.Length - (lastIndexOfSeperator + 1));
+
+            string dstDir;
+
+            if (rename.Length > 0)
+            {
+                dstDir = Path.Combine(dst, rename);
+            }
+            else {
+                dstDir = Path.Combine(dst, srcFolderName);
+            }
+            if (!Directory.Exists(dstDir))
+            {
+                Directory.CreateDirectory(dstDir);
+            }
+
+            try
+            {
+                foreach (string fileItem in Directory.GetFiles(src, "*", SearchOption.TopDirectoryOnly))
+                {
+                    string filePath = fileItem.Remove(0, src.Length);
+                    File.Copy(fileItem, dstDir + filePath);
+                }
+
+                DirectoryInfo srcDirInfo = new DirectoryInfo(src);
+                DirectoryInfo[] srcDirInfos = srcDirInfo.GetDirectories();
+
+                foreach (DirectoryInfo srcDirItem in srcDirInfos)
+                {
+                    Error err = CopyDir(srcDirItem.FullName, dstDir, "");
+                    if (err != null)
+                        return err;
+                }
+            }
+            catch (Exception ex)
+            {
+                return new Error(ex.ToString(), typeof(FileUtil), "CopyDir");
+            }
+
+            return null;
+        }
+
         public static Error SerializeObjectToFile(Object obj, string file)
         {
             try
@@ -216,7 +261,8 @@ namespace DevelopKit
             {
                 return ImageListIndexOfTreeView.Image;
             }
-            else {
+            else
+            {
                 return ImageListIndexOfTreeView.Text;
             }
         }

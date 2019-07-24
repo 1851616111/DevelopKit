@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -201,12 +202,12 @@ namespace DevelopKit
                 else
                 {
                     Log.Error("Flow1_FlowPanel", "LoadImageProperty", string.Format("property id={0} Get picture box nil", property.Id));
-                    image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value);
+                    image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(),property.Value));
                 }
             }
             else
             {
-                image = Image.FromFile(GlobalConfig.GetProjectResourcesDir() + property.Value);
+                image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(),property.Value));
             }
 
             PictureBox pictureBox = new PictureBox
@@ -274,12 +275,13 @@ namespace DevelopKit
                         if (openFileDialog.ShowDialog() == DialogResult.OK)
                         {
                             pictureBox.Image = Image.FromFile(openFileDialog.FileName);
+                            pictureBox.Image.Save(Path.Combine(GlobalConfig.Project.GetUserUploadImageDir(), openFileDialog.SafeFileName));;
                             pictureBox.Refresh();
 
                             if (openFileDialog.FileName != property.Value)
                             {
                                 Property propertyCopy = property.Clone();
-                                propertyCopy.Value = openFileDialog.FileName;
+                                propertyCopy.Value = GlobalConfig.Project.GetPropertyImagePath(openFileDialog.SafeFileName);
                                 GlobalConfig.Project.Editer.Add(property.Id, propertyCopy);
                             }
                             else
@@ -292,6 +294,8 @@ namespace DevelopKit
                     }
                     catch (Exception)
                     { }
+
+
                 });
                 panel.Controls.Add(button);
             }
@@ -311,10 +315,17 @@ namespace DevelopKit
                 {
                     try
                     {
-                        text.BackColor = RGB(Convert.ToInt32(property.DefaultValue, 16));
+                        text.BackColor = Color.FromArgb(
+                            Convert.ToInt32(property.DefaultValue.Substring(2, 2), 16),
+                            Convert.ToInt32(property.DefaultValue.Substring(4, 2), 16), 
+                            Convert.ToInt32(property.DefaultValue.Substring(6, 2), 16));
+
+                        PngUtil.SetAlphaWhilteImage((Bitmap)image, text.BackColor);
+                        pictureBox.Refresh();
                     }
                     catch (Exception ex)
                     {
+                        Console.WriteLine(ex.ToString());
                     }
                 }
 
@@ -327,7 +338,7 @@ namespace DevelopKit
                         if (dialog.Color.ToArgb() != text.BackColor.ToArgb())
                         {
                             Property propertyCopy = property.Clone();
-                            propertyCopy.DefaultValue = "Ox" + Convert.ToString(dialog.Color.ToArgb(), 16);
+                            propertyCopy.DefaultValue = "0x" + dialog.Color.R.ToString("X2") + dialog.Color.G.ToString("X2") + dialog.Color.B.ToString("X2");
                             GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
                         }
                         else
@@ -349,16 +360,20 @@ namespace DevelopKit
             {
                 TextBox text = new TextBox
                 {
-                    Text = "255",
                     Width = 35,
                     Location = new Point(label.Width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
                     Height = 20,
                     Margin = new Padding(0, 0, 0, 0),
                     Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
                 };
-                if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+                if (property.DefaultValue == null || property.DefaultValue.Length == 0)
                 {
+                    text.Text = "0";
+                }
+                else {
                     text.Text = property.DefaultValue;
+                    PngUtil.SetAlphaWhilteImage((Bitmap)image, Convert.ToInt32(property.DefaultValue));
+                    pictureBox.Refresh();
                 }
 
                 string oldText = text.Text;
@@ -387,22 +402,6 @@ namespace DevelopKit
                 panel.Controls.Add(button);
                 panel.Controls.Add(text);
             }
-        }
-
-        public static uint ParseRGB(Color color)
-        {
-            return (uint)(((uint)color.B << 16) | (ushort)(((ushort)color.G << 8) | color.R));
-        }
-
-
-        private static Color RGB(int color)
-        {
-            int r = 0xFF & color;
-            int g = 0xFF00 & color;
-            g >>= 8;
-            int b = 0xFF0000 & color;
-            b >>= 16;
-            return Color.FromArgb(r, g, b);
         }
     }
 }

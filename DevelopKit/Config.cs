@@ -17,10 +17,7 @@ namespace DevelopKit
             PropertyTitleHeight = 30
         };
 
-        public static string GetProjectResourcesDir()
-        {
-            return AppDomain.CurrentDomain.BaseDirectory + Project.CarInfo.ResourcesDir;
-        }
+
     }
 
     public class UIConfig

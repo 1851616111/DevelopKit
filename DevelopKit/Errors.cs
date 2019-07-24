@@ -29,5 +29,9 @@ namespace DevelopKit
             Function = src_function;
             Message = message;
         }
+        public override string ToString()
+        {
+            return string.Format("class:{0}, function:{1}, message:{2}", Class, Function, Message);
+        }
     }
 }

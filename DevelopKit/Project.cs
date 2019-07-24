@@ -16,6 +16,8 @@ namespace DevelopKit
     {
         public static string RuntimeConfigDirName = ".kit";
         public static string RuntimeConfigXmlName = "project.xml";
+        public static string UserProjectResourcesDir = "Resources";
+        public static string UserProjectUploadDir = "upload";
 
         [XmlElement(ElementName = "car_info")]
         public CarInfo CarInfo;  //车型信息
@@ -26,8 +28,8 @@ namespace DevelopKit
         [XmlElement(ElementName = "project_name")]
         public string ProjectName;  //项目名称
 
-        [XmlElement(ElementName = "project_path")]
-        public string ProjectPath;  //项目路径
+        [XmlElement(ElementName = "local_path")]
+        public string LocalPath;  //项目路径
 
         [XmlElement(ElementName = "developer")]
         public string Developer;    //开发者
@@ -47,10 +49,28 @@ namespace DevelopKit
             CarInfo = car;
             CarConfig = ccfg;
             ProjectName = name;
-            ProjectPath = path;
+            LocalPath = path;
             Developer = dev;
             Status = ProjectStatus.StartCreateProject;
             Editer = new PropertyiesEditer<int, Property>();
+        }
+
+        public void RestoreEditedProperties(List<Property> properties)
+        {
+            if (Editer == null || Editer.Count == 0)
+            {
+                return;
+            }
+
+            foreach (Property property in properties)
+            {
+                if (Editer.ContainsKey(property.Id))
+                {
+                    property.Value = Editer[property.Id].Value;
+                    property.DefaultValue = Editer[property.Id].DefaultValue;
+                }
+            }
+            Editer.Clear();
         }
 
         public void SetStatusOpen()
@@ -129,7 +149,7 @@ namespace DevelopKit
 
         public string GetUserSpaceDir()
         {
-            return ProjectPath + @"\" + ProjectName;
+            return LocalPath + @"\" + ProjectName;
         }
 
         public string GetRuntimeConfigDir()
@@ -142,6 +162,31 @@ namespace DevelopKit
             return GetRuntimeConfigDir() + @"\" + RuntimeConfigXmlName;
         }
 
+        public string GetAppResourcesDir()
+        {
+            return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CarInfo.ResourcesDir);
+        }
+
+        public string GetUserResourcesDir()
+        {
+            return Path.Combine(GetUserSpaceDir(), UserProjectResourcesDir);
+        }
+
+        public string GetUserUploadImageDir()
+        {
+            string dir = Path.Combine(GetUserResourcesDir(), UserProjectUploadDir);
+            if (!File.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            return dir;
+        }
+
+        public string GetPropertyImagePath(string image)
+        {
+            return Path.Combine(UserProjectUploadDir, image);
+        }
+
         //初始化项目目录
         public bool StartCreateProject(bool overwrite, out string error, out string errordetail)
         {
@@ -150,9 +195,9 @@ namespace DevelopKit
 
             try
             {
-                if (!Directory.Exists(ProjectPath))
+                if (!Directory.Exists(LocalPath))
                 {
-                    Directory.CreateDirectory(ProjectPath);
+                    Directory.CreateDirectory(LocalPath);
                 }
 
                 if (!overwrite && Directory.Exists(GetUserSpaceDir()))
@@ -167,6 +212,15 @@ namespace DevelopKit
                 }
 
                 WriteXmlFile();
+
+                Error err = FileUtil.CopyDir(GetAppResourcesDir(), GetUserSpaceDir(), UserProjectResourcesDir);
+                if (err != null)
+                {
+                    error = "初始化项目资源文件失败";
+                    errordetail = err.ToString();
+                    return false;
+                }
+               
             }
             catch (Exception ex)
             {
