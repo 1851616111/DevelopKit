@@ -190,6 +190,27 @@ namespace DevelopKit
             return groupLayerIndexMapping[sid][glid];
         }
 
+        //在同一个Group中，获取与Property的LayerId相同的Property
+        //相同LayerId的Property目前会出现两种情况
+        //1. Property B的RefPropertyId = Property A.ID
+        //2. Property A Property B无引用关系(不能同时出现)
+        public SortedDictionary<int, Property> GetGroupSameLayerProperties(int gid, Property property)
+        {
+            List<Property> groupProperties = GroupIdToPropertyMapping[gid];
+            if (groupProperties == null || groupProperties.Count == 0)
+                return null;
+
+            SortedDictionary<int, Property> res = new SortedDictionary<int, Property>();
+            foreach (Property propertyItem in groupProperties)
+            {
+                if (propertyItem.PropertyLayerIdx != property.PropertyLayerIdx || property.RefPropertyId > 0)
+                    continue;
+                res.Add(propertyItem.Id, propertyItem);
+            }
+            return res;
+        }
+
+
         public void MakeMappingCache()
         {
             if (sceneMapping == null)
@@ -452,6 +473,11 @@ namespace DevelopKit
         public string GetCachedPictureBoxId()
         {
             return string.Format("pb_cache_{0}_{1}", SceneId, GroupId);
+        }
+
+        public string GetCheckBoxId()
+        {
+            return string.Format("cb_{0}_{1}_{2}", SceneId, GroupId, Id);
         }
     }
 

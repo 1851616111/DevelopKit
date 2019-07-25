@@ -6,8 +6,12 @@
       <id>1</id>
       <name>KL30</name>
     </item>
-      <item>
+    <item>
       <id>2</id>
+      <name>人脸识别</name>
+    </item>
+    <item>
+      <id>3</id>
       <name>KL15</name>
     </item>
   </scenes>
@@ -229,7 +233,7 @@
       <group_layer_idx>2</group_layer_idx>
       <name>弹出框背景图</name>
       <type>image</type>
-       <operate_type>image_replace</operate_type>
+      <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -271,7 +275,7 @@
       <location>552,124</location>
       <size>812*472</size>
     </item>
-     <item>
+    <item>
       <id>16</id>
       <scene_id>1</scene_id>
       <group_id>3</group_id>
@@ -288,7 +292,7 @@
       <location>552,124</location>
       <size>812*472</size>
     </item>
-   
+
     <!--<item>
       <id>17</id>
       <scene_id>1</scene_id>
@@ -366,98 +370,444 @@
       <location>0,0</location>
       <size>1920*720</size>
     </item>
-  
-
-  <!--xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-->
-
-  
     <item>
       <id>22</id>
       <scene_id>2</scene_id>
       <group_id>7</group_id>
-      <group_name>TT灯2</group_name>
+      <group_name>背景</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>3</group_layer_idx>
-      <name>aaaaa</name>
+      <group_layer_idx>0</group_layer_idx>
+      <name>人脸识别背景图片</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
-      <can_edit>false</can_edit>
-      <property_layer_idx>2</property_layer_idx>
-      <value>noChange\ICU\KL30\tt.png</value>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL30\face_bg.png</value>
       <location>0,0</location>
       <size>1920*720</size>
     </item>
     <item>
       <id>23</id>
-      <scene_id>2</scene_id>
-      <group_id>7</group_id>
-      <group_name>TT灯2</group_name>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>0</group_layer_idx>
-      <name>bbbbb</name>
+      <name>背景图片</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
-      <can_edit>false</can_edit>
+      <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>noChange\ICU\KL30\charge_error_icon.png</value>
+      <value>ICU\KL15\black_background.png</value>
       <location>0,0</location>
       <size>1920*720</size>
     </item>
     <item>
       <id>24</id>
-      <scene_id>2</scene_id>
+      <scene_id>3</scene_id>
       <group_id>8</group_id>
-      <group_name>TT灯</group_name>
+      <group_name>常显</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>3</group_layer_idx>
-      <name>sdfsdfs</name>
-      <type>image</type>
-      <operate_type>image_replace</operate_type>
-      <show_label>true</show_label>
-      <can_edit>false</can_edit>
-      <property_layer_idx>0</property_layer_idx>
-      <value>noChange\ICU\KL30\tt.png</value>
-      <location>0,0</location>
-      <size>1920*720</size>
-    </item>
-    <item>
-      <id>25</id>
-      <scene_id>2</scene_id>
-      <group_id>9</group_id>
-      <group_name>TT灯</group_name>
-      <group_size>1920*720</group_size>
-      <group_layer_idx>4</group_layer_idx>
-      <name>进度数值颜色</name>
+      <group_layer_idx>0</group_layer_idx>
+      <name>时间文本颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <value>ICU\KL30\charge_progress_number.png</value>
-      <default_value>0x101010</default_value>
-      <location>863,307</location>
-      <size>134,85</size>
+      <value>ICU\KL15\time_text.png</value>
+      <location>920,58</location>
+      <size>85*28</size>
     </item>
     <item>
-      <id>26</id>
-      <scene_id>2</scene_id>
-      <group_id>10</group_id>
-      <group_name>TT灯</group_name>
+      <id>25</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>5</group_layer_idx>
-      <name>进度数值透明度(0-255)</name>
+      <group_layer_idx>0</group_layer_idx>
+      <name>时间文本透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <ref_property_id>2</ref_property_id>
-      <value>ICU\KL30\charge_progress_number.png</value>
-      <default_value>100</default_value>
-      <location>863,307</location>
-      <size>134,85</size>
+      <ref_property_id>24</ref_property_id>
+      <value>ICU\KL15\time_text.png</value>
+      <location>920,58</location>
+      <size>85*28</size>
     </item>
+    <item>
+      <id>26</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>总里程数值+单位颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\odo_text.png</value>
+      <location>205,640</location>
+      <size>52*20</size>
+    </item>
+    <item>
+      <id>27</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>总里程数值+单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <ref_property_id>26</ref_property_id>
+      <value>ICU\KL15\odo_text.png</value>
+      <location>205,640</location>
+      <size>52*20</size>
+    </item>
+    <item>
+      <id>28</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>温度数值+单位颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL15\temp_text.png</value>
+      <location>458,639</location>
+      <size>66*25</size>
+    </item>
+    <item>
+      <id>29</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>温度数值+单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <ref_property_id>28</ref_property_id>
+      <value>ICU\KL15\temp_text.png</value>
+      <location>458,639</location>
+      <size>66*25</size>
+    </item>
+    <item>
+      <id>30</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>档位图片颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\gear_text.png</value>
+      <location>1560,611</location>
+      <size>30*30</size>
+    </item>
+    <item>
+      <id>31</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>档位图片透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <ref_property_id>30</ref_property_id>
+      <value>ICU\KL15\gear_text.png</value>
+      <location>1560,611</location>
+      <size>30*30</size>
+    </item>
+    <item>
+      <id>32</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度值颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL15\speed_text.png</value>
+      <location>930,167</location>
+      <size>61*96</size>
+    </item>
+    <item>
+      <id>33</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度值透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <ref_property_id>32</ref_property_id>
+      <value>ICU\KL15\speed_text.png</value>
+      <location>930,167</location>
+      <size>61*96</size>
+    </item>
+    <item>
+      <id>34</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+    <item>
+      <id>35</id>
+      <scene_id>3</scene_id>
+      <group_id>8</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+
+    <!-- 左侧行车信息 -->
+    <item>
+      <id>36</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量多颜色</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\ele_high_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>37</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量中颜色</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\ele_mid_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>38</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量少颜色</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+   <item>
+      <id>39</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量多数值颜色</name>
+     <type>image</type>
+     <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\ele_num_high_color.png</value>
+     <location>111,168</location>
+     <size>414*414</size>
+    </item>
+    <item>
+      <id>40</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量中数值颜色</name>
+      <type>image</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\ele_num_mid_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>41</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>剩余电量少数值颜色</name>
+      <type>image</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\ele_num_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <!--<item>
+      <id>42</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+    <item>
+      <id>43</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+    <item>
+      <id>44</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+    <item>
+      <id>45</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>
+    <item>
+      <id>46</id>
+      <scene_id>3</scene_id>
+      <group_id>9</group_id>
+      <group_name>左侧行车信息</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>速度单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <ref_property_id>34</ref_property_id>
+      <value>ICU\KL15\speed_unit.png</value>
+      <location>932,279</location>
+      <size>55*20</size>
+    </item>-->
+    
   </properties>
 </car_config>

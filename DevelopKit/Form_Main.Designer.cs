@@ -34,7 +34,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_Main));
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +44,6 @@
             this.closeprojectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.projectToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.centerboardPictureBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -65,6 +63,7 @@
             this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.CloseProjectPictureBox = new System.Windows.Forms.PictureBox();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.rgbStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -160,20 +159,14 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // imageList1
-            // 
-            this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
-            this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "save_floppy_32px_1187937_easyicon.net.png");
-            this.imageList1.Images.SetKeyName(1, "save_floppy_32px_1187725_easyicon.net.png");
-            // 
             // statusStrip1
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Highlight;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.projectToolStripStatusLabel1,
             this.centerboardPictureBoxSizeLabel,
-            this.centerBoardImageRealSizeLabel});
+            this.centerBoardImageRealSizeLabel,
+            this.rgbStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1924, 22);
@@ -356,6 +349,7 @@
             this.centerBoardPictuerBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.centerBoardPictuerBox.TabIndex = 1;
             this.centerBoardPictuerBox.TabStop = false;
+            this.centerBoardPictuerBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.CenterBoardPictuerBox_MouseMove);
             // 
             // CloseProjectPictureBox
             // 
@@ -383,6 +377,14 @@
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabIndex = 23;
             this.LogoPictureBox.TabStop = false;
+            // 
+            // rgbStripStatusLabel1
+            // 
+            this.rgbStripStatusLabel1.Image = global::DevelopKit.Properties.Resources.rgb;
+            this.rgbStripStatusLabel1.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
+            this.rgbStripStatusLabel1.Name = "rgbStripStatusLabel1";
+            this.rgbStripStatusLabel1.Size = new System.Drawing.Size(145, 17);
+            this.rgbStripStatusLabel1.Text = "rgbStripStatusLabel1";
             // 
             // Form_Main
             // 
@@ -446,7 +448,6 @@
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openProjectToolStripMenuItem1;
-        private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.TabControl tabControl2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
@@ -462,6 +463,7 @@
         private System.Windows.Forms.ToolStripStatusLabel centerboardPictureBoxSizeLabel;
         private System.Windows.Forms.ToolStripStatusLabel centerBoardImageRealSizeLabel;
         private System.Windows.Forms.ToolStripButton scrollUpToolStripButton;
+        private System.Windows.Forms.ToolStripStatusLabel rgbStripStatusLabel1;
     }
 }
 

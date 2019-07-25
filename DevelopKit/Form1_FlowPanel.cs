@@ -190,6 +190,14 @@ namespace DevelopKit
 
         private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index, int propertyHeight)
         {
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
+            };
+            tabPanel.Controls.Add(panel, 0, index);
+
             PictureBox cachedPb;
             Image image;
             if (property.RefPropertyId > 0)
@@ -202,12 +210,12 @@ namespace DevelopKit
                 else
                 {
                     Log.Error("Flow1_FlowPanel", "LoadImageProperty", string.Format("property id={0} Get picture box nil", property.Id));
-                    image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(),property.Value));
+                    image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(), property.Value));
                 }
             }
             else
             {
-                image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(),property.Value));
+                image = Image.FromFile(Path.Combine(GlobalConfig.Project.GetUserResourcesDir(), property.Value));
             }
 
             PictureBox pictureBox = new PictureBox
@@ -224,6 +232,56 @@ namespace DevelopKit
                 Visible = false,
 
             };
+            panel.Controls.Add(pictureBox);
+
+            SortedDictionary<int, Property> brothers = GlobalConfig.Project.CarConfig.GetGroupSameLayerProperties(property.GroupId, property);
+            if (brothers.Count > 1) //包含自己所以大于1
+            {
+                CheckBox checkBox = new CheckBox
+                {
+                    Name = property.GetCheckBoxId(),
+                    Margin = new Padding(0, 0, 0, 0),
+                    Padding = new Padding(0, 0, 0, 0),
+                    Checked = brothers.FirstOrDefault().Key == property.Id,
+                    Width = 13,
+                    Text = "",
+                };
+                if (!checkBox.Checked)
+                    pictureBox.Enabled = false;
+                checkBox.CheckedChanged += new System.EventHandler(delegate (object sender, EventArgs e)
+                {
+                    if (checkBox.Checked)
+                    {
+                        pictureBox.Enabled = true;
+                        foreach (Property brotherProperty in brothers.Values)
+                        {
+                            if (brotherProperty.GetCheckBoxId() == checkBox.Name)
+                                continue;
+
+                            Control[] pbControls = tabPanel.Controls.Find(brotherProperty.GetPictureBoxId(), true);
+                            foreach (PictureBox pb in pbControls)
+                            {
+                                pb.Enabled = false;
+                            }
+
+                            Control[] ckControls = tabPanel.Controls.Find(brotherProperty.GetCheckBoxId(), true);
+                            foreach (CheckBox ck in ckControls)
+                            {
+                                ck.Checked = false;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        pictureBox.Enabled = false;
+                    }
+
+                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                });
+                panel.Controls.Add(checkBox);
+            }
+
+            
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
             GlobalConfig.Controller.SetPictureBox(property.Id, pictureBox);
 
@@ -234,17 +292,13 @@ namespace DevelopKit
             }
 
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
-            Panel panel = new Panel
-            {
-                Dock = DockStyle.Fill,
-            };
-            tabPanel.Controls.Add(panel, 0, index);
-            panel.Controls.Add(pictureBox);
 
             Label label = new Label
             {
                 Text = property.Name,
-                Location = new Point(0, 0),
+                Location = new Point(14, 0),
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
                 Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
                 Height = 20,
                 Width = 180,
@@ -275,7 +329,7 @@ namespace DevelopKit
                         if (openFileDialog.ShowDialog() == DialogResult.OK)
                         {
                             pictureBox.Image = Image.FromFile(openFileDialog.FileName);
-                            pictureBox.Image.Save(Path.Combine(GlobalConfig.Project.GetUserUploadImageDir(), openFileDialog.SafeFileName));;
+                            pictureBox.Image.Save(Path.Combine(GlobalConfig.Project.GetUserUploadImageDir(), openFileDialog.SafeFileName)); ;
                             pictureBox.Refresh();
 
                             if (openFileDialog.FileName != property.Value)
@@ -317,7 +371,7 @@ namespace DevelopKit
                     {
                         text.BackColor = Color.FromArgb(
                             Convert.ToInt32(property.DefaultValue.Substring(2, 2), 16),
-                            Convert.ToInt32(property.DefaultValue.Substring(4, 2), 16), 
+                            Convert.ToInt32(property.DefaultValue.Substring(4, 2), 16),
                             Convert.ToInt32(property.DefaultValue.Substring(6, 2), 16));
 
                         PngUtil.SetAlphaWhilteImage((Bitmap)image, text.BackColor);
@@ -370,7 +424,8 @@ namespace DevelopKit
                 {
                     text.Text = "0";
                 }
-                else {
+                else
+                {
                     text.Text = property.DefaultValue;
                     PngUtil.SetAlphaWhilteImage((Bitmap)image, Convert.ToInt32(property.DefaultValue));
                     pictureBox.Refresh();
@@ -386,7 +441,8 @@ namespace DevelopKit
                         propertyCopy.DefaultValue = text.Text;
                         GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
                     }
-                    else {
+                    else
+                    {
                         GlobalConfig.Project.Editer.Remove(property.Id);
                     }
                     try

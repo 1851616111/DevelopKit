@@ -16,7 +16,7 @@ namespace DevelopKit
         private int CenterBoardWidth;
         ParameterizedThreadStart pts;
         Thread t;
-      
+
         public Form_Main()
         {
             InitializeComponent();
@@ -45,7 +45,7 @@ namespace DevelopKit
             }
 
             GlobalConfig.Project = project;
-            GlobalConfig.Controller = new CenterBoardController(centerBoardPictuerBox, rightPanel, 
+            GlobalConfig.Controller = new CenterBoardController(centerBoardPictuerBox, rightPanel,
                 centerBoardImageRealSizeLabel, centerboardPictureBoxSizeLabel, CenterBoardWidth);
             ProjectStatusHandler(GlobalConfig.Project);
         }
@@ -171,11 +171,12 @@ namespace DevelopKit
         {
             if (GlobalConfig.Project.Editer.Count > 0)
             {
-                DialogResult dialogResult = MessageBox.Show(string.Format("存在{0}个已修改的属性未保存，是否关闭", GlobalConfig.Project.Editer.Count),  "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult dialogResult = MessageBox.Show(string.Format("存在{0}个已修改的属性未保存，是否关闭", GlobalConfig.Project.Editer.Count), "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                     HideOpenedProject();
             }
-            else {
+            else
+            {
                 HideOpenedProject();
             }
         }
@@ -212,6 +213,17 @@ namespace DevelopKit
         {
             if (GlobalConfig.Controller != null)
                 GlobalConfig.Controller.ScrollDownCenterBoardPictureBox();
+        }
+
+        private void CenterBoardPictuerBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            rgbStripStatusLabel1.Visible = centerBoardPictuerBox.Image != null;
+
+            if (rgbStripStatusLabel1.Visible)
+            {
+                Color pixel = ((Bitmap)(centerBoardPictuerBox.Image)).GetPixel(e.X, e.Y);
+                rgbStripStatusLabel1.Text = string.Format("RGB: ({0},{1},{2}),  Alpha: {3}", pixel.R, pixel.G, pixel.B, pixel.A);
+            }
         }
     }
 }

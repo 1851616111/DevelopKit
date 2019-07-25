@@ -284,6 +284,10 @@ namespace DevelopKit
                     {
                         Console.WriteLine("Get group property picturebox nil, property id={0}", property.Id);
                     }
+
+                    if (!(bool)((PictureBox)(pbCtl[0])).Enabled)  //checkbox 负责启用还是停用PictureBox
+                        continue;
+
                     mergeParams.Add(new PngUtil.MergeImageParams
                     {
                         Image = ((PictureBox)pbCtl[0]).Image,

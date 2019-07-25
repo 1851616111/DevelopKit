@@ -163,19 +163,214 @@
     <Content Include="Resources\close_project.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\close_project1.png" />
-    <Content Include="Resources\conf\cat_wm_aes01_v0.7.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\background.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\conf\app.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\black_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Loupe_Zoom2.png" />
-    <None Include="Resources\Loupe_Zoomback.png" />
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\charge_number.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\charge_unit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_high_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_low_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_mid_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_num_high_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_num_low_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\ele_num_mid_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\gear_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\left\left_pop_img_frame_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\left\left_pop_img_frame_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\left\left_pop_img_shadow_green.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\left\left_pop_img_shadow_red.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\left\left_pop_text_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\media_background.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop12_image_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop12_image_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop12_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop_alarm_pop_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop_alarm_pop_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop_mark_text_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\apa_pop_text_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\car.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\exit_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\exit_btn_choosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\exit_btn_unchoosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_btn_choosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_btn_unchoosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_hor_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_hor_btn_choosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_hor_btn_unchoosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_ver_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_ver_btn_choosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\in_ver_btn_unchoosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\out_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\out_btn_choosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\out_btn_unchoosed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_left_hor_done.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_left_hor_ready.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_left_ver_done.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_left_ver_ready.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_right_hor_done.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_right_hor_ready.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_right_ver_done.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\apa\park_right_ver_ready.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\lvds_error_bg.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_1_image_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_1_image_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_1_image_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_4_image_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_4_image_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_4_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_full_frame.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_full_shadow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\middle\mid_pop_full_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\odo_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\power_high_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\power_low_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\power_mid_color.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\speed_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\speed_unit.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\temp_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\time_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\trip.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\alarm_pop_53_icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\alarm_pop_53_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\background.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_other_number.png">
@@ -191,6 +386,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\charge_tip_text.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL30\face_bg.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\car_door.png">
@@ -214,6 +412,15 @@
     <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\tt.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\close_project1.png" />
+    <Content Include="Resources\conf\cat_wm_aes01_v0.7.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\conf\app.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\Loupe_Zoom2.png" />
+    <None Include="Resources\Loupe_Zoomback.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
