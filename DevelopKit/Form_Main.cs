@@ -13,6 +13,7 @@ namespace DevelopKit
     {
         static private readonly int displayWidth = SystemInformation.WorkingArea.Width; //获取显示器工作区宽度
         static private readonly int displayHeight = SystemInformation.WorkingArea.Height; //获取显示器工作区高度
+        private int CenterBoardWidth;
         ParameterizedThreadStart pts;
         Thread t;
       
@@ -23,6 +24,9 @@ namespace DevelopKit
             Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             HideOpenedProject();
             GlobalConfig.Project = null;
+
+            CenterBoardWidth = splitter2.Location.X - centerBoardFlowPanel.Location.X;
+            centerBoardFlowPanel.Width = CenterBoardWidth;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,8 +45,8 @@ namespace DevelopKit
             }
 
             GlobalConfig.Project = project;
-            GlobalConfig.Controller = new CenterBoardController(panel2, tabPage1);
-
+            GlobalConfig.Controller = new CenterBoardController(centerBoardPictuerBox, rightPanel, 
+                centerBoardImageRealSizeLabel, centerboardPictureBoxSizeLabel, CenterBoardWidth);
             ProjectStatusHandler(GlobalConfig.Project);
         }
 
@@ -51,10 +55,10 @@ namespace DevelopKit
             switch (project.Status)
             {
                 case (ProjectStatus.StartOpenProject):
-                    toolStripStatusLabel1.Text = "打开皮肤项目：" + project.ProjectName;
+                    projectToolStripStatusLabel1.Text = "打开皮肤项目：" + project.ProjectName;
                     project.NextStatus();
                     ShowOpenedProject();
-                    toolStripStatusLabel1.Text = "就绪";
+                    projectToolStripStatusLabel1.Text = "就绪";
 
                     break;
             }
@@ -63,11 +67,12 @@ namespace DevelopKit
         private void ShowOpenedProject()
         {
             panel1.Visible = true;
-            panel2.Visible = true;
-            tabControl1.Visible = true;
+            rightPanel.Visible = true;
             splitter1.Visible = true;
             splitter2.Visible = true;
-            openImageToolStripMenuItem.Enabled = true;
+            centerBoardFlowPanel.Visible = true;
+            centerBoardPictuerBox.Visible = true;
+            centerBoardToolStrip.Visible = true;
             loadScene(treeView2, GlobalConfig.Project.CarConfig);
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
@@ -94,18 +99,21 @@ namespace DevelopKit
 
         private void HideOpenedProject()
         {
-            panel1.Visible = false;
-            panel2.Visible = false;
-            tabControl1.Visible = false;
-            splitter1.Visible = false;
-            splitter2.Visible = false;
-            openImageToolStripMenuItem.Enabled = false;
-            treeView2.Nodes.Clear();
             centerBoardPictuerBox.Image = null;
-            panel2.Controls.Clear();
-
             GlobalConfig.Project = null;
             GlobalConfig.Controller = null;
+
+            centerBoardPictuerBox.Visible = false;
+            centerBoardFlowPanel.Visible = false;
+            centerBoardToolStrip.Visible = false;
+
+            panel1.Visible = false;
+            rightPanel.Visible = false;
+            splitter1.Visible = false;
+            splitter2.Visible = false;
+
+            treeView2.Nodes.Clear();
+            rightPanel.Controls.Clear();
         }
 
         //创建项目
@@ -179,17 +187,6 @@ namespace DevelopKit
             GlobalConfig.Controller.DoubleClickScene(sceneId);
         }
 
-        private void TrackBar1_Scroll(object sender, EventArgs e)
-        {
-            GlobalConfig.Controller.CenterBoardBarOnScroll();
-        }
-
-        //保存
-        private void ToolBar1_ButtonClick(object sender, ToolBarButtonClickEventArgs e)
-        {
-
-        }
-
         private void CloseProjectPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
             CloseProjectPictureBox.BackColor = Color.White;
@@ -203,6 +200,18 @@ namespace DevelopKit
         private void CloseProjectPictureBox_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void ScrollUpToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (GlobalConfig.Controller != null)
+                GlobalConfig.Controller.ScrollUpCenterBoardPictureBox();
+        }
+
+        private void ScrollDownToolStripButton_Click(object sender, EventArgs e)
+        {
+            if (GlobalConfig.Controller != null)
+                GlobalConfig.Controller.ScrollDownCenterBoardPictureBox();
         }
     }
 }
