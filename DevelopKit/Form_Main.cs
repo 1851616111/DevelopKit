@@ -92,6 +92,15 @@ namespace DevelopKit
                     Text = scene.Name
                 };
 
+                foreach (Scene childScene in scene.children)
+                {
+                    sceneNode.Nodes.Add(new TreeNode
+                    {
+                        Name = childScene.Id.ToString(),
+                        Text = childScene.Name
+                    });
+                }
+
                 treeview.Nodes.Add(sceneNode);
             }
             treeview.EndUpdate();

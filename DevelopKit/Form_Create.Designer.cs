@@ -203,7 +203,7 @@
             this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Items.AddRange(new object[] {
-            "微马电动车01"});
+            "威马电动车01"});
             this.comboBox3.Location = new System.Drawing.Point(310, 120);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(184, 33);

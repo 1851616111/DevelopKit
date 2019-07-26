@@ -180,7 +180,12 @@ namespace DevelopKit
 
         public Scene GetSceneById(int id)
         {
+            if (sceneMapping.ContainsKey(id))
+            {
             return sceneMapping[id];
+            } else {
+                return null;
+            }
         }
 
         //sid scene id
@@ -203,7 +208,9 @@ namespace DevelopKit
             SortedDictionary<int, Property> res = new SortedDictionary<int, Property>();
             foreach (Property propertyItem in groupProperties)
             {
-                if (propertyItem.PropertyLayerIdx != property.PropertyLayerIdx || property.RefPropertyId > 0)
+                if (propertyItem.PropertyLayerIdx != property.PropertyLayerIdx || 
+                    propertyItem.RefPropertyId == property.Id || 
+                    property.RefPropertyId > 0)
                     continue;
                 res.Add(propertyItem.Id, propertyItem);
             }
@@ -313,13 +320,13 @@ namespace DevelopKit
     [Serializable]
     public class Scene
     {
-        private int id;
-        private string name;
-
         [XmlElement("id")]
-        public int Id { get => id; set => id = value; }
+        public int Id;
         [XmlElement("name")]
-        public string Name { get => name; set => name = value; }
+        public string Name;
+
+        [XmlArray("child_scenes"), XmlArrayItem("item")]
+        public List<Scene> children; 
     }
 
     [Serializable]

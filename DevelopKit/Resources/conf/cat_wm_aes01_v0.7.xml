@@ -14,6 +14,24 @@
       <id>3</id>
       <name>KL15</name>
     </item>
+    <item>
+      <id>4</id>
+      <name>test</name>
+      <child_scenes>
+        <item>
+          <id>5</id>
+          <name>刘德华</name>
+        </item>
+        <item>
+          <id>6</id>
+          <name>张学友</name>
+        </item>
+        <item>
+          <id>7</id>
+          <name>黎明</name>
+        </item>
+      </child_scenes>
+    </item>
   </scenes>
   <properties>
     <item>
@@ -387,6 +405,9 @@
       <location>0,0</location>
       <size>1920*720</size>
     </item>
+
+    <!--常显-->
+
     <item>
       <id>23</id>
       <scene_id>3</scene_id>
@@ -622,7 +643,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量多颜色</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
@@ -639,7 +660,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量中颜色</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
@@ -656,7 +677,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量少颜色</name>
       <type>image</type>
       <operate_type>image_replace</operate_type>
@@ -667,22 +688,22 @@
       <location>111,168</location>
       <size>414*414</size>
     </item>
-   <item>
+    <item>
       <id>39</id>
       <scene_id>3</scene_id>
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量多数值颜色</name>
-     <type>image</type>
-     <operate_type>alpha_white_image_set_color</operate_type>
+      <type>image</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
       <value>ICU\KL15\ele_num_high_color.png</value>
-     <location>111,168</location>
-     <size>414*414</size>
+      <location>111,168</location>
+      <size>414*414</size>
     </item>
     <item>
       <id>40</id>
@@ -690,7 +711,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量中数值颜色</name>
       <type>image</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -707,7 +728,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
+      <group_layer_idx>1</group_layer_idx>
       <name>剩余电量少数值颜色</name>
       <type>image</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -718,23 +739,22 @@
       <location>111,168</location>
       <size>414*414</size>
     </item>
-    <!--<item>
+    <item>
       <id>42</id>
       <scene_id>3</scene_id>
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>速度单位透明度</name>
-      <type>alpha</type>
+      <group_layer_idx>1</group_layer_idx>
+      <name>功率高档颜色</name>
+      <type>txt_color</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>6</property_layer_idx>
-      <ref_property_id>34</ref_property_id>
-      <value>ICU\KL15\speed_unit.png</value>
-      <location>932,279</location>
-      <size>55*20</size>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\power_high_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
     </item>
     <item>
       <id>43</id>
@@ -742,17 +762,16 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>速度单位透明度</name>
-      <type>alpha</type>
-      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <group_layer_idx>1</group_layer_idx>
+      <name>功率中档颜色</name>
+      <type>txt_color</type>
+      <operate_type>ICU\KL15\power_mid_color.png</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>6</property_layer_idx>
-      <ref_property_id>34</ref_property_id>
-      <value>ICU\KL15\speed_unit.png</value>
-      <location>932,279</location>
-      <size>55*20</size>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\power_mid_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
     </item>
     <item>
       <id>44</id>
@@ -760,17 +779,16 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>速度单位透明度</name>
-      <type>alpha</type>
+      <group_layer_idx>1</group_layer_idx>
+      <name>功率低档颜色</name>
+      <type>txt_color</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>6</property_layer_idx>
-      <ref_property_id>34</ref_property_id>
-      <value>ICU\KL15\speed_unit.png</value>
-      <location>932,279</location>
-      <size>55*20</size>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\power_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
     </item>
     <item>
       <id>45</id>
@@ -778,17 +796,16 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>速度单位透明度</name>
-      <type>alpha</type>
-      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <group_layer_idx>1</group_layer_idx>
+      <name>可续航里程、里程小计颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>6</property_layer_idx>
-      <ref_property_id>34</ref_property_id>
-      <value>ICU\KL15\speed_unit.png</value>
-      <location>932,279</location>
-      <size>55*20</size>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\trip.png</value>
+      <location>111,168</location>
+      <size>414*414</size>>
     </item>
     <item>
       <id>46</id>
@@ -796,18 +813,1176 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>速度单位透明度</name>
+      <group_layer_idx>1</group_layer_idx>
+      <name>可续航里程、里程小计透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <ref_property_id>45</ref_property_id>
+      <value>ICU\KL15\trip.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+    <!--左侧弹窗报警-->
+    <item>
+      <id>48</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧弹出报警红色背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\left\left_pop_img_frame_red.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+    <item>
+      <id>49</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧弹出报警绿色背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\left\left_pop_img_frame_green.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+    <item>
+      <id>50</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧弹出报警红色阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\left\left_pop_img_shadow_red.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+    <item>
+      <id>51</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧弹出报警绿色阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\left\left_pop_img_shadow_green.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+    <item>
+      <id>52</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧报警文字颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\left\left_pop_text_color.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+    <item>
+      <id>53</id>
+      <scene_id>3</scene_id>
+      <group_id>10</group_id>
+      <group_name>左侧弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>2</group_layer_idx>
+      <name>左侧报警文字透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <ref_property_id>52</ref_property_id>
+      <value>ICU\KL15\left\left_pop_text_color.png</value>
+      <location>94,462</location>
+      <size>474*174</size>
+    </item>
+
+
+    <!--下方充电界面-->
+    <item>
+      <id>54</id>
+      <scene_id>3</scene_id>
+      <group_id>11</group_id>
+      <group_name>下方充电界面</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>时间功率电压电流数值颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\charge_number.png</value>
+      <location>549,614</location>
+      <size>806*39</size>
+    </item>
+    <item>
+      <id>55</id>
+      <scene_id>3</scene_id>
+      <group_id>11</group_id>
+      <group_name>下方充电界面</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>时间功率电压电流数值透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <ref_property_id>54</ref_property_id>
+      <value>ICU\KL15\charge_number.png</value>
+      <location>549,614</location>
+      <size>806*39</size>
+    </item>
+    <item>
+      <id>56</id>
+      <scene_id>3</scene_id>
+      <group_id>11</group_id>
+      <group_name>下方充电界面</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>时间功率电压电流单位颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\charge_unit.png</value>
+      <location>549,614</location>
+      <size>806*39</size>
+    </item>
+    <item>
+      <id>57</id>
+      <scene_id>3</scene_id>
+      <group_id>11</group_id>
+      <group_name>下方充电界面</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>3</group_layer_idx>
+      <name>时间功率电压电流单位透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <ref_property_id>56</ref_property_id>
+      <value>ICU\KL15\charge_unit.png</value>
+      <location>549,614</location>
+      <size>806*39</size>
+    </item>
+
+
+    <!--中部APA-->
+    <item>
+      <id>58</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>左水平停车位未停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_left_hor_ready.png</value>
+      <location>682,400</location>
+      <size>195*237</size>
+    </item>
+    <item>
+      <id>59</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>左水平停车位停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_left_hor_done.png</value>
+      <location>682,389</location>
+      <size>201*248</size>
+    </item>
+    <item>
+      <id>60</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>左垂直停车位未停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_left_ver_ready.png</value>
+      <location>680,467</location>
+      <size>1201*141</size>
+    </item>
+    <item>
+      <id>61</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>左垂直停车位停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_left_ver_done.png</value>
+      <location>680,449</location>
+      <size>215*188</size>
+    </item>
+    <item>
+      <id>62</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>右水平停车位未停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_right_hor_ready.png</value>
+      <location>1042,400</location>
+      <size>195*236</size>
+    </item>
+    <item>
+      <id>63</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>右水平停车位停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_right_hor_done.png</value>
+      <location>1036,389</location>
+      <size>201*248</size>
+    </item>
+    <item>
+      <id>64</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>右垂直停车位未停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_right_ver_ready.png</value>
+      <location>1033,467</location>
+      <size>204*141</size>
+    </item>
+    <item>
+      <id>65</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>右垂直停车位停进</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\park_right_ver_done.png</value>
+      <location>1022,449</location>
+      <size>215*188</size>
+    </item>
+    <item>
+      <id>66</id>
+      <scene_id>3</scene_id>
+      <group_id>12</group_id>
+      <group_name>中部APA</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>4</group_layer_idx>
+      <name>车辆图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\apa\car.png</value>
+      <location>905,370</location>
+      <size>107*163</size>
+    </item>
+
+    <!--APA中部泊入泊出弹窗-->
+    <item>
+      <id>67</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_alarm_pop_frame.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>68</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗背景投影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_alarm_pop_shadow.png</value>
+      <location>617,620</location>
+      <size>682*47</size>
+    </item>
+    <item>
+      <id>69</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗特殊文字颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_mark_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>70</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗特殊文字透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <ref_property_id>69</ref_property_id>
+      <value>ICU\KL15\middle\apa\apa_pop_mark_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>71</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗文字颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>72</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>弹窗文字透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <ref_property_id>71</ref_property_id>
+      <value>ICU\KL15\middle\apa\apa_pop_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>73</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊入按下按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_btn_choosed.png</value>
+      <location>683,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>74</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊入抬起按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_btn_unchoosed.png</value>
+      <location>683,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>75</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊入图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_bg.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>76</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊出按下按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
       <property_layer_idx>6</property_layer_idx>
-      <ref_property_id>34</ref_property_id>
-      <value>ICU\KL15\speed_unit.png</value>
-      <location>932,279</location>
-      <size>55*20</size>
-    </item>-->
-    
+      <value>ICU\KL15\middle\apa\out_btn_choosed.png</value>
+      <location>888,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>77</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊出抬起按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <value>ICU\KL15\middle\apa\out_btn_unchoosed.png</value>
+      <location>888,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>78</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>泊出图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>7</property_layer_idx>
+      <value>ICU\KL15\middle\apa\out_bg.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>79</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>退出按下按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>8</property_layer_idx>
+      <value>ICU\KL15\middle\apa\exit_btn_choosed.png</value>
+      <location>1091,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>80</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>退出抬起按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>8</property_layer_idx>
+      <value>ICU\KL15\middle\apa\exit_btn_unchoosed.png</value>
+      <location>1091,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>81</id>
+      <scene_id>3</scene_id>
+      <group_id>13</group_id>
+      <group_name>APA中部泊入泊出弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>5</group_layer_idx>
+      <name>退出图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>9</property_layer_idx>
+      <value>ICU\KL15\middle\apa\exit_bg.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+
+
+    <!--APA中部水平垂直泊车弹窗-->
+    <item>
+      <id>82</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_alarm_pop_frame.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>83</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗背景投影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_alarm_pop_shadow.png</value>
+      <location>617,620</location>
+      <size>682*47</size>
+    </item>
+    <item>
+      <id>84</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗特殊文字颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_mark_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>85</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗特殊文字透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <ref_property_id>84</ref_property_id>
+      <value>ICU\KL15\middle\apa\apa_pop_mark_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>86</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗文字颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>87</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>弹窗文字透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <ref_property_id>86</ref_property_id>
+      <value>ICU\KL15\middle\apa\apa_pop_text_color.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>88</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>水平泊入按下按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_hor_btn_choosed.png</value>
+      <location>742,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>89</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>水平泊入抬起按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_hor_btn_unchoosed.png</value>
+      <location>742,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>90</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>水平泊入图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_hor_bg.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+    <item>
+      <id>91</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>垂直泊入按下按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_ver_btn_choosed.png</value>
+      <location>1030,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>92</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>垂直泊入抬起按钮</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>6</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_ver_btn_unchoosed.png</value>
+      <location>1030,489</location>
+      <size>141*61</size>
+    </item>
+    <item>
+      <id>93</id>
+      <scene_id>3</scene_id>
+      <group_id>14</group_id>
+      <group_name>APA中部水平垂直泊车弹窗</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>6</group_layer_idx>
+      <name>垂直泊入图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>7</property_layer_idx>
+      <value>ICU\KL15\middle\apa\in_ver_bg.png</value>
+      <location>617,278</location>
+      <size>682*342</size>
+    </item>
+
+
+    <!--APA中部弹窗报警-->
+    <item>
+      <id>94</id>
+      <scene_id>3</scene_id>
+      <group_id>15</group_id>
+      <group_name>APA中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>7</group_layer_idx>
+      <name>弹出报警12背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop12_image_frame.png</value>
+      <location>700,473</location>
+      <size>520*177</size>
+    </item>
+    <item>
+      <id>95</id>
+      <scene_id>3</scene_id>
+      <group_id>15</group_id>
+      <group_name>APA中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>7</group_layer_idx>
+      <name>弹出报警12阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop12_image_shadow.png</value>
+      <location>700,473</location>
+      <size>520*177</size>
+    </item>
+    <item>
+      <id>96</id>
+      <scene_id>3</scene_id>
+      <group_id>15</group_id>
+      <group_name>APA中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>7</group_layer_idx>
+      <name>报警文字12颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop12_text.png</value>
+      <location>700,473</location>
+      <size>520*177</size>
+    </item>
+    <item>
+      <id>97</id>
+      <scene_id>3</scene_id>
+      <group_id>15</group_id>
+      <group_name>APA中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>7</group_layer_idx>
+      <name>报警文字12透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL15\middle\apa\apa_pop12_text.png</value>
+      <ref_property_id>96</ref_property_id>
+      <location>700,473</location>
+      <size>520*177</size>
+    </item>
+
+    <!--中部导航-->
+    <item>
+      <id>98</id>
+      <scene_id>3</scene_id>
+      <group_id>16</group_id>
+      <group_name>中部导航</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>8</group_layer_idx>
+      <name>无导航时背景图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\lvds_error_bg.png</value>
+      <location>700,473</location>
+      <size>520*177</size>
+    </item>
+
+
+    <!--中部弹窗报警-->
+    <item>
+      <id>99</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>全屏大弹窗报警背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_full_frame.png</value>
+      <location>0,0</location>
+      <size>1920,720</size>
+    </item>
+    <item>
+      <id>100</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>全屏大弹窗报警阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>4</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_full_shadow.png</value>
+      <location>0,0</location>
+      <size>1920,720</size>
+    </item>
+    <item>
+      <id>101</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>全屏大弹窗报警颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_full_text.png</value>
+      <location>0,0</location>
+      <size>1920,720</size>
+    </item>
+    <item>
+      <id>102</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>全屏大弹窗报警透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>5</property_layer_idx>
+      <ref_property_id>101</ref_property_id>
+      <value>ICU\KL15\middle\mid_pop_full_text.png</value>
+      <location>0,0</location>
+      <size>1920,720</size>
+    </item>
+    <item>
+      <id>103</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>大弹窗报警背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_1_image_frame.png</value>
+      <location>617,278</location>
+      <size>682,343</size>
+    </item>
+    <item>
+      <id>104</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>大弹窗报警阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_1_image_shadow.png</value>
+      <location>617,621</location>
+      <size>682*41</size>
+    </item>
+    <item>
+      <id>105</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>大弹窗报警颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_1_image_text.png</value>
+      <location>617,278</location>
+      <size>1920*720</size>
+    </item>
+    <item>
+      <id>106</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>大弹窗报警透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>3</property_layer_idx>
+      <ref_property_id>105</ref_property_id>
+      <value>ICU\KL15\middle\mid_pop_1_text.png</value>
+      <location>617,278</location>
+      <size>1920*720</size>
+    </item>
+    <item>
+      <id>107</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>小弹窗报警背景</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_4_image_frame.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+    <item>
+      <id>108</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>小弹窗报警阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_4_image_shadow.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+    <item>
+      <id>109</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>小弹窗报警颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_4_text.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+    <item>
+      <id>110</id>
+      <scene_id>3</scene_id>
+      <group_id>17</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>9</group_layer_idx>
+      <name>小弹窗报警透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <ref_property_id>109</ref_property_id>
+      <value>ICU\KL15\middle\mid_pop_4_text.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+
+
+    <!--全屏报警-->
+
+    <item>
+      <id>111</id>
+      <scene_id>3</scene_id>
+      <group_id>18</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>10</group_layer_idx>
+      <name>小弹窗报警阴影</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL30\alarm_pop_53_icon.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+    <item>
+      <id>112</id>
+      <scene_id>3</scene_id>
+      <group_id>18</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>10</group_layer_idx>
+      <name>小弹窗报警颜色</name>
+      <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_4_text.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+    <item>
+      <id>113</id>
+      <scene_id>3</scene_id>
+      <group_id>18</group_id>
+      <group_name>中部弹窗报警</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>10</group_layer_idx>
+      <name>小弹窗报警透明度</name>
+      <type>alpha</type>
+      <operate_type>alpha_white_image_set_alpha</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\middle\mid_pop_4_text.png</value>
+      <location>101,473</location>
+      <size>654,177</size>
+    </item>
+
   </properties>
 </car_config>

@@ -54,7 +54,7 @@ namespace DevelopKit
         {
             if (CenterBoardPictureBox.Image == null || CenterBoardPictureBox.Image.Width == CenterBoardPictureBox.Width)
                 return;
-    
+
             int StepWidth = 100;
 
             if (CenterBoardPictureBox.Image.Width - CenterBoardPictureBox.Width >= StepWidth)
@@ -137,7 +137,12 @@ namespace DevelopKit
             }
             else
             {
-                SceneFlowLayoutPanelMap.Add(newSceneID, loadSceneFlowLayoutPanel(newSceneID));
+                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID);
+                if (flowLayoutPanel != null)
+                {
+
+                    SceneFlowLayoutPanelMap.Add(newSceneID, flowLayoutPanel);
+                }
             }
 
             OpenedSceneId = newSceneID;
@@ -146,10 +151,15 @@ namespace DevelopKit
         private FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId)
         {
             Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
+            if (scene == null)
+                return null;
+
+            if (!GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping.ContainsKey(scene.Id))
+                return null;
+
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
-
             RightPenel.Controls.Add(flowLayoutPanel);
-
+       
             bool setFlow = false;
             foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
             {
@@ -265,7 +275,6 @@ namespace DevelopKit
                     {
                         resultList = resultList.Union(groupCache.GroupPropertiesImages).ToList();
                     }
-
                 }
                 UpdateCenterBoard(group.Sceneid, PngUtil.MergeImageList(resultList, maxGroupSize.Width, maxGroupSize.Height));
             }
