@@ -25,14 +25,22 @@ namespace DevelopKit
             HideOpenedProject();
             GlobalConfig.Project = null;
 
-            CenterBoardWidth = splitter2.Location.X - centerBoardFlowPanel.Location.X;
-            centerBoardFlowPanel.Width = CenterBoardWidth;
+            Resize();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             this.ControlBox = true;
             this.SetBounds(0, 0, displayWidth, displayHeight);
+        }
+
+        private void Resize()
+        {
+
+            CenterBoardWidth = splitter2.Location.X - centerBoardFlowPanel.Location.X;
+            centerBoardFlowPanel.Width = CenterBoardWidth;
+            //centerBoardToolStrip.MinimumSize.Width = splitter2.Location.X - centerBoardFlowPanel.Location.X;
+            centerBoardToolStrip.Width = splitter2.Location.X - centerBoardFlowPanel.Location.X;
         }
 
         public void SetGlobalProject(Project project)
@@ -82,7 +90,13 @@ namespace DevelopKit
 
         private void loadScene(TreeView treeview, CarConfig carConfig)
         {
+            Form_Progress form_Progress = new Form_Progress(carConfig.GetTotalSceneNum());
+            form_Progress.Location = new Point((displayWidth - form_Progress.Width) /2 , (displayHeight - form_Progress.Height) /2);
+            form_Progress.Show();
 
+            GlobalConfig.Controller.HideCenterBoardPictureBox();
+
+            rightPanel.SuspendLayout();
             treeview.BeginUpdate();
             foreach (Scene scene in carConfig.Scenes)
             {
@@ -91,6 +105,7 @@ namespace DevelopKit
                     Name = scene.Id.ToString(),
                     Text = scene.Name
                 };
+                GlobalConfig.Controller.InitScene(scene.Id, true);
 
                 foreach (Scene childScene in scene.children)
                 {
@@ -99,11 +114,22 @@ namespace DevelopKit
                         Name = childScene.Id.ToString(),
                         Text = childScene.Name
                     });
+
+                    GlobalConfig.Controller.InitScene(childScene.Id, true);
+                    form_Progress.AddProgressValue(1, childScene.Name);
                 }
 
+                form_Progress.AddProgressValue(1, scene.Name);
                 treeview.Nodes.Add(sceneNode);
             }
+
             treeview.EndUpdate();
+            rightPanel.ResumeLayout();
+
+            GlobalConfig.Controller.ShowCenterBoardPictureBox();
+
+            form_Progress.Close();
+            form_Progress.Dispose();
         }
 
         private void HideOpenedProject()
@@ -175,6 +201,17 @@ namespace DevelopKit
             }
         }
 
+        //导出皮肤
+        private void OutputToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (GlobalConfig.Project != null)
+            {
+                Form_Output outputForm = new Form_Output(GlobalConfig.Project.Developer, GlobalConfig.Project.GetDefaultOutputPath());
+                outputForm.SetDesktopBounds(Form_Main.displayWidth / 4, 80, Form_Main.displayWidth / 2, Form_Main.displayHeight / 2 + 150);
+                outputForm.Show();
+            }
+        }
+
         //关闭项目
         private void CloseprojectToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -194,7 +231,7 @@ namespace DevelopKit
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int sceneId = Convert.ToInt32(e.Node.Name);
-            GlobalConfig.Controller.DoubleClickScene(sceneId);
+            GlobalConfig.Controller.InitScene(sceneId, false);
         }
 
         private void CloseProjectPictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -234,6 +271,10 @@ namespace DevelopKit
                 rgbStripStatusLabel1.Text = string.Format("RGB: ({0},{1},{2}),  Alpha: {3}", pixel.R, pixel.G, pixel.B, pixel.A);
             }
         }
+
+        private void InitOutputResources() {
+
+        } 
     }
 }
 

@@ -55,6 +55,11 @@ namespace DevelopKit
             Editer = new PropertyiesEditer<int, Property>();
         }
 
+        public string GetDefaultOutputPath()
+        {
+            return Path.Combine(LocalPath, "output");
+        }    
+
         public void RestoreEditedProperties(List<Property> properties)
         {
             if (Editer == null || Editer.Count == 0)

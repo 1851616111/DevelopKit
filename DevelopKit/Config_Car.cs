@@ -178,6 +178,20 @@ namespace DevelopKit
         [XmlIgnore]
         public Dictionary<int, List<Group>> SceneIdToGroupsMapping { get => sceneIdToGroupsMapping; }
 
+        public int GetTotalSceneNum()
+        {
+            int total = 0;
+            foreach (Scene scene in Scenes)
+            {
+                if (scene.children.Count > 0)
+                    total += scene.children.Count;
+                
+                total += 1;
+                
+            }
+            return total;
+        }
+       
         public Scene GetSceneById(int id)
         {
             if (sceneMapping.ContainsKey(id))

@@ -74,6 +74,18 @@
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
     <Compile Include="Errors.cs" />
+    <Compile Include="Form_Output.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Output.Designer.cs">
+      <DependentUpon>Form_Output.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_Progress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_Progress.Designer.cs">
+      <DependentUpon>Form_Progress.cs</DependentUpon>
+    </Compile>
     <Compile Include="Log.cs" />
     <Compile Include="MathUtil.cs" />
     <Compile Include="Form_Main.cs">
@@ -105,6 +117,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_Create.resx">
       <DependentUpon>Form_Create.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Output.resx">
+      <DependentUpon>Form_Output.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_Progress.resx">
+      <DependentUpon>Form_Progress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -163,6 +181,7 @@
     <Content Include="Resources\close_project.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\folder.png" />
     <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\background.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -412,6 +431,7 @@
     <Content Include="Resources\project\cat_wm_aes01_v0.7\noChange\ICU\KL30\tt.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\unfold.png" />
     <None Include="Resources\close_project1.png" />
     <Content Include="Resources\conf\cat_wm_aes01_v0.7.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

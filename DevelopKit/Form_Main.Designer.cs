@@ -44,10 +44,12 @@
             this.closeprojectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.OutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.projectToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.centerboardPictureBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.centerBoardImageRealSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.rgbStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -63,7 +65,6 @@
             this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.CloseProjectPictureBox = new System.Windows.Forms.PictureBox();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
-            this.rgbStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -149,7 +150,8 @@
             this.menuStrip1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(16, 48);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.OutputToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Margin = new System.Windows.Forms.Padding(0, 0, 38, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -158,6 +160,13 @@
             this.menuStrip1.Size = new System.Drawing.Size(1924, 37);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            // 
+            // OutputToolStripMenuItem
+            // 
+            this.OutputToolStripMenuItem.Name = "OutputToolStripMenuItem";
+            this.OutputToolStripMenuItem.Size = new System.Drawing.Size(54, 25);
+            this.OutputToolStripMenuItem.Text = "导出";
+            this.OutputToolStripMenuItem.Click += new System.EventHandler(this.OutputToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -192,6 +201,14 @@
             this.centerBoardImageRealSizeLabel.Name = "centerBoardImageRealSizeLabel";
             this.centerBoardImageRealSizeLabel.Size = new System.Drawing.Size(196, 17);
             this.centerBoardImageRealSizeLabel.Text = "centerBoardImageRealSizeLabel";
+            // 
+            // rgbStripStatusLabel1
+            // 
+            this.rgbStripStatusLabel1.Image = global::DevelopKit.Properties.Resources.rgb;
+            this.rgbStripStatusLabel1.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
+            this.rgbStripStatusLabel1.Name = "rgbStripStatusLabel1";
+            this.rgbStripStatusLabel1.Size = new System.Drawing.Size(145, 17);
+            this.rgbStripStatusLabel1.Text = "rgbStripStatusLabel1";
             // 
             // skinEngine1
             // 
@@ -297,17 +314,17 @@
             // 
             // centerBoardToolStrip
             // 
-            this.centerBoardToolStrip.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.centerBoardToolStrip.GripMargin = new System.Windows.Forms.Padding(3, 3, 0, 0);
+            this.centerBoardToolStrip.Dock = System.Windows.Forms.DockStyle.None;
+            this.centerBoardToolStrip.GripMargin = new System.Windows.Forms.Padding(0);
             this.centerBoardToolStrip.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.centerBoardToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.scrollUpToolStripButton,
             this.scrollDownToolStripButton});
             this.centerBoardToolStrip.Location = new System.Drawing.Point(0, 0);
-            this.centerBoardToolStrip.MinimumSize = new System.Drawing.Size(1920, 36);
+            this.centerBoardToolStrip.MinimumSize = new System.Drawing.Size(1290, 36);
             this.centerBoardToolStrip.Name = "centerBoardToolStrip";
             this.centerBoardToolStrip.Padding = new System.Windows.Forms.Padding(0);
-            this.centerBoardToolStrip.Size = new System.Drawing.Size(1920, 42);
+            this.centerBoardToolStrip.Size = new System.Drawing.Size(1290, 42);
             this.centerBoardToolStrip.TabIndex = 2;
             this.centerBoardToolStrip.Text = "toolStrip1";
             // 
@@ -341,6 +358,7 @@
             // 
             // centerBoardPictuerBox
             // 
+            this.centerBoardPictuerBox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.centerBoardPictuerBox.BackColor = System.Drawing.Color.LightSkyBlue;
             this.centerBoardPictuerBox.Location = new System.Drawing.Point(0, 42);
             this.centerBoardPictuerBox.Margin = new System.Windows.Forms.Padding(0);
@@ -377,14 +395,6 @@
             this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.LogoPictureBox.TabIndex = 23;
             this.LogoPictureBox.TabStop = false;
-            // 
-            // rgbStripStatusLabel1
-            // 
-            this.rgbStripStatusLabel1.Image = global::DevelopKit.Properties.Resources.rgb;
-            this.rgbStripStatusLabel1.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
-            this.rgbStripStatusLabel1.Name = "rgbStripStatusLabel1";
-            this.rgbStripStatusLabel1.Size = new System.Drawing.Size(145, 17);
-            this.rgbStripStatusLabel1.Text = "rgbStripStatusLabel1";
             // 
             // Form_Main
             // 
@@ -464,6 +474,7 @@
         private System.Windows.Forms.ToolStripStatusLabel centerBoardImageRealSizeLabel;
         private System.Windows.Forms.ToolStripButton scrollUpToolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel rgbStripStatusLabel1;
+        private System.Windows.Forms.ToolStripMenuItem OutputToolStripMenuItem;
     }
 }
 

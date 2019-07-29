@@ -76,6 +76,15 @@ namespace DevelopKit
                 SetCenterBoardPictureBoxWidth(minPictureBoxWidth);
         }
 
+        public void HideCenterBoardPictureBox()
+        {
+            CenterBoardPictureBox.Visible = false;
+        }
+
+        public void ShowCenterBoardPictureBox()
+        {
+            CenterBoardPictureBox.Visible = true;
+        }
 
         public void SetCenterBoardPictureBoxWidth(int width)
         {
@@ -115,9 +124,9 @@ namespace DevelopKit
             CenterBoardPictureBoxSizeLabel.Text = string.Format("显示尺寸:{0}*{1}", CenterBoardPictureBox.Width, (int)(CenterBoardPictureBox.Width * percent));
         }
 
-        public void DoubleClickScene(int newSceneID)
+        public void InitScene(int newSceneID, bool init)
         {
-            if (newSceneID == OpenedSceneId)
+            if (!init && newSceneID == OpenedSceneId)
                 return;
 
             //隐藏上一次打开的场景
@@ -137,10 +146,9 @@ namespace DevelopKit
             }
             else
             {
-                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID);
+                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID, init);
                 if (flowLayoutPanel != null)
                 {
-
                     SceneFlowLayoutPanelMap.Add(newSceneID, flowLayoutPanel);
                 }
             }
@@ -148,7 +156,7 @@ namespace DevelopKit
             OpenedSceneId = newSceneID;
         }
 
-        private FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId)
+        private FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId, bool init)
         {
             Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
             if (scene == null)
@@ -159,7 +167,9 @@ namespace DevelopKit
 
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
             RightPenel.Controls.Add(flowLayoutPanel);
-       
+            flowLayoutPanel.Width = RightPenel.Width;
+            flowLayoutPanel.Visible = false;
+
             bool setFlow = false;
             foreach (Group group in GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[scene.Id])
             {
@@ -171,7 +181,7 @@ namespace DevelopKit
                     setFlow = true;
                 }
                 Form1_FlowPanel.LoadGroupTablePanelConfig(tableLayoutPanel, flowLayoutPanel.Width, group);
-                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], GlobalConfig.UiConfig.PropertyRowHeight);
+                Form1_FlowPanel.LoadGroupTablePanelData(group, tableLayoutPanel, GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id], GlobalConfig.UiConfig.PropertyRowHeight, init);
             }
 
             return flowLayoutPanel;
@@ -202,6 +212,7 @@ namespace DevelopKit
                     SceneCenterBoardDataMap[sceneID].PictureBoxImage = CenterBoardPictureBox.Image;
                 }
 
+                //SetCenterBoardSizeLabel();
                 CenterBoardImageSizeLabel.Text = string.Format("{0}*{1}", CenterBoardPictureBox.Width, CenterBoardPictureBox.Height);
             }
 

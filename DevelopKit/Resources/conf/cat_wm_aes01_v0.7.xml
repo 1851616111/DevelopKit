@@ -1715,8 +1715,8 @@
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
       <value>ICU\KL15\middle\lvds_error_bg.png</value>
-      <location>700,473</location>
-      <size>520*177</size>
+      <location>0,0</location>
+      <size>1920*</size>
     </item>
 
 

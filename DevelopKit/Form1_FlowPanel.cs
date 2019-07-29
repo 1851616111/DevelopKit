@@ -37,7 +37,7 @@ namespace DevelopKit
             tablePanel.TabIndex = 0;
         }
 
-        public static void LoadGroupTablePanelData(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
+        public static void LoadGroupTablePanelData(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight, bool init)
         {
 
             Button titleBtn = new Button
@@ -51,31 +51,40 @@ namespace DevelopKit
             };
             titleBtn.Click += new EventHandler(delegate (object _, EventArgs b)
             {
-                if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
-                {
-                    LoadGroups(tabPanel, properties, rowHeight);
-                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
-                }
-                else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
-                {
-                    ShowGroupTablePanel(tabPanel, rowHeight);
-                    HideGroupBrotherTablePanel(tabPanel, group);
-                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
-                }
-                else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
-                {
-                    HideGroupTablePanel(tabPanel);
-                    GlobalConfig.Controller.HideGroupOnCenterBoard(group, null);
-                }
-                else
-                {
-                    Log.Error("Form1_FlowPanel", "table panel button click unknow status", "");
-                }
+                clickGroupButton(group, tabPanel, properties, rowHeight);
             });
+
+            //若是初始化，则直接加载
+            if (init)
+                clickGroupButton(group, tabPanel, properties, rowHeight);
 
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, GlobalConfig.UiConfig.PropertyTitleHeight));
             tabPanel.Height += GlobalConfig.UiConfig.PropertyTitleHeight;
             tabPanel.Controls.Add(titleBtn, 0, 0);
+        }
+
+        private static void clickGroupButton(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
+        {
+            if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
+            {
+                LoadGroups(tabPanel, properties, rowHeight);
+                GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
+            }
+            else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
+            {
+                ShowGroupTablePanel(tabPanel, rowHeight);
+                HideGroupBrotherTablePanel(tabPanel, group);
+                GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
+            }
+            else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
+            {
+                HideGroupTablePanel(tabPanel);
+                GlobalConfig.Controller.HideGroupOnCenterBoard(group, null);
+            }
+            else
+            {
+                Log.Error("Form1_FlowPanel", "table panel button click unknow status", "");
+            }
         }
 
         private static void LoadGroups(TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)

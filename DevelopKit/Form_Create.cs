@@ -102,18 +102,16 @@ namespace DevelopKit
 
             if (newProject.StartCreateProject(overwrite, out string error, out string errorDetails))
             {
+                this.Hide();
                 newProject.NextStatus();
-                MessageBox.Show("创建项目成功", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 newProject.SetStatusOpen();
                 updateGlobalProjectHandler(newProject);
-                this.Hide();
             }
             else if (Errors.IsProjectAlreadyExistErr(error))
             {
                 DialogResult dialogResult = MessageBox.Show(error + ", 请选择是否覆盖", "请确认", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (dialogResult == DialogResult.Yes)
                 {
-
                     try
                     {
                         Directory.Delete(newProject.GetUserSpaceDir(), true);

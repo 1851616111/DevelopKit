@@ -93,6 +93,16 @@ namespace DevelopKit.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        internal static System.Drawing.Bitmap folder {
+            get {
+                object obj = ResourceManager.GetObject("folder", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         internal static System.Drawing.Bitmap img_size {
             get {
                 object obj = ResourceManager.GetObject("img_size", resourceCulture);
@@ -126,6 +136,16 @@ namespace DevelopKit.Properties {
         internal static System.Drawing.Bitmap rgb {
             get {
                 object obj = ResourceManager.GetObject("rgb", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        internal static System.Drawing.Bitmap unfold {
+            get {
+                object obj = ResourceManager.GetObject("unfold", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
