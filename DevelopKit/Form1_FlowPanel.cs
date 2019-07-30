@@ -239,7 +239,6 @@ namespace DevelopKit
                 Location = new Point(0, 0),
                 BackColor = Color.Gray,
                 Visible = false,
-
             };
             panel.Controls.Add(pictureBox);
 
@@ -366,6 +365,7 @@ namespace DevelopKit
             {
                 TextBox text = new TextBox
                 {
+                    Name = property.GetTextBoxColorID(),
                     AutoSize = false,
                     Width = 35,
                     Height = 25,
@@ -423,6 +423,7 @@ namespace DevelopKit
             {
                 TextBox text = new TextBox
                 {
+                    Name = property.GetTextBoxAlphaID(),
                     Width = 35,
                     Location = new Point(label.Width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
                     Height = 20,

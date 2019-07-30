@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace DevelopKit
 {
@@ -168,6 +169,9 @@ namespace DevelopKit
         public List<Scene> Scenes { get => scenes; set { scenes = value; } }
         [XmlArray("properties"), XmlArrayItem("item")]
         public List<Property> Properties { get => properties; set { properties = value; } }
+
+        [XmlElement("outputs")]
+        public Outputs outputs;
 
         [XmlIgnore]
         public Dictionary<int, Property> PropertyIdMapping { get => propertyMapping; }
@@ -499,6 +503,16 @@ namespace DevelopKit
         public string GetCheckBoxId()
         {
             return string.Format("cb_{0}_{1}_{2}", SceneId, GroupId, Id);
+        }
+
+        public string GetTextBoxAlphaID()
+        {
+            return string.Format("tb_alpha_{0}_{1}_{2}", SceneId, GroupId, Id);
+        }
+
+        public string GetTextBoxColorID()
+        {
+            return string.Format("tb_color_{0}_{1}_{2}", SceneId, GroupId, Id);
         }
     }
 

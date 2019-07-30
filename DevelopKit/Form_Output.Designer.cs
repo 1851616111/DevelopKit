@@ -1,6 +1,6 @@
 ﻿namespace DevelopKit
 {
-    partial class Form_Output
+    partial class Form_OutPut
     {
         /// <summary>
         /// Required designer variable.

@@ -90,7 +90,7 @@ namespace DevelopKit
 
         private void loadScene(TreeView treeview, CarConfig carConfig)
         {
-            Form_Progress form_Progress = new Form_Progress(carConfig.GetTotalSceneNum());
+            Form_Progress form_Progress = new Form_Progress(carConfig.GetTotalSceneNum(), false);
             form_Progress.Location = new Point((displayWidth - form_Progress.Width) /2 , (displayHeight - form_Progress.Height) /2);
             form_Progress.Show();
 
@@ -116,13 +116,14 @@ namespace DevelopKit
                     });
 
                     GlobalConfig.Controller.InitScene(childScene.Id, true);
-                    form_Progress.AddProgressValue(1, childScene.Name);
+                    form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", childScene.Name));
                 }
 
-                form_Progress.AddProgressValue(1, scene.Name);
+                form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", scene.Name));
                 treeview.Nodes.Add(sceneNode);
             }
 
+           
             treeview.EndUpdate();
             rightPanel.ResumeLayout();
 
@@ -206,7 +207,23 @@ namespace DevelopKit
         {
             if (GlobalConfig.Project != null)
             {
-                Form_Output outputForm = new Form_Output(GlobalConfig.Project.Developer, GlobalConfig.Project.GetDefaultOutputPath());
+                Form_OutPut outputForm = new Form_OutPut(GlobalConfig.Project.Developer, 
+                    GlobalConfig.Project.GetDefaultOutputPath(),
+                    delegate () {
+                        Form_Progress form_Progress = new Form_Progress(100, true);
+                        form_Progress.Location = new Point((displayWidth - form_Progress.Width) / 2, (displayHeight - form_Progress.Height) / 2);
+                        form_Progress.Show();
+
+                        string err = GlobalConfig.Controller.StartOutput(
+                           GlobalConfig.Project.CarConfig.outputs,
+                           GlobalConfig.Project.CarConfig.PropertyIdMapping,
+                           GlobalConfig.Project.GetDefaultOutputPath(),
+                           form_Progress);
+                        if (err != null)
+                        {
+                            Console.WriteLine("-------------------> result " + err);
+                        }
+                    });
                 outputForm.SetDesktopBounds(Form_Main.displayWidth / 4, 80, Form_Main.displayWidth / 2, Form_Main.displayHeight / 2 + 150);
                 outputForm.Show();
             }

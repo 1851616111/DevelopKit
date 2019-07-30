@@ -9,6 +9,8 @@ namespace DevelopKit
     public static class Errors {
         static public string ProjectAlreadyExist = "项目已存在";
         static public string ProjectFileAlreadyExist = "文件已存在项目中";
+        static public string PropertyIdNotExist = "属性ID不存在";
+        static public string UiPictureBoxNotExist = "属性容器不存在";
         static public bool IsProjectAlreadyExistErr(string error)
         {
             return error == ProjectAlreadyExist;

@@ -1,31 +1,37 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    
-    public partial class Form_Output : Form
+
+    public partial class Form_OutPut : Form
     {
-        public Form_Output(string developer, string defaultPath)
+        public delegate void OutPutHandler();
+
+        public OutPutHandler MainFormOutPutHandler;
+
+        public Form_OutPut(string developer, string defaultPath, OutPutHandler handler)
         {
             InitializeComponent();
-            {
-            }
 
+            MainFormOutPutHandler = handler;
             DevelopWarningLabel.Visible = false;
             DevelopNumberWarningLabel.Visible = false;
             OutputPathWarningLabel.Visible = false;
 
             DeveloperTextBox.Text = developer;
             OutputTextBox.Text = defaultPath;
+            try
+            {
+                Directory.CreateDirectory(defaultPath);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("新建导出操作失败");
+            }
+           
         }
 
         private void Form_Output_Load(object sender, EventArgs e)
@@ -64,7 +70,9 @@ namespace DevelopKit
                 }
             }
 
+            MainFormOutPutHandler();
 
+            this.Hide();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)

@@ -55,11 +55,6 @@ namespace DevelopKit
             Editer = new PropertyiesEditer<int, Property>();
         }
 
-        public string GetDefaultOutputPath()
-        {
-            return Path.Combine(LocalPath, "output");
-        }    
-
         public void RestoreEditedProperties(List<Property> properties)
         {
             if (Editer == null || Editer.Count == 0)
@@ -170,6 +165,12 @@ namespace DevelopKit
         public string GetAppResourcesDir()
         {
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CarInfo.ResourcesDir);
+        }
+
+
+        public string GetDefaultOutputPath()
+        {
+            return Path.Combine(GetUserSpaceDir(), "output");
         }
 
         public string GetUserResourcesDir()

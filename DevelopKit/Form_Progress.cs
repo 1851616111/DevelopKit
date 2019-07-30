@@ -12,25 +12,57 @@ namespace DevelopKit
 {
     public partial class Form_Progress : Form
     {
-        public Form_Progress(int progressMax)
+        private bool WithDetail;
+        public Form_Progress(int progressMax, bool withDetail)
         {
             InitializeComponent();
             progressBar1.Maximum = progressMax;
             ProgressContentLabel.Text = "";
+            if (!withDetail)
+            {
+                listBox1.Visible = false;
+                this.Height = 115;
+            }
+
+            WithDetail = withDetail;
         }
 
-        public void AddProgressValue(int value, string sceneName)
+        public void SetProgressMax(int max)
+        {
+            progressBar1.Maximum = max;
+        }
+
+        public void AddProgressValue(int value, string label)
         {
             if (progressBar1.Value + value <= progressBar1.Maximum)
             {
                 progressBar1.Value += value;
                 progressBar1.Refresh();
 
-                ProgressContentLabel.Show();
-                ProgressContentLabel.Text = string.Format("场景 {0} 已加载", sceneName);
-                ProgressContentLabel.Update();
-                Thread.Sleep(100);
+                if (WithDetail)
+                {
+                    AppendDetails(label);
+                }
+                else {
+                    ProgressContentLabel.Show();
+                    ProgressContentLabel.Text = label;
+                    ProgressContentLabel.Update();
+                }
+                
+                Thread.Sleep(80);
             }
+        }
+
+        private void AppendDetails(string detailItem)
+        {
+            listBox1.Items.Add(detailItem);
+            listBox1.SelectedIndex = listBox1.Items.Count - 1;
+            listBox1.SelectedIndex = -1;
+        }
+
+        private void DoneButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -1983,6 +1983,29 @@
       <location>101,473</location>
       <size>654,177</size>
     </item>
-
   </properties>
+  <outputs>
+    <image_outputs>
+      <item>
+        <property_id>1</property_id>
+        <target>ICU\KL30\background.jpg</target>
+      </item>
+    </image_outputs>
+    <xml_outputs>
+      <item>
+        <property_id>2</property_id>
+        <target>ICU\KL30\charge_progress_number_color</target>
+      </item>
+      <item>
+        <property_id>3</property_id>
+        <target>ICU\KL30\charge_progress_number_transparent</target>
+      </item>
+    </xml_outputs>
+    <merge_image_outputs>
+      <item>
+        <property_ids>2,3</property_ids>
+        <target>ICU\KL30\30_charge_ElecUnit.png</target>
+      </item>
+    </merge_image_outputs>
+  </outputs>
 </car_config>
