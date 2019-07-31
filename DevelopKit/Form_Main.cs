@@ -33,7 +33,6 @@ namespace DevelopKit
             centerBoardToolStrip.Width = splitter2.Location.X - centerBoardFlowPanel.Location.X;
         }
 
-
         public void SetGlobalProject(Project project)
         {
             if (project.Status == 0)

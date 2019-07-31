@@ -80,7 +80,7 @@ namespace DevelopKit
             else if (!(bool)((Hashtable)tabPanel.Tag)["hide"])//上次为显示，再点击后更新为隐藏
             {
                 HideGroupTablePanel(tabPanel);
-                GlobalConfig.Controller.HideGroupOnCenterBoard(group, null);
+                GlobalConfig.Controller.UnionGroupsImageParams(group, null);
             }
             else
             {
@@ -290,9 +290,8 @@ namespace DevelopKit
                 panel.Controls.Add(checkBox);
             }
 
-            
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
-            GlobalConfig.Controller.SetPictureBox(property.Id, pictureBox);
+            GlobalConfig.Controller.SetPropertyImage(property.Id, pictureBox);
 
             if (!property.ShowLabel)
             {

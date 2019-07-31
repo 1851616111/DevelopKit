@@ -167,7 +167,6 @@ namespace DevelopKit
             return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, CarInfo.ResourcesDir);
         }
 
-
         public string GetDefaultOutputPath()
         {
             return Path.Combine(GetUserSpaceDir(), "output");
@@ -237,7 +236,6 @@ namespace DevelopKit
             return true;
         }
     }
-
 
     public enum ProjectStatus : int
     {

@@ -17,8 +17,8 @@ namespace DevelopKit
         private ToolStripLabel CenterBoardPictureBoxSizeLabel;
 
         private Dictionary<int, PictureBox> PropertyPictureBoxCache;
-        private Dictionary<int, FlowLayoutPanel> SceneFlowLayoutPanelMap;
-        private Dictionary<int, CenterBoardData> SceneCenterBoardDataMap;
+        private Dictionary<int, FlowLayoutPanel> SceneIdToSceneFlowPanelCache;
+        private Dictionary<int, CenterBoardData> SceneToCenterBoardDataCache;
         private Dictionary<int, SortedDictionary<int, GroupCache>> GroupLayerCache;
 
         public CenterBoardController() { }
@@ -32,14 +32,46 @@ namespace DevelopKit
             SetCenterBoardPictureBoxWidth(width);
 
             PropertyPictureBoxCache = new Dictionary<int, PictureBox>();
-            SceneFlowLayoutPanelMap = new Dictionary<int, FlowLayoutPanel>();
-            SceneCenterBoardDataMap = new Dictionary<int, CenterBoardData>();
+            SceneIdToSceneFlowPanelCache = new Dictionary<int, FlowLayoutPanel>();
+            SceneToCenterBoardDataCache = new Dictionary<int, CenterBoardData>();  
             GroupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
+        }
+
+        public void InitScene(int newSceneID, bool init)
+        {
+            if (!init && newSceneID == OpenedSceneId)
+                return;
+
+            //隐藏上一次打开的场景
+            if (OpenedSceneId > 0 && SceneIdToSceneFlowPanelCache.ContainsKey(OpenedSceneId))
+            {
+                SceneIdToSceneFlowPanelCache[OpenedSceneId].Visible = false;
+                SceneIdToSceneFlowPanelCache[OpenedSceneId].Enabled = false;
+                CenterBoardPictureBox.Image = null;
+                CenterBoardPictureBox.Refresh();
+            }
+
+            if (SceneIdToSceneFlowPanelCache.ContainsKey(newSceneID))
+            {
+                SceneIdToSceneFlowPanelCache[newSceneID].Visible = true;
+                SceneIdToSceneFlowPanelCache[newSceneID].Enabled = true;
+                ShowCenterBoard(newSceneID);
+            }
+            else
+            {
+                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID, init);
+                if (flowLayoutPanel != null)
+                {
+                    SceneIdToSceneFlowPanelCache.Add(newSceneID, flowLayoutPanel);
+                }
+            }
+
+            OpenedSceneId = newSceneID;
         }
 
         public FlowLayoutPanel GetSceneFlowLayoutPanel(int sceneId)
         {
-            return SceneFlowLayoutPanelMap[sceneId];
+            return SceneIdToSceneFlowPanelCache[sceneId];
         }
 
         public void ScrollUpCenterBoardPictureBox()
@@ -93,7 +125,7 @@ namespace DevelopKit
             }
         }
 
-        public void SetCenterBoardPictureBoxImage(Image image)
+        public void UpdateCenterBoardPictureBoxImage(Image image)
         {
             CenterBoardPictureBox.Image = image;
             CenterBoardPictureBox.Refresh();
@@ -116,37 +148,6 @@ namespace DevelopKit
             CenterBoardPictureBoxSizeLabel.Text = string.Format("显示尺寸:{0}*{1}", CenterBoardPictureBox.Width, (int)(CenterBoardPictureBox.Width * percent));
         }
 
-        public void InitScene(int newSceneID, bool init)
-        {
-            if (!init && newSceneID == OpenedSceneId)
-                return;
-
-            //隐藏上一次打开的场景
-            if (OpenedSceneId > 0 && SceneFlowLayoutPanelMap.ContainsKey(OpenedSceneId))
-            {
-                SceneFlowLayoutPanelMap[OpenedSceneId].Visible = false;
-                SceneFlowLayoutPanelMap[OpenedSceneId].Enabled = false;
-                CenterBoardPictureBox.Image = null;
-                CenterBoardPictureBox.Refresh();
-            }
-
-            if (SceneFlowLayoutPanelMap.ContainsKey(newSceneID))
-            {
-                SceneFlowLayoutPanelMap[newSceneID].Visible = true;
-                SceneFlowLayoutPanelMap[newSceneID].Enabled = true;
-                ShowCenterBoard(newSceneID);
-            }
-            else
-            {
-                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID, init);
-                if (flowLayoutPanel != null)
-                {
-                    SceneFlowLayoutPanelMap.Add(newSceneID, flowLayoutPanel);
-                }
-            }
-
-            OpenedSceneId = newSceneID;
-        }
 
         private FlowLayoutPanel loadSceneFlowLayoutPanel(int sceneId, bool init)
         {
@@ -181,37 +182,34 @@ namespace DevelopKit
 
         public void ShowCenterBoard(int sceneID)
         {
-            if (!SceneCenterBoardDataMap.ContainsKey(sceneID))
+            if (!SceneToCenterBoardDataCache.ContainsKey(sceneID))
                 return;
 
-            SetCenterBoardPictureBoxImage(SceneCenterBoardDataMap[sceneID].PictureBoxImage);
-            CenterBoardImageSizeLabel.Text = string.Format("{0}*{1}", CenterBoardPictureBox.Width, CenterBoardPictureBox.Height);
+            UpdateCenterBoardPictureBoxImage(SceneToCenterBoardDataCache[sceneID].PictureBoxImage);
         }
 
         private void UpdateCenterBoard(int sceneID, Image image)
         {
             if (image != null)
             {
-                if (!SceneCenterBoardDataMap.ContainsKey(sceneID))
+                if (!SceneToCenterBoardDataCache.ContainsKey(sceneID))
                 {
-                    SceneCenterBoardDataMap.Add(sceneID, new CenterBoardData
+                    SceneToCenterBoardDataCache.Add(sceneID, new CenterBoardData
                     {
                         PictureBoxImage = CenterBoardPictureBox.Image,
                     });
                 }
                 else
                 {
-                    SceneCenterBoardDataMap[sceneID].PictureBoxImage = CenterBoardPictureBox.Image;
+                    SceneToCenterBoardDataCache[sceneID].PictureBoxImage = CenterBoardPictureBox.Image;
                 }
-
-                CenterBoardImageSizeLabel.Text = string.Format("{0}*{1}", CenterBoardPictureBox.Width, CenterBoardPictureBox.Height);
             }
 
-            SetCenterBoardPictureBoxImage(image);
+            UpdateCenterBoardPictureBoxImage(image);
             OpenedSceneId = sceneID;
         }
 
-        public void SetPictureBox(int key, PictureBox pb)
+        public void SetPropertyImage(int key, PictureBox pb)
         {
             PropertyPictureBoxCache[key] = pb;
         }
@@ -230,11 +228,11 @@ namespace DevelopKit
 
         public void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
         {
-            List<PngUtil.MergeImageParams> ps = ListGroupImages(tabPanel, group);
-            HideGroupOnCenterBoard(group, ps);
+            List<PngUtil.MergeImageParams> ps = ListGroupImageParams(tabPanel, group);
+            UnionGroupsImageParams(group, ps);
         }
 
-        public void HideGroupOnCenterBoard(Group group, List<PngUtil.MergeImageParams> ps)
+        public void UnionGroupsImageParams(Group group, List<PngUtil.MergeImageParams> ps)
         {
             if (!GroupLayerCache.ContainsKey(group.Sceneid))
             {
@@ -282,7 +280,7 @@ namespace DevelopKit
             }
         }
 
-        private List<PngUtil.MergeImageParams> ListGroupImages(TableLayoutPanel tabPanel, Group group)
+        private List<PngUtil.MergeImageParams> ListGroupImageParams(TableLayoutPanel tabPanel, Group group)
         {
             List<Property> properties = GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[group.Id];
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
