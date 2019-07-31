@@ -1015,7 +1015,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>左水平停车位未停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -1032,7 +1032,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>左水平停车位停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -1049,7 +1049,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>左垂直停车位未停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -1066,7 +1066,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>左垂直停车位停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -1083,7 +1083,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>右水平停车位未停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -1100,7 +1100,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>右水平停车位停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -1117,7 +1117,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>右垂直停车位未停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -1134,7 +1134,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>右垂直停车位停进</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
@@ -1151,7 +1151,7 @@
       <group_layer_idx>4</group_layer_idx>
       <name>车辆图片</name>
       <type>image</type>
-      <operate_type>image_replace</operate_type>
+      <operate_type>image_filter_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>

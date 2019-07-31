@@ -188,6 +188,11 @@ namespace DevelopKit
                         LoadImageProperty(tabPanel, property, index, propertyHeight);
                     }
                     break;
+                    if (property.Value.Length > 0)
+                    {
+                        LoadImageProperty(tabPanel, property, index, propertyHeight);
+                    }
+                    break;
                 case PropertyType.Nil:
                     Button btn4 = new Button();
                     btn4.Text = "nil";
@@ -467,6 +472,37 @@ namespace DevelopKit
                 });
                 panel.Controls.Add(button);
                 panel.Controls.Add(text);
+            }
+            else if (property.OptType == PropertyOperateType.ImageFilterColor)
+            {
+                TextBox textBox = new TextBox
+                {
+                    Width = 35,
+                    Location = new Point(label.Width + 20 , 0),
+                    Height = 20,
+                    Margin = new Padding(0, 0, 0, 0),
+                    Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                    Text = "0"
+                };
+
+                TrackBar trackBar = new TrackBar
+                {
+                    Location = new Point(panel.Width - 150, 0),
+                    Size = new Size(150, 45),
+                    Maximum = 180,
+                    Minimum = -180,
+                    Value = 0,
+                    TickFrequency = 30,
+                };
+                trackBar.ValueChanged += new EventHandler(delegate (object sender, EventArgs e)
+                {
+                    textBox.Text = trackBar.Value.ToString();
+                    pictureBox.Image = (Image)PngUtil.RelativeChangeColor((Bitmap)image, Convert.ToInt32(trackBar.Value) + 180);
+                    pictureBox.Refresh();
+                    GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                });
+                panel.Controls.Add(textBox);
+                panel.Controls.Add(trackBar);
             }
         }
     }

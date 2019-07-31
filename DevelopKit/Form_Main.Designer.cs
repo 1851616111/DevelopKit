@@ -42,6 +42,7 @@
             this.createProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeprojectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.adminToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,7 +82,8 @@
             this.toolStripMenuItem1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.createToolStripMenuItem,
-            this.closeToolStripMenuItem});
+            this.closeToolStripMenuItem,
+            this.adminToolStripMenuItem});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
             this.toolStripMenuItem1.Size = new System.Drawing.Size(73, 25);
             this.toolStripMenuItem1.Text = "文件(F)";
@@ -138,6 +140,13 @@
             this.closeprojectToolStripMenuItem.Size = new System.Drawing.Size(219, 26);
             this.closeprojectToolStripMenuItem.Text = "项目";
             this.closeprojectToolStripMenuItem.Click += new System.EventHandler(this.CloseprojectToolStripMenuItem_Click);
+            // 
+            // adminToolStripMenuItem
+            // 
+            this.adminToolStripMenuItem.Name = "adminToolStripMenuItem";
+            this.adminToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.adminToolStripMenuItem.Text = "管理员";
+            this.adminToolStripMenuItem.Click += new System.EventHandler(this.AdminToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -466,6 +475,7 @@
         private System.Windows.Forms.ToolStripButton scrollUpToolStripButton;
         private System.Windows.Forms.ToolStripStatusLabel centerBoardRGBLabel;
         private System.Windows.Forms.ToolStripMenuItem OutputToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem adminToolStripMenuItem;
     }
 }
 

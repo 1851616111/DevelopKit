@@ -284,9 +284,10 @@ namespace DevelopKit
             }
         }
 
-        private void InitOutputResources() {
+        private void AdminToolStripMenuItem_Click(object sender, EventArgs e)
+        {
 
-        } 
+        }
     }
 }
 

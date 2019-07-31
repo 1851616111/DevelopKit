@@ -286,7 +286,8 @@ namespace DevelopKit
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
             foreach (Property property in properties)
             {
-                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
+                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha 
+                    || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor || property.OptType == PropertyOperateType.ImageFilterColor)
                 {
                     Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
                     if (pbCtl.Length == 0)
