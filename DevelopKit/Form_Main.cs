@@ -21,27 +21,18 @@ namespace DevelopKit
         {
             InitializeComponent();
             this.skinEngine1.SkinFile = @"Resources\EighteenColor1.ssk";
-            Log.Init(Path.Combine(System.Environment.CurrentDirectory, "log.txt"));
             HideOpenedProject();
-            GlobalConfig.Project = null;
-
-            Resize();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.ControlBox = true;
             this.SetBounds(0, 0, displayWidth, displayHeight);
-        }
-
-        private void Resize()
-        {
-
             CenterBoardWidth = splitter2.Location.X - centerBoardFlowPanel.Location.X;
             centerBoardFlowPanel.Width = CenterBoardWidth;
             //centerBoardToolStrip.MinimumSize.Width = splitter2.Location.X - centerBoardFlowPanel.Location.X;
             centerBoardToolStrip.Width = splitter2.Location.X - centerBoardFlowPanel.Location.X;
         }
+
 
         public void SetGlobalProject(Project project)
         {
@@ -54,7 +45,7 @@ namespace DevelopKit
 
             GlobalConfig.Project = project;
             GlobalConfig.Controller = new CenterBoardController(centerBoardPictuerBox, rightPanel,
-                centerBoardImageRealSizeLabel, centerboardPictureBoxSizeLabel, CenterBoardWidth);
+                centerBoardImageRealSizeLabel, centerBoardPictureBoxSizeLabel, CenterBoardWidth);
             ProjectStatusHandler(GlobalConfig.Project);
         }
 
@@ -63,11 +54,8 @@ namespace DevelopKit
             switch (project.Status)
             {
                 case (ProjectStatus.StartOpenProject):
-                    projectToolStripStatusLabel1.Text = "打开皮肤项目：" + project.ProjectName;
                     project.NextStatus();
                     ShowOpenedProject();
-                    projectToolStripStatusLabel1.Text = "就绪";
-
                     break;
             }
         }
@@ -78,6 +66,11 @@ namespace DevelopKit
             rightPanel.Visible = true;
             splitter1.Visible = true;
             splitter2.Visible = true;
+
+            centerBoardPictureBoxSizeLabel.Visible = true;
+            centerBoardImageRealSizeLabel.Visible = true;
+            centerBoardRGBLabel.Visible = true;
+
             centerBoardFlowPanel.Visible = true;
             centerBoardPictuerBox.Visible = true;
             centerBoardToolStrip.Visible = true;
@@ -142,6 +135,9 @@ namespace DevelopKit
             centerBoardPictuerBox.Visible = false;
             centerBoardFlowPanel.Visible = false;
             centerBoardToolStrip.Visible = false;
+            centerBoardPictureBoxSizeLabel.Visible = false;
+            centerBoardImageRealSizeLabel.Visible = false;
+            centerBoardRGBLabel.Visible = false;
 
             panel1.Visible = false;
             rightPanel.Visible = false;
@@ -280,12 +276,12 @@ namespace DevelopKit
 
         private void CenterBoardPictuerBox_MouseMove(object sender, MouseEventArgs e)
         {
-            rgbStripStatusLabel1.Visible = centerBoardPictuerBox.Image != null;
+            centerBoardRGBLabel.Visible = centerBoardPictuerBox.Image != null;
 
-            if (rgbStripStatusLabel1.Visible)
+            if (centerBoardRGBLabel.Visible)
             {
                 Color pixel = ((Bitmap)(centerBoardPictuerBox.Image)).GetPixel(e.X, e.Y);
-                rgbStripStatusLabel1.Text = string.Format("RGB: ({0},{1},{2}),  Alpha: {3}", pixel.R, pixel.G, pixel.B, pixel.A);
+                centerBoardRGBLabel.Text = string.Format("RGB: ({0},{1},{2}),  Alpha: {3}", pixel.R, pixel.G, pixel.B, pixel.A);
             }
         }
 

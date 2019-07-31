@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace DevelopKit
         [STAThread]
         static void Main()
         {
-
+            Log.Init(Path.Combine(Environment.CurrentDirectory, "log.txt"));
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form_Main());

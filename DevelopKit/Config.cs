@@ -16,8 +16,6 @@ namespace DevelopKit
             PropertyRowHeight = 35,
             PropertyTitleHeight = 30
         };
-
-
     }
 
     public class UIConfig

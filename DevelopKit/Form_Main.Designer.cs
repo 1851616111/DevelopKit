@@ -46,10 +46,9 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.OutputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.projectToolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.centerboardPictureBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.centerBoardPictureBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.centerBoardImageRealSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.rgbStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.centerBoardRGBLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -172,28 +171,21 @@
             // 
             this.statusStrip1.BackColor = System.Drawing.SystemColors.Highlight;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.projectToolStripStatusLabel1,
-            this.centerboardPictureBoxSizeLabel,
+            this.centerBoardPictureBoxSizeLabel,
             this.centerBoardImageRealSizeLabel,
-            this.rgbStripStatusLabel1});
+            this.centerBoardRGBLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 1039);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(1924, 22);
             this.statusStrip1.TabIndex = 11;
             this.statusStrip1.Text = "statusStrip1";
             // 
-            // projectToolStripStatusLabel1
+            // centerBoardPictureBoxSizeLabel
             // 
-            this.projectToolStripStatusLabel1.Name = "projectToolStripStatusLabel1";
-            this.projectToolStripStatusLabel1.Size = new System.Drawing.Size(131, 17);
-            this.projectToolStripStatusLabel1.Text = "toolStripStatusLabel1";
-            // 
-            // centerboardPictureBoxSizeLabel
-            // 
-            this.centerboardPictureBoxSizeLabel.Margin = new System.Windows.Forms.Padding(200, 3, 0, 2);
-            this.centerboardPictureBoxSizeLabel.Name = "centerboardPictureBoxSizeLabel";
-            this.centerboardPictureBoxSizeLabel.Size = new System.Drawing.Size(195, 17);
-            this.centerboardPictureBoxSizeLabel.Text = "centerboardPictureBoxSizeLabel";
+            this.centerBoardPictureBoxSizeLabel.Margin = new System.Windows.Forms.Padding(250, 3, 0, 2);
+            this.centerBoardPictureBoxSizeLabel.Name = "centerBoardPictureBoxSizeLabel";
+            this.centerBoardPictureBoxSizeLabel.Size = new System.Drawing.Size(195, 17);
+            this.centerBoardPictureBoxSizeLabel.Text = "centerBoardPictureBoxSizeLabel";
             // 
             // centerBoardImageRealSizeLabel
             // 
@@ -202,13 +194,13 @@
             this.centerBoardImageRealSizeLabel.Size = new System.Drawing.Size(196, 17);
             this.centerBoardImageRealSizeLabel.Text = "centerBoardImageRealSizeLabel";
             // 
-            // rgbStripStatusLabel1
+            // centerBoardRGBLabel
             // 
-            this.rgbStripStatusLabel1.Image = global::DevelopKit.Properties.Resources.rgb;
-            this.rgbStripStatusLabel1.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
-            this.rgbStripStatusLabel1.Name = "rgbStripStatusLabel1";
-            this.rgbStripStatusLabel1.Size = new System.Drawing.Size(145, 17);
-            this.rgbStripStatusLabel1.Text = "rgbStripStatusLabel1";
+            this.centerBoardRGBLabel.Image = global::DevelopKit.Properties.Resources.rgb;
+            this.centerBoardRGBLabel.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
+            this.centerBoardRGBLabel.Name = "centerBoardRGBLabel";
+            this.centerBoardRGBLabel.Size = new System.Drawing.Size(152, 17);
+            this.centerBoardRGBLabel.Text = "centerBoardRGBLabel";
             // 
             // skinEngine1
             // 
@@ -449,7 +441,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel projectToolStripStatusLabel1;
         private Sunisoft.IrisSkin.SkinEngine skinEngine1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Splitter splitter1;
@@ -470,10 +461,10 @@
         private System.Windows.Forms.PictureBox centerBoardPictuerBox;
         private System.Windows.Forms.ToolStrip centerBoardToolStrip;
         private System.Windows.Forms.ToolStripButton scrollDownToolStripButton;
-        private System.Windows.Forms.ToolStripStatusLabel centerboardPictureBoxSizeLabel;
+        private System.Windows.Forms.ToolStripStatusLabel centerBoardPictureBoxSizeLabel;
         private System.Windows.Forms.ToolStripStatusLabel centerBoardImageRealSizeLabel;
         private System.Windows.Forms.ToolStripButton scrollUpToolStripButton;
-        private System.Windows.Forms.ToolStripStatusLabel rgbStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel centerBoardRGBLabel;
         private System.Windows.Forms.ToolStripMenuItem OutputToolStripMenuItem;
     }
 }

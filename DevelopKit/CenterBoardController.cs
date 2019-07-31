@@ -3,24 +3,10 @@ using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DevelopKit
 {
-    public class GroupCache
-    {
-        public int GroupLayerId;
-        public GroupSize GroupSize;
-        public List<PngUtil.MergeImageParams> GroupPropertiesImages;
-    }
-
-    public class CenterBoardData
-    {
-        public Image PictureBoxImage;
-    }
-
     public class CenterBoardController
     {
         private int OpenedSceneId;
@@ -51,131 +37,7 @@ namespace DevelopKit
             GroupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
         }
 
-        public string StartOutput(Outputs outputs, Dictionary<int, Property> propertyIdMapping, string basePath, Form_Progress progressForm)
-        {
-            progressForm.SetProgressMax(outputs.ImageOutputs.Length + outputs.XmlOutputs.Length + outputs.MergeImageOutputs.Length);
-
-            foreach (ImageOutput imageOutout in outputs.ImageOutputs)
-            {
-                if (!propertyIdMapping.ContainsKey(imageOutout.PropertyId))
-                {
-                    return Errors.PropertyIdNotExist;
-                }
-
-                Property property = propertyIdMapping[imageOutout.PropertyId];
-
-                Control[] controls = GetSceneFlowLayoutPanem(property.SceneId).Controls.Find(property.GetPictureBoxId(), true);
-                if (controls == null || controls.Length == 0)
-                {
-                    return Errors.UiPictureBoxNotExist;
-                }
-
-                try
-                {
-                    string newFile = Path.Combine(basePath, imageOutout.Target);
-                    string dirName = newFile.Substring(0, newFile.LastIndexOf('\\'));
-
-                    if (!Directory.Exists(dirName))
-                        Directory.CreateDirectory(dirName);
-
-                    ((PictureBox)(controls[0])).Image.Save(newFile);
-                }
-                catch (Exception ex)
-                {
-                    return ex.ToString();
-                }
-                progressForm.AddProgressValue(1, string.Format("组件：{0},   属性: {1} 导出完毕", property.GroupName, property.Name));
-            }
-
-            foreach (XmlOutput xmlOutout in outputs.XmlOutputs)
-            {
-                if (!propertyIdMapping.ContainsKey(xmlOutout.PropertyId))
-                {
-                    return Errors.PropertyIdNotExist;
-                }
-                Property property = propertyIdMapping[xmlOutout.PropertyId];
-
-
-                Control[] controls = null;
-                if (property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha)
-                {
-                    controls = GetSceneFlowLayoutPanem(property.SceneId).Controls.Find(property.GetTextBoxAlphaID(), true);
-                }
-                else if (property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
-                {
-                    controls = GetSceneFlowLayoutPanem(property.SceneId).Controls.Find(property.GetTextBoxColorID(), true);
-                }
-
-                if (controls == null || controls.Length == 0)
-                {
-                    return Errors.UiPictureBoxNotExist;
-                }
-                progressForm.AddProgressValue(1, string.Format("组件：{0}, 属性: {1} 导出完毕", property.GroupName, property.Name));
-            }
-
-
-            List<PngUtil.MergeImageParams> list = new List<PngUtil.MergeImageParams>();
-            foreach (MergeImageOutput MergeImageOutPut in outputs.MergeImageOutputs)
-            {
-                Dictionary<int, Property> map = MergeImageOutPut.GetPropertyMap();
-                foreach (int proertyId in map.Keys)
-                {
-                    if (!propertyIdMapping.ContainsKey(proertyId))
-                    {
-                        return Errors.PropertyIdNotExist;
-                    }
-
-                    Property propertItem = propertyIdMapping[proertyId];
-                    if (map.ContainsKey(propertItem.RefPropertyId))   //如果出现引用形式， 则此图不需要参与合成
-                        continue;
-
-                    Control[] controls = GetSceneFlowLayoutPanem(propertItem.SceneId).Controls.Find(propertItem.GetPictureBoxId(), true);
-                    if (controls == null || controls.Length == 0)
-                    {
-                        return Errors.UiPictureBoxNotExist;
-                    }
-
-
-                    list.Add(new PngUtil.MergeImageParams
-                    {
-                        Image = ((PictureBox)(controls[0])).Image,
-                    });
-                };
-
-                Image image = null;
-                if (list.Count == 1)
-                {
-                    image = list[0].Image;
-                }
-                else
-                {
-                    image = PngUtil.MergeImageList(list, list[0].Image.Width, list[0].Image.Height);
-                }
-
-                try
-                {
-                    string newFile = Path.Combine(basePath, MergeImageOutPut.Target);
-                    string dirName = newFile.Substring(0, newFile.LastIndexOf('\\'));
-
-                    if (!Directory.Exists(dirName))
-                        Directory.CreateDirectory(dirName);
-
-                    image.Save(newFile);
-                }
-                catch (Exception ex)
-                {
-                    return ex.ToString();
-                }
-
-                list.Clear();
-                progressForm.AddProgressValue(1, string.Format("图片合成导出完毕"));
-            }
-
-            return null;
-        }
-
-
-        public FlowLayoutPanel GetSceneFlowLayoutPanem(int sceneId)
+        public FlowLayoutPanel GetSceneFlowLayoutPanel(int sceneId)
         {
             return SceneFlowLayoutPanelMap[sceneId];
         }
@@ -342,7 +204,6 @@ namespace DevelopKit
                     SceneCenterBoardDataMap[sceneID].PictureBoxImage = CenterBoardPictureBox.Image;
                 }
 
-                //SetCenterBoardSizeLabel();
                 CenterBoardImageSizeLabel.Text = string.Format("{0}*{1}", CenterBoardPictureBox.Width, CenterBoardPictureBox.Height);
             }
 
@@ -448,5 +309,141 @@ namespace DevelopKit
             }
             return mergeParams;
         }
+
+
+        public string StartOutput(Outputs outputs, Dictionary<int, Property> propertyIdMapping, string basePath, Form_Progress progressForm)
+        {
+            progressForm.SetProgressMax(outputs.ImageOutputs.Length + outputs.XmlOutputs.Length + outputs.MergeImageOutputs.Length);
+
+            foreach (ImageOutput imageOutout in outputs.ImageOutputs)
+            {
+                if (!propertyIdMapping.ContainsKey(imageOutout.PropertyId))
+                {
+                    return Errors.PropertyIdNotExist;
+                }
+
+                Property property = propertyIdMapping[imageOutout.PropertyId];
+
+                Control[] controls = GetSceneFlowLayoutPanel(property.SceneId).Controls.Find(property.GetPictureBoxId(), true);
+                if (controls == null || controls.Length == 0)
+                {
+                    return Errors.UiPictureBoxNotExist;
+                }
+
+                try
+                {
+                    string newFile = Path.Combine(basePath, imageOutout.Target);
+                    string dirName = newFile.Substring(0, newFile.LastIndexOf('\\'));
+
+                    if (!Directory.Exists(dirName))
+                        Directory.CreateDirectory(dirName);
+
+                    ((PictureBox)(controls[0])).Image.Save(newFile);
+                }
+                catch (Exception ex)
+                {
+                    return ex.ToString();
+                }
+                progressForm.AddProgressValue(1, string.Format("组件：{0},   属性: {1} 导出完毕", property.GroupName, property.Name));
+            }
+
+            foreach (XmlOutput xmlOutout in outputs.XmlOutputs)
+            {
+                if (!propertyIdMapping.ContainsKey(xmlOutout.PropertyId))
+                {
+                    return Errors.PropertyIdNotExist;
+                }
+                Property property = propertyIdMapping[xmlOutout.PropertyId];
+
+
+                Control[] controls = null;
+                if (property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha)
+                {
+                    controls = GetSceneFlowLayoutPanel(property.SceneId).Controls.Find(property.GetTextBoxAlphaID(), true);
+                }
+                else if (property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
+                {
+                    controls = GetSceneFlowLayoutPanel(property.SceneId).Controls.Find(property.GetTextBoxColorID(), true);
+                }
+
+                if (controls == null || controls.Length == 0)
+                {
+                    return Errors.UiPictureBoxNotExist;
+                }
+                progressForm.AddProgressValue(1, string.Format("组件：{0}, 属性: {1} 导出完毕", property.GroupName, property.Name));
+            }
+
+
+            List<PngUtil.MergeImageParams> list = new List<PngUtil.MergeImageParams>();
+            foreach (MergeImageOutput MergeImageOutPut in outputs.MergeImageOutputs)
+            {
+                Dictionary<int, Property> map = MergeImageOutPut.GetPropertyMap();
+                foreach (int proertyId in map.Keys)
+                {
+                    if (!propertyIdMapping.ContainsKey(proertyId))
+                    {
+                        return Errors.PropertyIdNotExist;
+                    }
+
+                    Property propertItem = propertyIdMapping[proertyId];
+                    if (map.ContainsKey(propertItem.RefPropertyId))   //如果出现引用形式， 则此图不需要参与合成
+                        continue;
+
+                    Control[] controls = GetSceneFlowLayoutPanel(propertItem.SceneId).Controls.Find(propertItem.GetPictureBoxId(), true);
+                    if (controls == null || controls.Length == 0)
+                    {
+                        return Errors.UiPictureBoxNotExist;
+                    }
+
+
+                    list.Add(new PngUtil.MergeImageParams
+                    {
+                        Image = ((PictureBox)(controls[0])).Image,
+                    });
+                };
+
+                Image image = null;
+                if (list.Count == 1)
+                {
+                    image = list[0].Image;
+                }
+                else
+                {
+                    image = PngUtil.MergeImageList(list, list[0].Image.Width, list[0].Image.Height);
+                }
+
+                try
+                {
+                    string newFile = Path.Combine(basePath, MergeImageOutPut.Target);
+                    string dirName = newFile.Substring(0, newFile.LastIndexOf('\\'));
+
+                    if (!Directory.Exists(dirName))
+                        Directory.CreateDirectory(dirName);
+
+                    image.Save(newFile);
+                }
+                catch (Exception ex)
+                {
+                    return ex.ToString();
+                }
+
+                list.Clear();
+                progressForm.AddProgressValue(1, string.Format("图片合成导出完毕"));
+            }
+
+            return null;
+        }
+    }
+
+    public class GroupCache
+    {
+        public int GroupLayerId;
+        public GroupSize GroupSize;
+        public List<PngUtil.MergeImageParams> GroupPropertiesImages;
+    }
+
+    public class CenterBoardData
+    {
+        public Image PictureBoxImage;
     }
 }
