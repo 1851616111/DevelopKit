@@ -84,7 +84,7 @@ namespace DevelopKit
                 {
                     return ex.ToString();
                 }
-                progressForm.AddProgressValue(1, string.Format("组件：{0}, 属性: {1} 导出完毕", property.GroupName, property.Name));
+                progressForm.AddProgressValue(1, string.Format("组件：{0},   属性: {1} 导出完毕", property.GroupName, property.Name));
             }
 
             foreach (XmlOutput xmlOutout in outputs.XmlOutputs)

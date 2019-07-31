@@ -45,7 +45,7 @@
             // 
             this.ProgressContentLabel.AutoSize = true;
             this.ProgressContentLabel.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ProgressContentLabel.Location = new System.Drawing.Point(742, 71);
+            this.ProgressContentLabel.Location = new System.Drawing.Point(733, 57);
             this.ProgressContentLabel.MinimumSize = new System.Drawing.Size(200, 25);
             this.ProgressContentLabel.Name = "ProgressContentLabel";
             this.ProgressContentLabel.Size = new System.Drawing.Size(200, 25);

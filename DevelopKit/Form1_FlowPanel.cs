@@ -68,6 +68,7 @@ namespace DevelopKit
             if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
             {
                 LoadGroups(tabPanel, properties, rowHeight);
+                HideGroupBrotherTablePanel(tabPanel, group);
                 GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, group);
             }
             else if ((bool)((Hashtable)tabPanel.Tag)["hide"]) //上次为隐藏，再点击后更新为展开
