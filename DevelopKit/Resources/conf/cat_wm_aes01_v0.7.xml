@@ -636,9 +636,8 @@
       <size>55*20</size>
     </item>
 
+    
     <!--剩余电量（高）-->
-
-   
     <item>
       <id>1000</id>
       <scene_id>3</scene_id>
@@ -646,7 +645,7 @@
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
-      <name>剩余电量多时上部颜色</name>
+      <name>剩余电量高时上部颜色</name>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
       <show_label>true</show_label>
@@ -664,7 +663,7 @@
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
-      <name>剩余电量多时下部颜色</name>
+      <name>剩余电量高时下部颜色</name>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
       <show_label>true</show_label>
@@ -682,16 +681,298 @@
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
-      <name>左侧行车信息显示宽度</name>
+      <name>剩余电量高时显示宽度</name>
       <type>int</type>
       <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
-      <default_value>30</default_value>
+      <default_value>60</default_value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
+
+    <!--剩余电量（中）-->
+    <item>
+      <id>1003</id>
+      <scene_id>3</scene_id>
+      <group_id>101</group_id>
+      <group_name>剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1004</id>
+      <scene_id>3</scene_id>
+      <group_id>101</group_id>
+      <group_name>剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1005</id>
+      <scene_id>3</scene_id>
+      <group_id>101</group_id>
+      <group_name>剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawCircleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>60</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+    <!--剩余电量（低）-->
+    <item>
+      <id>1006</id>
+      <scene_id>3</scene_id>
+      <group_id>102</group_id>
+      <group_name>剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1007</id>
+      <scene_id>3</scene_id>
+      <group_id>102</group_id>
+      <group_name>剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1008</id>
+      <scene_id>3</scene_id>
+      <group_id>102</group_id>
+      <group_name>剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawCircleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>60</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+
+
+    <!--P档剩余电量（高）-->
+    <item>
+      <id>1009</id>
+      <scene_id>3</scene_id>
+      <group_id>103</group_id>
+      <group_name>P档剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量高时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1010</id>
+      <scene_id>3</scene_id>
+      <group_id>103</group_id>
+      <group_name>>P档剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量高时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1011</id>
+      <scene_id>3</scene_id>
+      <group_id>103</group_id>
+      <group_name>P档剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量高时显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>60</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+    <!--剩余电量（中）-->
+    <item>
+      <id>1012</id>
+      <scene_id>3</scene_id>
+      <group_id>104</group_id>
+      <group_name>P档剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1013</id>
+      <scene_id>3</scene_id>
+      <group_id>104</group_id>
+      <group_name>P档剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1014</id>
+      <scene_id>3</scene_id>
+      <group_id>104</group_id>
+      <group_name>P档剩余电量（中）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量中时显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>60</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+    <!--剩余电量（低）-->
+    <item>
+      <id>1015</id>
+      <scene_id>3</scene_id>
+      <group_id>105</group_id>
+      <group_name>P档剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1016</id>
+      <scene_id>3</scene_id>
+      <group_id>105</group_id>
+      <group_name>P档剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1017</id>
+      <scene_id>3</scene_id>
+      <group_id>105</group_id>
+      <group_name>剩余电量（低）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量低时显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>60</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+
+
+
+
+
     <!-- 左侧行车信息 -->
 
     <!--<item>

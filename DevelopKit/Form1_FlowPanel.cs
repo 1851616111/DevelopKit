@@ -241,7 +241,6 @@ namespace DevelopKit
                 GlobalConfig.Controller.SetPictureBox(property.GetGroupPictureBoxId(), GroupPictureBox);
                 GroupPictureBox.Tag = new ThirdPartApiClient(property.OptType, GroupPictureBox, maxIndex + 1);
                 panel.Controls.Add(GroupPictureBox);
-
             }
 
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
@@ -279,6 +278,13 @@ namespace DevelopKit
                 string lastText = text.Text;
                 text.TextChanged += new EventHandler(delegate (object _, EventArgs b)
                 {
+                    if (text.Text.Trim(' ').Length == 0)
+                    {
+                        text.Text = lastText;
+                        return;
+                    }
+
+
                     int min, max;
                     bool ok = property.GetRangeAllowValue(out min, out max);
 
@@ -287,12 +293,13 @@ namespace DevelopKit
                     {
                         if (ok)
                         {
-                            MessageBox.Show(string.Format("请输入{0}-{1}的整数", min, max), "输入错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show(string.Format("请输入{0}-{1}的整数", min, max), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                         else
                         {
-                            MessageBox.Show(string.Format("请输入整数"), "输入错误");
+                            MessageBox.Show("请输入整数", "错误");
                         }
+
                         text.Text = lastText;
                         return;
                     }
@@ -311,6 +318,7 @@ namespace DevelopKit
                     }
                     else
                     {
+                        lastText = text.Text;
                         Property propertyCopy = property.Clone();
                         propertyCopy.DefaultValue = text.Text;
                         GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);

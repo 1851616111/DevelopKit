@@ -87,6 +87,29 @@ namespace ThirdPart
             Draw_PM(pb, 0, 0, 399, 5, w, 90, 60, upColor, downColor);
         }
 
+        public void DrawRectangleHightSpeed(PictureBox pb, Color upColor, Color downColor, int w)
+        {
+            int re_w = 399;
+            int re_edge = 5;
+            int angle = 270;
+            int defalut_w = 60;
+            Draw_PM_P(pb, 0, 0, re_w, re_edge, w, angle, defalut_w, downColor, upColor);
+        }
+
+        public void DrawRectangleMidSpeed(PictureBox pb, Color upColor, Color downColor, int w)
+        {
+            int re_w = 399;
+            int re_edge = 5;
+            int angle = 180;
+            int defalut_w = 60;
+            Draw_PM_P(pb, 0, 0, re_w, re_edge, w, angle, defalut_w, downColor, upColor);
+        }
+
+        public void DrawRectangleLowSpeed(PictureBox pb, Color upColor, Color downColor, int w)
+        {
+            int defalut_w = 60;
+            Draw_PM_P(pb, 0, 0, 399, 5, w, 90, defalut_w, downColor, upColor);
+        }
 
         //参数说明：默认x,默认y,默认矩形宽度，默认边距，可变宽度，高中低角度（270，150，60），最大填充色宽度，默认顶部颜色，默认底部颜色
         //-----默认底部颜色，默认顶部颜色 
@@ -138,35 +161,47 @@ namespace ThirdPart
 
             pb.Image = (Image)bpm;
         }
-
-        public void DrawRectangleSpeed(PictureBox pb, Color upColor, Color downColor, int angle, int w)
+        
+        private void Draw_PM_P(PictureBox pb, int x, int y, int w, int r_edge, int change_w, int change_angle, int defalut_w, Color FillColor_down, Color FillColor_up)
         {
-            int r_out = 200;
-            int x = 50;
-            int y = 50;
 
-            Graphics g = pb.CreateGraphics();
-            g.SmoothingMode = SmoothingMode.AntiAlias;//消除锯齿  
+            int r_in = w - change_w * 2;
+            int parma = 32;
+            Color Color_bg = Color.FromArgb(45, 45, 45);
+            if (change_w > defalut_w)
+            {
+                return;
+            }
+
+            if (change_w < 10)
+            {
+                return;
+            }
+
+            Bitmap bpm = new Bitmap(w, w);
+            Graphics g = Graphics.FromImage(bpm);
+
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;//消除锯齿  
             g.InterpolationMode = InterpolationMode.HighQualityBicubic;
             //g.CompositingQuality = CompositingQuality.HighQuality;
             float tension = 0.4F;
-            Point[] p_out = set_Points(45 + 17, 45 + 17, 210 - 34);
-            Point[] p_in = set_Points(x + w + 12 + 3, x + w + 12 + 3, r_out - w * 2 - 24 - 6);
-            Point[] p_re_out = set_Points(x + 15, y + 15, r_out - 30);
-            Point[] p_re_in = set_Points(x + w + 12, y + w + 12, r_out - w * 2 - 24);
-            g.DrawClosedCurve(new Pen(Color.Black, 1), p_out, tension, FillMode.Winding);
-            g.DrawClosedCurve(new Pen(Color.Black, 1), p_in, tension, FillMode.Winding);
+            Point[] p_out = set_Points(x + parma, y + parma, w - parma * 2);
+            Point[] p_in = set_Points(x + change_w + parma, y + change_w + parma, w - change_w * 2 - parma * 2);
+            Point[] p_re_out = set_Points(x + r_edge + parma, y + r_edge + parma, w - r_edge * 2 - parma * 2);
+            Point[] p_re_in = set_Points(x + change_w - r_edge + parma, y + change_w - r_edge + parma, w - change_w * 2 + r_edge * 2 - parma * 2);
+            g.DrawClosedCurve(new Pen(Color_bg, 1), p_out, tension, FillMode.Winding);
+            g.DrawClosedCurve(new Pen(Color_bg, 1), p_in, tension, FillMode.Winding);
 
 
             GraphicsPath myPath = new GraphicsPath();//建立GraphicsPath()类对象
             Rectangle re = new Rectangle(x, y, w, w);
             Region re_Region = new Region(re);
 
-            if (angle == 270)
+            if (change_angle == 270)
             {
-                Rectangle re_out = new Rectangle(x - 15, y - 15, r_out + 30, r_out + 30);
+                Rectangle re_out = new Rectangle(x + r_edge, y + r_edge, w - r_edge * 2, w - r_edge * 2);
                 Region myRegion = new Region(re_out);
-                Rectangle re_wai = new Rectangle(x + r_out / 2, y + r_out / 2, r_out / 2 + 15, r_out / 2 + 15);
+                Rectangle re_wai = new Rectangle(x + r_edge + w / 2, y + r_edge + w / 2, w / 2 - r_edge * 2 + 1, w / 2 - r_edge * 2);
                 myPath.AddRectangle(re_wai);
                 myRegion.Xor(myPath);//得到两个区域的交集
                 myPath.AddClosedCurve(p_re_out, tension);
@@ -176,9 +211,9 @@ namespace ThirdPart
                 re_Region = myRegion;
 
             }
-            else if (angle == 180)
+            else if (change_angle == 180)
             {
-                Rectangle re_out = new Rectangle(x - 15, y - 15, (r_out + 30) / 2, r_out + 30);
+                Rectangle re_out = new Rectangle(x + r_edge, y + r_edge, (w - r_edge * 2) / 2, w - r_edge * 2);
                 Region myRegion = new Region(re_out);
                 myPath.AddClosedCurve(p_re_out, tension);
                 myPath.AddClosedCurve(p_re_in, tension);
@@ -186,9 +221,9 @@ namespace ThirdPart
                 re = re_out;
                 re_Region = myRegion;
             }
-            else if (angle == 90)
+            else if (change_angle == 90)
             {
-                Rectangle re_out = new Rectangle(x - 15, y - 15 + r_out / 2, (r_out + 30) / 2, r_out + 30);
+                Rectangle re_out = new Rectangle(x + r_edge, y + r_edge + w / 2, (w - r_edge * 2) / 2, w - r_edge * 2);
                 Region myRegion = new Region(re_out);
                 myPath.AddClosedCurve(p_re_out, tension);
                 myPath.AddClosedCurve(p_re_in, tension);
@@ -199,13 +234,14 @@ namespace ThirdPart
             GraphicsPath myPath_bg = new GraphicsPath();
             myPath_bg.AddClosedCurve(p_re_out, tension);
             myPath_bg.AddClosedCurve(p_re_in, tension);
-            SolidBrush brush_bg = new SolidBrush(Color.WhiteSmoke);
+            SolidBrush brush_bg = new SolidBrush(Color_bg);
             g.FillPath(brush_bg, myPath_bg);
-
-            LinearGradientBrush brush = set_brush(re, upColor, downColor);
+            LinearGradientBrush brush = set_brush(re, FillColor_up, FillColor_down);
             g.FillRegion(brush, re_Region);//填充区域   
-            g.DrawClosedCurve(new Pen(Color.WhiteSmoke, 1), p_re_out, tension, FillMode.Winding);
-            g.DrawClosedCurve(new Pen(Color.WhiteSmoke, 1), p_re_in, tension, FillMode.Winding);
+            g.DrawClosedCurve(new Pen(Color_bg, 1), p_re_out, tension, FillMode.Winding);
+            g.DrawClosedCurve(new Pen(Color_bg, 1), p_re_in, tension, FillMode.Winding);
+
+            pb.Image = (Image)bpm;
         }
 
         private Point[] set_Points(int x, int y, int w)
