@@ -189,19 +189,21 @@ namespace DevelopKit
             {
                 if (scene.children.Count > 0)
                     total += scene.children.Count;
-                
+
                 total += 1;
-                
+
             }
             return total;
         }
-       
+
         public Scene GetSceneById(int id)
         {
             if (sceneMapping.ContainsKey(id))
             {
-            return sceneMapping[id];
-            } else {
+                return sceneMapping[id];
+            }
+            else
+            {
                 return null;
             }
         }
@@ -226,8 +228,8 @@ namespace DevelopKit
             SortedDictionary<int, Property> res = new SortedDictionary<int, Property>();
             foreach (Property propertyItem in groupProperties)
             {
-                if (propertyItem.PropertyLayerIdx != property.PropertyLayerIdx || 
-                    propertyItem.RefPropertyId == property.Id || 
+                if (propertyItem.PropertyLayerIdx != property.PropertyLayerIdx ||
+                    propertyItem.RefPropertyId == property.Id ||
                     property.RefPropertyId > 0)
                     continue;
                 res.Add(propertyItem.Id, propertyItem);
@@ -344,7 +346,7 @@ namespace DevelopKit
         public string Name;
 
         [XmlArray("child_scenes"), XmlArrayItem("item")]
-        public List<Scene> children; 
+        public List<Scene> children;
     }
 
     [Serializable]
@@ -415,10 +417,9 @@ namespace DevelopKit
         public string Size;
         [XmlElement("location")]
         public string Location;
-        [XmlElement("display_type")]
-        public string DisplayType;
-        [XmlElement("display_content")]
-        public string DisplayContent;
+        [XmlElement("allow_value")]
+        public string AllowValue;
+
 
         public Property Clone()
         {
@@ -440,10 +441,10 @@ namespace DevelopKit
                 RefPropertyId = RefPropertyId,
                 Size = Size,
                 Location = Location,
-                DisplayType = DisplayType,
-                DisplayContent = DisplayContent
+                AllowValue = AllowValue
             };
         }
+
         public Group GetGroup()
         {
             return new Group
@@ -495,6 +496,11 @@ namespace DevelopKit
             return string.Format("pb_{0}_{1}_{2}", SceneId, GroupId, Id);
         }
 
+        public string GetGroupPictureBoxId()
+        {
+            return string.Format("pb_{0}_{1}", SceneId, GroupId);
+        }
+
         public string GetCachedPictureBoxId()
         {
             return string.Format("pb_cache_{0}_{1}", SceneId, GroupId);
@@ -513,6 +519,27 @@ namespace DevelopKit
         public string GetTextBoxColorID()
         {
             return string.Format("tb_color_{0}_{1}_{2}", SceneId, GroupId, Id);
+        }
+
+        public bool GetRangeAllowValue(out int min, out int max)
+        {
+            min = 0;
+            max = 0;
+            if (AllowValue == null || AllowValue.Length == 0)
+                return false;
+
+            if (AllowValue.Contains("-"))
+            {
+                string[] l = AllowValue.Split('-');
+                if (l.Length == 2)
+                {
+                    min = Convert.ToInt32(l[0]);
+                    max = Convert.ToInt32(l[1]);
+                    return true;
+                }
+            }
+        
+            return false;
         }
     }
 
@@ -540,6 +567,8 @@ namespace DevelopKit
         public const string Image = "image";
         public const string TxtColor = "txt_color";
         public const string ImageAlpha = "alpha";
+        public const string Int = "int";
+        public const string Color = "color";
     }
 
     public static class PropertyOperateType
@@ -549,5 +578,10 @@ namespace DevelopKit
         public const string AlphaWhiteImageSetColor = "alpha_white_image_set_color";
         public const string AlphaWhiteImageSetAlpha = "alpha_white_image_set_alpha";
         public const string ImageFilterColor = "image_filter_color";
+
+        public static bool IsThirdPartType(string tp)
+        {
+            return tp.StartsWith("ThirdPart");
+        }
     }
 }

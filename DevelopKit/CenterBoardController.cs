@@ -16,7 +16,7 @@ namespace DevelopKit
         private ToolStripLabel CenterBoardImageSizeLabel;
         private ToolStripLabel CenterBoardPictureBoxSizeLabel;
 
-        private Dictionary<int, PictureBox> PropertyPictureBoxCache;
+        private Dictionary<string, PictureBox> PropertyPictureBoxCache;
         private Dictionary<int, FlowLayoutPanel> SceneIdToSceneFlowPanelCache;
         private Dictionary<int, CenterBoardData> SceneToCenterBoardDataCache;
         private Dictionary<int, SortedDictionary<int, GroupCache>> GroupLayerCache;
@@ -31,7 +31,7 @@ namespace DevelopKit
             CenterBoardPictureBoxSizeLabel = pbSizeLabel;
             SetCenterBoardPictureBoxWidth(width);
 
-            PropertyPictureBoxCache = new Dictionary<int, PictureBox>();
+            PropertyPictureBoxCache = new Dictionary<string, PictureBox>();
             SceneIdToSceneFlowPanelCache = new Dictionary<int, FlowLayoutPanel>();
             SceneToCenterBoardDataCache = new Dictionary<int, CenterBoardData>();  
             GroupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
@@ -209,12 +209,12 @@ namespace DevelopKit
             OpenedSceneId = sceneID;
         }
 
-        public void SetPropertyImage(int key, PictureBox pb)
+        public void SetPictureBox(string key, PictureBox pb)
         {
             PropertyPictureBoxCache[key] = pb;
         }
 
-        public PictureBox GetPictureBox(int key)
+        public PictureBox GetPictureBox(string key)
         {
             if (PropertyPictureBoxCache.ContainsKey(key))
             {
@@ -287,15 +287,16 @@ namespace DevelopKit
             foreach (Property property in properties)
             {
                 if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha 
-                    || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor || property.OptType == PropertyOperateType.ImageFilterColor)
+                    || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor || property.OptType == PropertyOperateType.ImageFilterColor || PropertyOperateType.IsThirdPartType(property.OptType))
                 {
                     Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
                     if (pbCtl.Length == 0)
                     {
+                        continue;
                         Console.WriteLine("Get group property picturebox nil, property id={0}", property.Id);
                     }
-
-                    if (!(bool)((PictureBox)(pbCtl[0])).Enabled)  //checkbox 负责启用还是停用PictureBox
+                    PictureBox pb = (PictureBox)(pbCtl[0]);
+                    if (!(bool)(pb).Enabled || pb.Image == null)  //checkbox 负责启用还是停用PictureBox
                         continue;
 
                     mergeParams.Add(new PngUtil.MergeImageParams

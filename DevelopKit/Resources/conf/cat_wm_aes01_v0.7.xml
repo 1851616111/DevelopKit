@@ -636,8 +636,65 @@
       <size>55*20</size>
     </item>
 
-    <!-- 左侧行车信息 -->
+    <!--剩余电量（高）-->
+
+   
     <item>
+      <id>1000</id>
+      <scene_id>3</scene_id>
+      <group_id>100</group_id>
+      <group_name>剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量多时上部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <default_value>0x222222</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1001</id>
+      <scene_id>3</scene_id>
+      <group_id>100</group_id>
+      <group_name>剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>剩余电量多时下部颜色</name>
+      <type>color</type>
+      <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>1</property_layer_idx>
+      <default_value>0x887766</default_value>
+      <value>ICU\KL15\ele_low_color.png</value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <item>
+      <id>1002</id>
+      <scene_id>3</scene_id>
+      <group_id>100</group_id>
+      <group_name>剩余电量（高）</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>1</group_layer_idx>
+      <name>左侧行车信息显示宽度</name>
+      <type>int</type>
+      <operate_type>ThirdPart.WM.DrawCircleHighSpeed</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>2</property_layer_idx>
+      <default_value>30</default_value>
+      <location>111,168</location>
+      <size>414*414</size>
+    </item>
+    <!-- 左侧行车信息 -->
+
+    <!--<item>
       <id>36</id>
       <scene_id>3</scene_id>
       <group_id>9</group_id>
@@ -645,7 +702,7 @@
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量多颜色</name>
-      <type>image</type>
+      <type>third_part</type>
       <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
@@ -687,14 +744,14 @@
       <value>ICU\KL15\ele_low_color.png</value>
       <location>111,168</location>
       <size>414*414</size>
-    </item>
-    <item>
+    </item>-->
+    <!--<item>
       <id>39</id>
       <scene_id>3</scene_id>
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>剩余电量多数值颜色</name>
       <type>image</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -711,7 +768,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>剩余电量中数值颜色</name>
       <type>image</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -728,7 +785,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>剩余电量少数值颜色</name>
       <type>image</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -745,7 +802,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>功率高档颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
@@ -755,14 +812,14 @@
       <value>ICU\KL15\power_high_color.png</value>
       <location>111,168</location>
       <size>414*414</size>
-    </item>
-    <item>
+    </item>-->
+    <!--<item>
       <id>43</id>
       <scene_id>3</scene_id>
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>功率中档颜色</name>
       <type>txt_color</type>
       <operate_type>ICU\KL15\power_mid_color.png</operate_type>
@@ -779,7 +836,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>功率低档颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
@@ -796,7 +853,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>可续航里程、里程小计颜色</name>
       <type>txt_color</type>
       <operate_type>alpha_white_image_set_color</operate_type>
@@ -813,7 +870,7 @@
       <group_id>9</group_id>
       <group_name>左侧行车信息</group_name>
       <group_size>1920*720</group_size>
-      <group_layer_idx>1</group_layer_idx>
+      <group_layer_idx>2</group_layer_idx>
       <name>可续航里程、里程小计透明度</name>
       <type>alpha</type>
       <operate_type>alpha_white_image_set_alpha</operate_type>
@@ -826,7 +883,7 @@
       <size>414*414</size>
     </item>
 
-    <!--左侧弹窗报警-->
+    --><!--左侧弹窗报警--><!--
     <item>
       <id>48</id>
       <scene_id>3</scene_id>
@@ -932,7 +989,7 @@
     </item>
 
 
-    <!--下方充电界面-->
+    --><!--下方充电界面--><!--
     <item>
       <id>54</id>
       <scene_id>3</scene_id>
@@ -1005,7 +1062,7 @@
     </item>
 
 
-    <!--中部APA-->
+    --><!--中部APA--><!--
     <item>
       <id>58</id>
       <scene_id>3</scene_id>
@@ -1160,7 +1217,7 @@
       <size>107*163</size>
     </item>
 
-    <!--APA中部泊入泊出弹窗-->
+    --><!--APA中部泊入泊出弹窗--><!--
     <item>
       <id>67</id>
       <scene_id>3</scene_id>
@@ -1420,7 +1477,7 @@
     </item>
 
 
-    <!--APA中部水平垂直泊车弹窗-->
+    --><!--APA中部水平垂直泊车弹窗--><!--
     <item>
       <id>82</id>
       <scene_id>3</scene_id>
@@ -1629,7 +1686,7 @@
     </item>
 
 
-    <!--APA中部弹窗报警-->
+    --><!--APA中部弹窗报警--><!--
     <item>
       <id>94</id>
       <scene_id>3</scene_id>
@@ -1700,7 +1757,7 @@
       <size>520*177</size>
     </item>
 
-    <!--中部导航-->
+    --><!--中部导航--><!--
     <item>
       <id>98</id>
       <scene_id>3</scene_id>
@@ -1720,7 +1777,7 @@
     </item>
 
 
-    <!--中部弹窗报警-->
+    --><!--中部弹窗报警--><!--
     <item>
       <id>99</id>
       <scene_id>3</scene_id>
@@ -1930,7 +1987,7 @@
     </item>
 
 
-    <!--全屏报警-->
+    --><!--全屏报警--><!--
 
     <item>
       <id>111</id>
@@ -1982,7 +2039,7 @@
       <value>ICU\KL15\middle\mid_pop_4_text.png</value>
       <location>101,473</location>
       <size>654,177</size>
-    </item>
+    </item>-->
   </properties>
   <outputs>
     <image_outputs>

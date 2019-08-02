@@ -51,19 +51,19 @@ namespace DevelopKit
             };
             titleBtn.Click += new EventHandler(delegate (object _, EventArgs b)
             {
-                clickGroupButton(group, tabPanel, properties, rowHeight);
+                ClickGroupButton(group, tabPanel, properties, rowHeight);
             });
 
             //若是初始化，则直接加载
             if (init)
-                clickGroupButton(group, tabPanel, properties, rowHeight);
+                ClickGroupButton(group, tabPanel, properties, rowHeight);
 
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, GlobalConfig.UiConfig.PropertyTitleHeight));
             tabPanel.Height += GlobalConfig.UiConfig.PropertyTitleHeight;
             tabPanel.Controls.Add(titleBtn, 0, 0);
         }
 
-        private static void clickGroupButton(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
+        private static void ClickGroupButton(Group group, TableLayoutPanel tabPanel, List<Property> properties, int rowHeight)
         {
             if (tabPanel.Tag == null)  //第一次点击展开需要初始化所有控件
             {
@@ -99,17 +99,18 @@ namespace DevelopKit
             }
 
             int rowIndex = 1;
+            int maxRowIndex = properties.Count;
             foreach (Property property in properties)
             {
                 if (property.ShowLabel)
                 {
                     tabPanel.Height += rowHeight;
-                    LoadProperty(tabPanel, rowIndex, property, rowHeight);
+                    LoadProperty(tabPanel, rowIndex, maxRowIndex, property, rowHeight);
                     rowIndex++;
                 }
                 else
                 {
-                    LoadProperty(tabPanel, rowIndex, property, rowHeight);
+                    LoadProperty(tabPanel, rowIndex, maxRowIndex, property, rowHeight);
                 }
             }
         }
@@ -165,37 +166,41 @@ namespace DevelopKit
         }
 
         //为属性创建单独的pannel用于方便展开和收缩
-        private static void LoadProperty(TableLayoutPanel tabPanel, int index, Property property, int propertyHeight)
+        private static void LoadProperty(TableLayoutPanel tabPanel, int index, int maxIndex, Property property, int propertyHeight)
         {
-
             switch (property.Type)
             {
                 case PropertyType.Image:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index, propertyHeight);
+                        LoadImageProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     }
                     break;
                 case PropertyType.TxtColor:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index, propertyHeight);
+                        LoadImageProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     }
                     break;
                 case PropertyType.ImageAlpha:
                     if (property.Value.Length > 0)
                     {
-                        LoadImageProperty(tabPanel, property, index, propertyHeight);
+                        LoadImageProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     }
                     break;
-                    if (property.Value.Length > 0)
-                    {
-                        LoadImageProperty(tabPanel, property, index, propertyHeight);
-                    }
+                case PropertyType.Int:
+
+                    LoadGroupProperty(tabPanel, property, index, maxIndex, propertyHeight);
+                    break;
+                case PropertyType.Color:
+
+                    LoadGroupProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     break;
                 case PropertyType.Nil:
-                    Button btn4 = new Button();
-                    btn4.Text = "nil";
+                    Button btn4 = new Button
+                    {
+                        Text = "nil"
+                    };
                     tabPanel.Controls.Add(btn4, 0, index);
                     break;
                 default:
@@ -203,7 +208,179 @@ namespace DevelopKit
             }
         }
 
-        private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index, int propertyHeight)
+        private static void LoadGroupProperty(TableLayoutPanel tabPanel, Property property, int index, int maxIndex, int propertyHeight)
+        {
+            if (!PropertyOperateType.IsThirdPartType(property.OptType))
+                return;
+
+            Panel panel = new Panel
+            {
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
+            };
+            tabPanel.Controls.Add(panel, 0, index);
+
+            //获取组件共享的PictureBox
+            PictureBox GroupPictureBox = GlobalConfig.Controller.GetPictureBox(property.GetGroupPictureBoxId());
+            if (GroupPictureBox == null)
+            {
+                GroupPictureBox = new PictureBox
+                {
+                    Name = property.GetPictureBoxId(),  //TODO to make sure
+                    Size = new Size(0, 0),
+                    Margin = new Padding(0, 0, 0, 0),
+                    Padding = new Padding(0, 0, 0, 0),
+                    SizeMode = PictureBoxSizeMode.Zoom,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Location = new Point(0, 0),
+                    BackColor = Color.Gray,
+                    Visible = false,
+                };
+
+                GlobalConfig.Controller.SetPictureBox(property.GetGroupPictureBoxId(), GroupPictureBox);
+                GroupPictureBox.Tag = new ThirdPartApiClient(property.OptType, GroupPictureBox, maxIndex + 1);
+                panel.Controls.Add(GroupPictureBox);
+
+            }
+
+            tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
+
+            Label label = new Label
+            {
+                Text = property.Name,
+                Location = new Point(14, 0),
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
+                Font = new Font("微软雅黑", 10F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                Height = 20,
+                Width = 180,
+                TextAlign = ContentAlignment.MiddleLeft,
+            };
+            TextBox text = new TextBox
+            {
+                Name = property.GetTextBoxColorID(),
+                AutoSize = false,
+                Width = 35,
+                Height = 25,
+                Location = new Point(label.Width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
+                Margin = new Padding(0, 0, 0, 0),
+                BorderStyle = BorderStyle.FixedSingle,
+                Tag = property.Type
+            };
+            ((ThirdPartApiClient)(GroupPictureBox.Tag)).SetParam(index, text);
+            panel.Controls.Add(label);
+            panel.Controls.Add(text);
+
+
+            if (property.Type == PropertyType.Int)
+            {
+                text.Text = property.DefaultValue;
+                string lastText = text.Text;
+                text.TextChanged += new EventHandler(delegate (object _, EventArgs b)
+                {
+                    int min, max;
+                    bool ok = property.GetRangeAllowValue(out min, out max);
+
+                    int textNumber;
+                    if (!int.TryParse(text.Text, out textNumber))
+                    {
+                        if (ok)
+                        {
+                            MessageBox.Show(string.Format("请输入{0}-{1}的整数", min, max), "输入错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        else
+                        {
+                            MessageBox.Show(string.Format("请输入整数"), "输入错误");
+                        }
+                        text.Text = lastText;
+                        return;
+                    }
+
+
+                    if (ok && (textNumber < min || textNumber > max))
+                    {
+                        MessageBox.Show(string.Format("请输入{0}-{1}的整数", min, max), "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        text.Text = lastText;
+                        return;
+                    }
+
+                    if (text.Text == lastText)
+                    {
+                        GlobalConfig.Project.Editer.Remove(property.Id);
+                    }
+                    else
+                    {
+                        Property propertyCopy = property.Clone();
+                        propertyCopy.DefaultValue = text.Text;
+                        GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
+
+                        ((ThirdPartApiClient)(GroupPictureBox.Tag)).Call();
+                        GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                    }
+                });
+            }
+            else if (property.Type == PropertyType.Color)
+            {
+                Button button = new Button
+                {
+                    Location = new Point(panel.Width - 100, 0),
+                    Width = 100,
+                    Height = 26,
+                    Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
+                if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+                {
+                    try
+                    {
+                        text.BackColor = Color.FromArgb(
+                            Convert.ToInt32(property.DefaultValue.Substring(2, 2), 16),
+                            Convert.ToInt32(property.DefaultValue.Substring(4, 2), 16),
+                            Convert.ToInt32(property.DefaultValue.Substring(6, 2), 16));
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                    }
+                }
+
+                button.Text = "设置颜色";
+                button.Click += new EventHandler(delegate (object _, EventArgs b)
+                {
+                    ColorDialog dialog = new ColorDialog();
+                    if (dialog.ShowDialog() == DialogResult.OK)
+                    {
+                        if (dialog.Color.ToArgb() != text.BackColor.ToArgb())
+                        {
+                            Property propertyCopy = property.Clone();
+                            propertyCopy.DefaultValue = "0x" + dialog.Color.R.ToString("X2") + dialog.Color.G.ToString("X2") + dialog.Color.B.ToString("X2");
+                            GlobalConfig.Project.Editer.Set(property.Id, propertyCopy);
+
+                            text.BackColor = dialog.Color;
+                            ((ThirdPartApiClient)(GroupPictureBox.Tag)).Call();
+                            GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+                        }
+                        else
+                        {
+                            text.BackColor = dialog.Color;
+                            GlobalConfig.Project.Editer.Remove(property.Id);
+                        }
+                    }
+                });
+                panel.Controls.Add(button);
+            }
+
+            if (index == maxIndex) //index 从1开始开始计数， 当是最后一个时
+            {
+                ((ThirdPartApiClient)(GroupPictureBox.Tag)).Call();
+                GlobalConfig.Controller.ShowGroupOnCenterBoard(tabPanel, property.GetGroup());
+            }
+        }
+
+
+
+        private static void LoadImageProperty(TableLayoutPanel tabPanel, Property property, int index, int maxIndex, int propertyHeight)
         {
             Panel panel = new Panel
             {
@@ -217,7 +394,7 @@ namespace DevelopKit
             Image image;
             if (property.RefPropertyId > 0)
             {
-                cachedPb = GlobalConfig.Controller.GetPictureBox(property.RefPropertyId);
+                cachedPb = GlobalConfig.Controller.GetPictureBox(property.RefPropertyId.ToString());
                 if (cachedPb != null)
                 {
                     image = cachedPb.Image;
@@ -296,7 +473,7 @@ namespace DevelopKit
             }
 
             //每个Property的PictureBox都先注册到缓存中， 当有Property需要引用其他Property的图片时，直接取出 
-            GlobalConfig.Controller.SetPropertyImage(property.Id, pictureBox);
+            GlobalConfig.Controller.SetPictureBox(property.Id.ToString(), pictureBox);
 
             if (!property.ShowLabel)
             {
@@ -478,7 +655,7 @@ namespace DevelopKit
                 TextBox textBox = new TextBox
                 {
                     Width = 35,
-                    Location = new Point(label.Width + 20 , 0),
+                    Location = new Point(label.Width + 20, 0),
                     Height = 20,
                     Margin = new Padding(0, 0, 0, 0),
                     Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),

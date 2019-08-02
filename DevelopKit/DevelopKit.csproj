@@ -76,6 +76,7 @@
     <Compile Include="CenterBoardController.cs" />
     <Compile Include="Config_Car.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="ThirdPart.cs" />
     <Compile Include="FileUtil.cs" />
     <Compile Include="Form1_FlowPanel.cs" />
     <Compile Include="Errors.cs" />
