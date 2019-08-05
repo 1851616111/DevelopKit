@@ -13,27 +13,34 @@
     <item>
       <id>3</id>
       <name>KL15</name>
-    </item>
-    <item>
-      <id>4</id>
-      <name>test</name>
       <child_scenes>
         <item>
           <id>5</id>
-          <name>刘德华</name>
+          <name>背景</name>
         </item>
         <item>
           <id>6</id>
-          <name>张学友</name>
+          <name>常显</name>
         </item>
         <item>
           <id>7</id>
-          <name>黎明</name>
+          <name>行车信息</name>
+        </item>
+        <item>
+          <id>8</id>
+          <name>自动泊车</name>
+        </item>
+        <item>
+          <id>9</id>
+          <name>弹出报警</name>
         </item>
       </child_scenes>
+      
     </item>
   </scenes>
   <properties>
+
+    <!--背景-->
     <item>
       <id>1</id>
       <scene_id>1</scene_id>
@@ -51,6 +58,8 @@
       <location>0,0</location>
       <size>1920,720</size>
     </item>
+
+    <!--充电界面-->
     <item>
       <id>2</id>
       <scene_id>1</scene_id>
@@ -242,6 +251,8 @@
       <location>0,0</location>
       <size>1920*720</size>
     </item>
+
+    <!--充电失败-->
     <item>
       <id>13</id>
       <scene_id>1</scene_id>
@@ -406,8 +417,26 @@
       <size>1920*720</size>
     </item>
 
+    <!--背景-->
+    <item>
+      <id>23</id>
+      <scene_id>5</scene_id>
+      <group_id>50</group_id>
+      <group_name>常显</group_name>
+      <group_size>1920*720</group_size>
+      <group_layer_idx>0</group_layer_idx>
+      <name>背景图片</name>
+      <type>image</type>
+      <operate_type>image_replace</operate_type>
+      <show_label>true</show_label>
+      <can_edit>true</can_edit>
+      <property_layer_idx>0</property_layer_idx>
+      <value>ICU\KL15\black_background.png</value>
+      <location>0,0</location>
+      <size>1920*720</size>
+    </item>
+    
     <!--常显-->
-
     <item>
       <id>23</id>
       <scene_id>3</scene_id>
