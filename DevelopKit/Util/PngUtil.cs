@@ -207,7 +207,7 @@ namespace DevelopKit
             return (Image)bmPhoto;
         }
 
-        public static Bitmap FilPic(Bitmap mybm, Color targetColor)
+        public static Bitmap FilterImageColor(Bitmap mybm, Color targetColor)
         {
             int width = ((Image)mybm).Width;
             int height = ((Image)mybm).Height;

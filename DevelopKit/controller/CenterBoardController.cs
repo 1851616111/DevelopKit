@@ -16,7 +16,7 @@ namespace DevelopKit
         private ToolStripLabel CenterBoardImageSizeLabel;
         private ToolStripLabel CenterBoardPictureBoxSizeLabel;
 
-        private Dictionary<string, PictureBox> PropertyPictureBoxCache;
+        public ImageStore PictureBoxStore;
         private Dictionary<int, FlowLayoutPanel> SceneIdToSceneFlowPanelCache;
         private Dictionary<int, CenterBoardData> SceneToCenterBoardDataCache;
         private Dictionary<int, SortedDictionary<int, GroupCache>> GroupLayerCache;
@@ -31,46 +31,42 @@ namespace DevelopKit
             CenterBoardPictureBoxSizeLabel = pbSizeLabel;
             SetCenterBoardPictureBoxWidth(width);
 
-            PropertyPictureBoxCache = new Dictionary<string, PictureBox>();
+            PictureBoxStore = new ImageStore();
             SceneIdToSceneFlowPanelCache = new Dictionary<int, FlowLayoutPanel>();
             SceneToCenterBoardDataCache = new Dictionary<int, CenterBoardData>();  
             GroupLayerCache = new Dictionary<int, SortedDictionary<int, GroupCache>>();
         }
 
-        public void LoadRight(int sceneID, bool init)
+        public void InitScene(int newSceneID, bool init)
         {
-            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneID);
+            if (!init && newSceneID == OpenedSceneId)
+                return;
 
+            //隐藏上一次打开的场景
+            if (OpenedSceneId > 0 && SceneIdToSceneFlowPanelCache.ContainsKey(OpenedSceneId))
+            {
+                SceneIdToSceneFlowPanelCache[OpenedSceneId].Visible = false;
+                SceneIdToSceneFlowPanelCache[OpenedSceneId].Enabled = false;
+                CenterBoardPictureBox.Image = null;
+                CenterBoardPictureBox.Refresh();
+            }
 
+            if (SceneIdToSceneFlowPanelCache.ContainsKey(newSceneID))
+            {
+                SceneIdToSceneFlowPanelCache[newSceneID].Visible = true;
+                SceneIdToSceneFlowPanelCache[newSceneID].Enabled = true;
+                ShowCenterBoard(newSceneID);
+            }
+            else
+            {
+                FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID, init);
+                if (flowLayoutPanel != null)
+                {
+                    SceneIdToSceneFlowPanelCache.Add(newSceneID, flowLayoutPanel);
+                }
+            }
 
-            //if (!init && newSceneID == OpenedSceneId)
-            //    return;
-
-            ////隐藏上一次打开的场景
-            //if (OpenedSceneId > 0 && SceneIdToSceneFlowPanelCache.ContainsKey(OpenedSceneId))
-            //{
-            //    SceneIdToSceneFlowPanelCache[OpenedSceneId].Visible = false;
-            //    SceneIdToSceneFlowPanelCache[OpenedSceneId].Enabled = false;
-            //    CenterBoardPictureBox.Image = null;
-            //    CenterBoardPictureBox.Refresh();
-            //}
-
-            //if (SceneIdToSceneFlowPanelCache.ContainsKey(newSceneID))
-            //{
-            //    SceneIdToSceneFlowPanelCache[newSceneID].Visible = true;
-            //    SceneIdToSceneFlowPanelCache[newSceneID].Enabled = true;
-            //    ShowCenterBoard(newSceneID);
-            //}
-            //else
-            //{
-            //    FlowLayoutPanel flowLayoutPanel = loadSceneFlowLayoutPanel(newSceneID, init);
-            //    if (flowLayoutPanel != null)
-            //    {
-            //        SceneIdToSceneFlowPanelCache.Add(newSceneID, flowLayoutPanel);
-            //    }
-            //}
-
-            //OpenedSceneId = newSceneID;
+            OpenedSceneId = newSceneID;
         }
 
         public FlowLayoutPanel GetSceneFlowLayoutPanel(int sceneId)
@@ -161,7 +157,7 @@ namespace DevelopKit
 
             if (!GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping.ContainsKey(scene.Id))
                 return null;
-
+       
             FlowLayoutPanel flowLayoutPanel = new FlowLayoutPanel();
             RightPenel.Controls.Add(flowLayoutPanel);
             flowLayoutPanel.Width = RightPenel.Width;
@@ -211,23 +207,6 @@ namespace DevelopKit
 
             UpdateCenterBoardPictureBoxImage(image);
             OpenedSceneId = sceneID;
-        }
-
-        public void SetPictureBox(string key, PictureBox pb)
-        {
-            PropertyPictureBoxCache[key] = pb;
-        }
-
-        public PictureBox GetPictureBox(string key)
-        {
-            if (PropertyPictureBoxCache.ContainsKey(key))
-            {
-                return PropertyPictureBoxCache[key];
-            }
-            else
-            {
-                return null;
-            }
         }
 
         public void ShowGroupOnCenterBoard(TableLayoutPanel tabPanel, Group group)
@@ -290,13 +269,14 @@ namespace DevelopKit
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
             foreach (Property property in properties)
             {
-                if (property.Type == PropertyType.Image || property.OperateType == PropertyOperateType.AlphaWhiteImageSetAlpha 
-                    || property.OperateType == PropertyOperateType.AlphaWhiteImageSetColor || property.OperateType == PropertyOperateType.ImageFilterColor || PropertyOperateType.IsThirdPartType(property.OperateType))
+                if (property.Type == PropertyType.Image || property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha 
+                    || property.OptType == PropertyOperateType.AlphaWhiteImageSetColor || property.OptType == PropertyOperateType.ImageFilterColor || PropertyOperateType.IsThirdPartType(property.OptType))
                 {
                     Control[] pbCtl = tabPanel.Controls.Find(property.GetPictureBoxId(), true);
                     if (pbCtl.Length == 0)
                     {
                         continue;
+                        Console.WriteLine("Get group property picturebox nil, property id={0}", property.Id);
                     }
                     PictureBox pb = (PictureBox)(pbCtl[0]);
                     if (!(bool)(pb).Enabled || pb.Image == null)  //checkbox 负责启用还是停用PictureBox
@@ -360,11 +340,11 @@ namespace DevelopKit
 
 
                 Control[] controls = null;
-                if (property.OperateType == PropertyOperateType.AlphaWhiteImageSetAlpha)
+                if (property.OptType == PropertyOperateType.AlphaWhiteImageSetAlpha)
                 {
                     controls = GetSceneFlowLayoutPanel(property.SceneId).Controls.Find(property.GetTextBoxAlphaID(), true);
                 }
-                else if (property.OperateType == PropertyOperateType.AlphaWhiteImageSetColor)
+                else if (property.OptType == PropertyOperateType.AlphaWhiteImageSetColor)
                 {
                     controls = GetSceneFlowLayoutPanel(property.SceneId).Controls.Find(property.GetTextBoxColorID(), true);
                 }

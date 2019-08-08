@@ -42,9 +42,14 @@ namespace DevelopKit
                 project.Status = ProjectStatus.StartOpenProject;
             }
 
+
             GlobalConfig.Project = project;
-            GlobalConfig.Controller = new CenterBoardController(centerBoardPictuerBox, rightPanel,
+            GlobalConfig.Controller = new Controller(new LeftController(treeView2), new CenterController(centerBoardPictuerBox), new RightController(rightPanel));
+            GlobalConfig.CenterBoardController = new CenterBoardController(centerBoardPictuerBox, rightPanel,
                 centerBoardImageRealSizeLabel, centerBoardPictureBoxSizeLabel, CenterBoardWidth);
+            GlobalConfig.FrontCache = new ShareCache();
+            GlobalConfig.EventHandler = new PropertyEventHandler();
+
             ProjectStatusHandler(GlobalConfig.Project);
         }
 
@@ -73,63 +78,77 @@ namespace DevelopKit
             centerBoardFlowPanel.Visible = true;
             centerBoardPictuerBox.Visible = true;
             centerBoardToolStrip.Visible = true;
-            loadScene(treeView2, GlobalConfig.Project.CarConfig);
+            //loadScene(treeView2, GlobalConfig.Project.CarConfig);
+            LoadAllResources();
 
             pts = new ParameterizedThreadStart(ProjectSyncTools.Sync);
             t = new Thread(pts);
             t.Start(this);
         }
 
-        private void loadScene(TreeView treeview, CarConfig carConfig)
+        private void LoadAllResources()
         {
-            Form_Progress form_Progress = new Form_Progress(carConfig.GetTotalSceneNum(), false);
-            form_Progress.Location = new Point((displayWidth - form_Progress.Width) /2 , (displayHeight - form_Progress.Height) /2);
+            Form_Progress form_Progress = new Form_Progress(GlobalConfig.Project.CarConfig.GetTotalSceneNum(), false);
+            form_Progress.Location = new Point((displayWidth - form_Progress.Width) / 2, (displayHeight - form_Progress.Height) / 2);
             form_Progress.Show();
 
-            GlobalConfig.Controller.HideCenterBoardPictureBox();
-
-            rightPanel.SuspendLayout();
-            treeview.BeginUpdate();
-            foreach (Scene scene in carConfig.Scenes)
-            {
-                TreeNode sceneNode = new TreeNode
-                {
-                    Name = scene.Id.ToString(),
-                    Text = scene.Name
-                };
-                GlobalConfig.Controller.InitScene(scene.Id, true);
-
-                foreach (Scene childScene in scene.children)
-                {
-                    sceneNode.Nodes.Add(new TreeNode
-                    {
-                        Name = childScene.Id.ToString(),
-                        Text = childScene.Name
-                    });
-
-                    GlobalConfig.Controller.InitScene(childScene.Id, true);
-                    form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", childScene.Name));
-                }
-
-                form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", scene.Name));
-                treeview.Nodes.Add(sceneNode);
-            }
-
-           
-            treeview.EndUpdate();
-            rightPanel.ResumeLayout();
-
-            GlobalConfig.Controller.ShowCenterBoardPictureBox();
+            GlobalConfig.Controller.LoadProjectWithProgress(form_Progress);
 
             form_Progress.Close();
             form_Progress.Dispose();
         }
 
+
+        //private void loadScene(TreeView treeview, CarConfig carConfig)
+        //{
+        //    Form_Progress form_Progress = new Form_Progress(carConfig.GetTotalSceneNum(), false);
+        //    form_Progress.Location = new Point((displayWidth - form_Progress.Width) /2 , (displayHeight - form_Progress.Height) /2);
+        //    form_Progress.Show();
+
+        //    GlobalConfig.Controller.HideCenterBoardPictureBox();
+
+        //    rightPanel.SuspendLayout();
+        //    treeview.BeginUpdate();
+        //    foreach (Scene scene in carConfig.Scenes)
+        //    {
+        //        TreeNode sceneNode = new TreeNode
+        //        {
+        //            Name = scene.Id.ToString(),
+        //            Text = scene.Name
+        //        };
+        //        GlobalConfig.Controller.InitScene(scene.Id, true);
+
+        //        foreach (Scene childScene in scene.children)
+        //        {
+        //            sceneNode.Nodes.Add(new TreeNode
+        //            {
+        //                Name = childScene.Id.ToString(),
+        //                Text = childScene.Name
+        //            });
+
+        //            GlobalConfig.Controller.InitScene(childScene.Id, true);
+        //            form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", childScene.Name));
+        //        }
+
+        //        form_Progress.AddProgressValue(1, string.Format("场景 {0} 已加载", scene.Name));
+        //        treeview.Nodes.Add(sceneNode);
+        //    }
+
+           
+        //    treeview.EndUpdate();
+        //    rightPanel.ResumeLayout();
+
+        //    GlobalConfig.Controller.ShowCenterBoardPictureBox();
+
+        //    form_Progress.Close();
+        //    form_Progress.Dispose();
+        //}
+
         private void HideOpenedProject()
         {
             centerBoardPictuerBox.Image = null;
             GlobalConfig.Project = null;
-            GlobalConfig.Controller = null;
+            GlobalConfig.CenterBoardController = null;
 
             centerBoardPictuerBox.Visible = false;
             centerBoardFlowPanel.Visible = false;
@@ -209,7 +228,7 @@ namespace DevelopKit
                         form_Progress.Location = new Point((displayWidth - form_Progress.Width) / 2, (displayHeight - form_Progress.Height) / 2);
                         form_Progress.Show();
 
-                        string err = GlobalConfig.Controller.StartOutput(
+                        string err = GlobalConfig.CenterBoardController.StartOutput(
                            GlobalConfig.Project.CarConfig.outputs,
                            GlobalConfig.Project.CarConfig.PropertyIdMapping,
                            GlobalConfig.Project.GetDefaultOutputPath(),
@@ -243,7 +262,9 @@ namespace DevelopKit
         private void TreeView2_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             int sceneId = Convert.ToInt32(e.Node.Name);
-            GlobalConfig.Controller.InitScene(sceneId, false);
+            Scene scene = GlobalConfig.Project.CarConfig.GetSceneById(sceneId);
+          
+            GlobalConfig.Controller.Show(scene);
         }
 
         private void CloseProjectPictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -263,14 +284,14 @@ namespace DevelopKit
 
         private void ScrollUpToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GlobalConfig.Controller != null)
-                GlobalConfig.Controller.ScrollUpCenterBoardPictureBox();
+            if (GlobalConfig.CenterBoardController != null)
+                GlobalConfig.CenterBoardController.ScrollUpCenterBoardPictureBox();
         }
 
         private void ScrollDownToolStripButton_Click(object sender, EventArgs e)
         {
-            if (GlobalConfig.Controller != null)
-                GlobalConfig.Controller.ScrollDownCenterBoardPictureBox();
+            if (GlobalConfig.CenterBoardController != null)
+                GlobalConfig.CenterBoardController.ScrollDownCenterBoardPictureBox();
         }
 
         private void CenterBoardPictuerBox_MouseMove(object sender, MouseEventArgs e)

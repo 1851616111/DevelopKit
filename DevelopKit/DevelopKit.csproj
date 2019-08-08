@@ -71,51 +71,61 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollectionUtil.cs" />
-    <Compile Include="ByteUtil.cs" />
+    <Compile Include="Controllers\ShareCache.cs" />
+    <Compile Include="Controllers\CenterController.cs" />
+    <Compile Include="Controllers\EventHandler.cs" />
+    <Compile Include="FormUtil\FormEvent.cs" />
+    <Compile Include="FormUtil\FormUtil.cs" />
+    <Compile Include="Util\CollectionUtil.cs" />
+    <Compile Include="Util\Bytes.cs" />
     <Compile Include="CenterBoardController.cs" />
-    <Compile Include="Config_Car.cs" />
-    <Compile Include="Config.cs" />
-    <Compile Include="ThirdPart.cs" />
-    <Compile Include="FileUtil.cs" />
-    <Compile Include="Form1_FlowPanel.cs" />
-    <Compile Include="Errors.cs" />
-    <Compile Include="Form_Admin.cs">
+    <Compile Include="Config\CarConfig.cs" />
+    <Compile Include="Config\GlobalConfig.cs" />
+    <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\LeftController.cs" />
+    <Compile Include="Controllers\RightController.cs" />
+    <Compile Include="forms\Form_Util_Old.cs" />
+    <Compile Include="forms\Form_Admin.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_Admin.Designer.cs">
+    <Compile Include="forms\Form_Admin.Designer.cs">
       <DependentUpon>Form_Admin.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form_OutPut.cs">
+    <Compile Include="forms\Form_Create.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form_OutPut.Designer.cs">
-      <DependentUpon>Form_OutPut.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Progress.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Progress.Designer.cs">
-      <DependentUpon>Form_Progress.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Log.cs" />
-    <Compile Include="MathUtil.cs" />
-    <Compile Include="Form_Main.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Main.Designer.cs">
-      <DependentUpon>Form_Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form_Create.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form_Create.Designer.cs">
+    <Compile Include="forms\Form_Create.Designer.cs">
       <DependentUpon>Form_Create.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\Form_Main.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Form_Main.Designer.cs">
+      <DependentUpon>Form_Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Form_Output.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Form_Output.Designer.cs">
+      <DependentUpon>Form_Output.cs</DependentUpon>
+    </Compile>
+    <Compile Include="forms\Form_Progress.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\Form_Progress.Designer.cs">
+      <DependentUpon>Form_Progress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormUtil\FlowLayoutPanelUtil.cs" />
+    <Compile Include="FormUtil\TableLayoutPanelUtil.cs" />
+    <Compile Include="ThirdPart.cs" />
+    <Compile Include="Util\FileUtil.cs" />
+    <Compile Include="Util\Errors.cs" />
+    <Compile Include="Util\Log.cs" />
+    <Compile Include="Util\MathUtil.cs" />
     <Compile Include="Outputs.cs" />
-    <Compile Include="PngUtil.cs" />
+    <Compile Include="Util\PngUtil.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Project.cs" />
+    <Compile Include="Config\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PropertiesEditer.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -123,21 +133,21 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="StringUtil.cs" />
+    <Compile Include="Util\StringUtil.cs" />
     <Compile Include="ProjectSyncTools.cs" />
-    <EmbeddedResource Include="Form_Admin.resx">
+    <EmbeddedResource Include="forms\Form_Admin.resx">
       <DependentUpon>Form_Admin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_Main.resx">
-      <DependentUpon>Form_Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form_Create.resx">
+    <EmbeddedResource Include="forms\Form_Create.resx">
       <DependentUpon>Form_Create.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_OutPut.resx">
-      <DependentUpon>Form_OutPut.cs</DependentUpon>
+    <EmbeddedResource Include="forms\Form_Main.resx">
+      <DependentUpon>Form_Main.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form_Progress.resx">
+    <EmbeddedResource Include="forms\Form_Output.resx">
+      <DependentUpon>Form_Output.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\Form_Progress.resx">
       <DependentUpon>Form_Progress.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -198,6 +208,7 @@
     <Content Include="Resources\close_project.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\P_position.png" />
     <None Include="Resources\folder.png" />
     <Content Include="Resources\project\cat_wm_aes01_v0.7\ICU\KL15\background.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

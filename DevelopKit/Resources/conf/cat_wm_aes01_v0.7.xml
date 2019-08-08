@@ -19,23 +19,10 @@
           <name>背景</name>
         </item>
         <item>
-          <id>6</id>
+          <id>8</id>
           <name>常显</name>
         </item>
-        <item>
-          <id>7</id>
-          <name>行车信息</name>
-        </item>
-        <item>
-          <id>8</id>
-          <name>自动泊车</name>
-        </item>
-        <item>
-          <id>9</id>
-          <name>弹出报警</name>
-        </item>
       </child_scenes>
-      
     </item>
   </scenes>
   <properties>
@@ -244,6 +231,7 @@
       <group_layer_idx>1</group_layer_idx>
       <name>/</name>
       <type>image</type>
+      <operate_type>/</operate_type>
       <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -322,7 +310,8 @@
       <size>812*472</size>
     </item>
 
-    <!--<item>
+    <!--全屏报警-->
+    <item>
       <id>17</id>
       <scene_id>1</scene_id>
       <group_id>4</group_id>
@@ -331,10 +320,11 @@
       <group_layer_idx>1</group_layer_idx>
       <name>图标</name>
       <type>image</type>
+      <operate_type>image_replace</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\30_charge_frame_pro.png</value>
+      <property_layer_idx>1</property_layer_idx>
+      <value>ICU\KL30\alarm_pop_53_icon.png</value>
       <location>0,0</location>
     </item>
     <item>
@@ -346,11 +336,14 @@
       <group_layer_idx>1</group_layer_idx>
       <name>提示文本颜色</name>
       <type>txt_color</type>
+      <operate_type>alpha_white_image_set_color</operate_type>
       <show_label>true</show_label>
       <can_edit>true</can_edit>
-      <property_layer_idx>0</property_layer_idx>
-    </item>-->
-    <!--<item>
+      <property_layer_idx>2</property_layer_idx>
+      <value>ICU\KL30\alarm_pop_53_text.png</value>
+      <location>0,0</location>
+    </item>
+    <item>
       <id>19</id>
       <scene_id>1</scene_id>
       <group_id>4</group_id>
@@ -359,14 +352,15 @@
       <group_layer_idx>1</group_layer_idx>
       <name>背景图片</name>
       <type>image</type>
+      <operate_type>/</operate_type>
       <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\30_charge_show.png</value>
+      <value></value>
       <ref_property_id>1</ref_property_id>
       <location>0,0</location>
       <size>1920*720</size>
-    </item>-->
+    </item>
     <item>
       <id>20</id>
       <scene_id>1</scene_id>
@@ -374,8 +368,9 @@
       <group_name>门开报警</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
-      <name>/</name>
+      <name>汽车开门</name>
       <type>image</type>
+      <operate_type>/</operate_type>
       <show_label>true</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -390,8 +385,9 @@
       <group_name>TT灯</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>3</group_layer_idx>
-      <name>/</name>
+      <name></name>
       <type>image</type>
+      <operate_type>/</operate_type>
       <show_label>false</show_label>
       <can_edit>false</can_edit>
       <property_layer_idx>0</property_layer_idx>
@@ -419,7 +415,7 @@
 
     <!--背景-->
     <item>
-      <id>23</id>
+      <id>22</id>
       <scene_id>5</scene_id>
       <group_id>50</group_id>
       <group_name>常显</group_name>
@@ -439,7 +435,7 @@
     <!--常显-->
     <item>
       <id>23</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -456,7 +452,7 @@
     </item>
     <item>
       <id>24</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -473,7 +469,7 @@
     </item>
     <item>
       <id>25</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -491,7 +487,7 @@
     </item>
     <item>
       <id>26</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -508,7 +504,7 @@
     </item>
     <item>
       <id>27</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -526,7 +522,7 @@
     </item>
     <item>
       <id>28</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -543,7 +539,7 @@
     </item>
     <item>
       <id>29</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -561,7 +557,7 @@
     </item>
     <item>
       <id>30</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -578,7 +574,7 @@
     </item>
     <item>
       <id>31</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -596,7 +592,7 @@
     </item>
     <item>
       <id>32</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -613,7 +609,7 @@
     </item>
     <item>
       <id>33</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -631,7 +627,7 @@
     </item>
     <item>
       <id>34</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -648,7 +644,7 @@
     </item>
     <item>
       <id>35</id>
-      <scene_id>3</scene_id>
+      <scene_id>8</scene_id>
       <group_id>8</group_id>
       <group_name>常显</group_name>
       <group_size>1920*720</group_size>
@@ -680,8 +676,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0x8ae857</default_value>
+      <value>0x8ae857</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -698,8 +694,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0x32e8b6</default_value>
+      <value>0x32e8b6</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -716,6 +712,7 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>60</value>
       <default_value>60</default_value>
       <location>111,168</location>
       <size>414*414</size>
@@ -735,8 +732,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xffff24</default_value>
+      <value>0xffff24</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -753,8 +750,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xffb402</default_value>
+      <value>0xffb402</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -771,6 +768,7 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>60</value>
       <default_value>60</default_value>
       <location>111,168</location>
       <size>414*414</size>
@@ -790,8 +788,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xff6f6f</default_value>
+      <value>0xff6f6f</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -808,8 +806,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xff4545</default_value>
+      <value>0xff4545</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -826,6 +824,7 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>60</value>
       <default_value>60</default_value>
       <location>111,168</location>
       <size>414*414</size>
@@ -847,8 +846,9 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <value>0x8ae857</value>
+      <default_value>0x8ae857</default_value>
+      <value>0x8ae857</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -865,8 +865,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0x32e8b6</default_value>
+      <value>0x32e8b6</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -884,6 +884,7 @@
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
       <default_value>60</default_value>
+      <value>60</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -902,8 +903,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xffff24</default_value>
+      <value>0xffff24</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -920,8 +921,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xffb402</default_value>
+      <value>0xffb402</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -939,6 +940,7 @@
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
       <default_value>60</default_value>
+      <value>60</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -957,8 +959,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <default_value>0x222222</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xff6f6f</default_value>
+      <value>0xff6f6f</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -975,8 +977,8 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>1</property_layer_idx>
-      <default_value>0x887766</default_value>
-      <value>ICU\KL15\ele_low_color.png</value>
+      <default_value>0xff4545</default_value>
+      <value>0xff4545</value>
       <location>111,168</location>
       <size>414*414</size>
     </item>
@@ -993,6 +995,7 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>2</property_layer_idx>
+      <value>60</value>
       <default_value>60</default_value>
       <location>111,168</location>
       <size>414*414</size>

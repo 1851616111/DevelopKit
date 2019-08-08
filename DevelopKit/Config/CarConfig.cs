@@ -198,14 +198,7 @@ namespace DevelopKit
 
         public Scene GetSceneById(int id)
         {
-            if (sceneMapping.ContainsKey(id))
-            {
-                return sceneMapping[id];
-            }
-            else
-            {
-                return null;
-            }
+            return sceneMapping.ContainsKey(id) ? sceneMapping[id] : null;
         }
 
         //sid scene id
@@ -236,7 +229,6 @@ namespace DevelopKit
             }
             return res;
         }
-
 
         public void MakeMappingCache()
         {
@@ -273,6 +265,13 @@ namespace DevelopKit
             foreach (Scene scene in scenes)
             {
                 sceneMapping[scene.Id] = scene;
+                if (scene.children.Count > 0)
+                {
+                    foreach (Scene childScene in scene.children)
+                    {
+                        sceneMapping[childScene.Id] = childScene;
+                    }
+                }
             }
 
             foreach (Property property in properties)
@@ -347,6 +346,17 @@ namespace DevelopKit
 
         [XmlArray("child_scenes"), XmlArrayItem("item")]
         public List<Scene> children;
+
+        public List<Group> GetGroups()
+        {
+            if (GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping.ContainsKey(Id))
+            {
+                return GlobalConfig.Project.CarConfig.SceneIdToGroupsMapping[Id];
+            } else
+            {
+                return null;
+            }
+        }
     }
 
     [Serializable]
@@ -368,6 +378,49 @@ namespace DevelopKit
         public int Sceneid { get => sceneid; set => sceneid = value; }
         [XmlElement("size")]
         public GroupSize Size { get => size; set => size = value; }
+
+        public List<Property> GetProperties()
+        {
+            return GlobalConfig.Project.CarConfig.GroupIdToPropertyMapping[id];
+        }
+
+        public SortedDictionary<int, Property> GetPropertiesByLayer()
+        {
+            SortedDictionary<int, Property> sortedDictionary = new SortedDictionary<int, Property>();
+
+            foreach (Property property in GetProperties())
+            {
+                if (!sortedDictionary.ContainsKey(property.PropertyLayerIdx))
+                    sortedDictionary.Add(property.PropertyLayerIdx, property);
+            }
+
+            return sortedDictionary;
+        }
+
+        public Scene SearchTopScene()
+        {
+            foreach (Scene topScene in GlobalConfig.Project.CarConfig.Scenes)
+            {
+                if (topScene.Id == sceneid)
+                    return topScene;
+                if (SearchScenes(topScene.children, sceneid) != null)
+                    return topScene;
+            }
+            return null;
+        }
+
+        private Scene SearchScenes(List<Scene> scenes, int sid)
+        {
+            if (scenes == null)
+                return null;
+
+            foreach (Scene scene in scenes)
+            {
+                if (scene.Id == sid)
+                    return scene;
+            }
+            return null;
+        }
 
         public string GetTablePanelId()
         {
@@ -393,12 +446,14 @@ namespace DevelopKit
         public string GroupName;
         [XmlElement("group_size")]
         public string GroupSize;
+        [XmlElement("position")]
+        public string Position;
         [XmlElement("name")]
         public string Name;
         [XmlElement("type")]
         public string Type;
         [XmlElement("operate_type")]
-        public string OptType;
+        public string OperateType;
         [XmlElement("show_label")]
         public bool ShowLabel;
         [XmlElement("can_edit")]
@@ -432,7 +487,7 @@ namespace DevelopKit
                 GroupSize = GroupSize,
                 Name = Name,
                 Type = Type,
-                OptType = OptType,
+                OperateType = OperateType,
                 ShowLabel = ShowLabel,
                 CanEdit = CanEdit,
                 GroupLayerIdx = GroupLayerIdx,
