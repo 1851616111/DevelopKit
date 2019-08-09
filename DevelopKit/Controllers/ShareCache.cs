@@ -12,16 +12,73 @@ namespace DevelopKit
     public class ShareCache
     {
         public int OpenedSceneID;
+        private string Position;
 
         public ShareCache<Image> ShareImage;
         public ShareCache<TextBox> ShareTextBox;
         public ShareCache<TrackBar> ShareTrackBar;
+
+        public ThirdPartDraw ThirdPartCaller;
 
         public ShareCache()
         {
             ShareImage = new ShareCache<Image>();
             ShareTextBox = new ShareCache<TextBox>();
             ShareTrackBar = new ShareCache<TrackBar>();
+
+            ThirdPartCaller = new ThirdPartDraw();
+        }
+
+        public void SetPosition(string P)
+        {
+            Position = P;
+        }
+
+        public string GetPosition()
+        {
+            return Position;
+        }
+    }
+
+    public class ThirdPartDraw
+    {
+        private Dictionary<string, SortedDictionary<int, Object>> methodToParamMapping;
+        private Dictionary<string, Object> methodToResultMapping;
+
+        public ThirdPartDraw()
+        {
+            methodToParamMapping = new Dictionary<string, SortedDictionary<int, Object>>();
+            methodToResultMapping = new Dictionary<string, object>();
+        }
+
+        public void Draw(string method, int paramIndex, Object param)
+        {
+            Register(method, paramIndex, param);
+            ThirdPartApiClient cli = new ThirdPartApiClient(method);
+
+            foreach (KeyValuePair<int, Object> kv in methodToParamMapping[method])
+            {
+                cli.AddParam(kv.Value);
+            }
+            Image image = cli.Call();
+
+            if (!methodToResultMapping.ContainsKey(method))
+                methodToResultMapping.Add(method, image);
+            else
+                methodToResultMapping[method] = image;
+        }
+
+        public Image Get(string method)
+        {
+            return methodToResultMapping.ContainsKey(method)? (Image)methodToResultMapping[method]: null;
+        }
+
+        public void Register(string method, int paramIndex, Object param)
+        {
+            if (!methodToParamMapping.ContainsKey(method))
+                methodToParamMapping[method] = new SortedDictionary<int, Object> { { paramIndex, param } };
+            else
+                methodToParamMapping[method][paramIndex] = param;
         }
     }
 

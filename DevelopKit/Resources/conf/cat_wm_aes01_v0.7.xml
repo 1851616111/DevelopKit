@@ -6,10 +6,10 @@
       <id>1</id>
       <name>KL30</name>
     </item>
-    <item>
+    <!--<item>
       <id>2</id>
       <name>人脸识别</name>
-    </item>
+    </item>-->
     <item>
       <id>3</id>
       <name>KL15</name>
@@ -21,6 +21,10 @@
         <item>
           <id>8</id>
           <name>常显</name>
+        </item>
+        <item>
+          <id>100</id>
+          <name>电量</name>
         </item>
       </child_scenes>
     </item>
@@ -395,30 +399,13 @@
       <location>0,0</location>
       <size>1920*720</size>
     </item>
-    <item>
-      <id>22</id>
-      <scene_id>2</scene_id>
-      <group_id>7</group_id>
-      <group_name>背景</group_name>
-      <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>人脸识别背景图片</name>
-      <type>image</type>
-      <operate_type>image_replace</operate_type>
-      <show_label>true</show_label>
-      <can_edit>true</can_edit>
-      <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL30\face_bg.png</value>
-      <location>0,0</location>
-      <size>1920*720</size>
-    </item>
 
     <!--背景-->
     <item>
       <id>22</id>
       <scene_id>5</scene_id>
       <group_id>50</group_id>
-      <group_name>常显</group_name>
+      <group_name>背景</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>0</group_layer_idx>
       <name>背景图片</name>
@@ -427,29 +414,12 @@
       <show_label>true</show_label>
       <can_edit>true</can_edit>
       <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL15\black_background.png</value>
+      <value>ICU\KL15\background.jpg</value>
       <location>0,0</location>
       <size>1920*720</size>
     </item>
     
     <!--常显-->
-    <item>
-      <id>23</id>
-      <scene_id>8</scene_id>
-      <group_id>8</group_id>
-      <group_name>常显</group_name>
-      <group_size>1920*720</group_size>
-      <group_layer_idx>0</group_layer_idx>
-      <name>背景图片</name>
-      <type>image</type>
-      <operate_type>image_replace</operate_type>
-      <show_label>true</show_label>
-      <can_edit>true</can_edit>
-      <property_layer_idx>0</property_layer_idx>
-      <value>ICU\KL15\black_background.png</value>
-      <location>0,0</location>
-      <size>1920*720</size>
-    </item>
     <item>
       <id>24</id>
       <scene_id>8</scene_id>
@@ -665,7 +635,7 @@
     <!--剩余电量（高）-->
     <item>
       <id>1000</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>100</group_id>
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
@@ -683,7 +653,7 @@
     </item>
     <item>
       <id>1001</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>100</group_id>
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
@@ -701,7 +671,7 @@
     </item>
     <item>
       <id>1002</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>100</group_id>
       <group_name>剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
@@ -721,7 +691,7 @@
     <!--剩余电量（中）-->
     <item>
       <id>1003</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>101</group_id>
       <group_name>剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
@@ -739,7 +709,7 @@
     </item>
     <item>
       <id>1004</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>101</group_id>
       <group_name>剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
@@ -757,7 +727,7 @@
     </item>
     <item>
       <id>1005</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>101</group_id>
       <group_name>剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
@@ -777,7 +747,7 @@
     <!--剩余电量（低）-->
     <item>
       <id>1006</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>102</group_id>
       <group_name>剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
@@ -795,7 +765,7 @@
     </item>
     <item>
       <id>1007</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>102</group_id>
       <group_name>剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
@@ -813,7 +783,7 @@
     </item>
     <item>
       <id>1008</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>102</group_id>
       <group_name>剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
@@ -835,12 +805,13 @@
     <!--P档剩余电量（高）-->
     <item>
       <id>1009</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>103</group_id>
       <group_name>P档剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量高时上部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
       <show_label>true</show_label>
@@ -854,12 +825,13 @@
     </item>
     <item>
       <id>1010</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>103</group_id>
       <group_name>>P档剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量高时下部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
       <show_label>true</show_label>
@@ -872,12 +844,13 @@
     </item>
     <item>
       <id>1011</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>103</group_id>
       <group_name>P档剩余电量（高）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量高时显示宽度</name>
+      <position>P</position>
       <type>int</type>
       <operate_type>ThirdPart.WM.DrawRectangleHightSpeed</operate_type>
       <show_label>true</show_label>
@@ -892,12 +865,13 @@
     <!--剩余电量（中）-->
     <item>
       <id>1012</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>104</group_id>
       <group_name>P档剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量中时上部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
       <show_label>true</show_label>
@@ -910,12 +884,13 @@
     </item>
     <item>
       <id>1013</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>104</group_id>
       <group_name>P档剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量中时下部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
       <show_label>true</show_label>
@@ -928,12 +903,13 @@
     </item>
     <item>
       <id>1014</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>104</group_id>
       <group_name>P档剩余电量（中）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量中时显示宽度</name>
+      <position>P</position>
       <type>int</type>
       <operate_type>ThirdPart.WM.DrawRectangleMidSpeed</operate_type>
       <show_label>true</show_label>
@@ -948,12 +924,13 @@
     <!--剩余电量（低）-->
     <item>
       <id>1015</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>105</group_id>
       <group_name>P档剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量低时上部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
       <show_label>true</show_label>
@@ -966,12 +943,13 @@
     </item>
     <item>
       <id>1016</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>105</group_id>
       <group_name>P档剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量低时下部颜色</name>
+      <position>P</position>
       <type>color</type>
       <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
       <show_label>true</show_label>
@@ -984,12 +962,13 @@
     </item>
     <item>
       <id>1017</id>
-      <scene_id>3</scene_id>
+      <scene_id>100</scene_id>
       <group_id>105</group_id>
       <group_name>剩余电量（低）</group_name>
       <group_size>1920*720</group_size>
       <group_layer_idx>1</group_layer_idx>
       <name>剩余电量低时显示宽度</name>
+      <position>P</position>
       <type>int</type>
       <operate_type>ThirdPart.WM.DrawRectangleLowSpeed</operate_type>
       <show_label>true</show_label>
@@ -1000,9 +979,6 @@
       <location>111,168</location>
       <size>414*414</size>
     </item>
-
-
-
 
 
     <!-- 左侧行车信息 -->

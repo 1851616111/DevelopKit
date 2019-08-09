@@ -69,7 +69,7 @@ namespace DevelopKit
             switch (property.Type)
             {
                 case PropertyType.Image:
-                        SetRow(tabPanel, property, index, maxIndex, propertyHeight);
+                    SetRow(tabPanel, property, index, maxIndex, propertyHeight);
                     break;
                 case PropertyType.TxtColor:
                     if (property.Value.Length > 0)
@@ -84,11 +84,11 @@ namespace DevelopKit
                     }
                     break;
                 case PropertyType.Int:
-
+                    SetRow(tabPanel, property, index, maxIndex, propertyHeight);
                     //LoadGroupProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     break;
                 case PropertyType.Color:
-
+                    SetRow(tabPanel, property, index, maxIndex, propertyHeight);
                     //LoadGroupProperty(tabPanel, property, index, maxIndex, propertyHeight);
                     break;
                 case PropertyType.Nil:
@@ -157,7 +157,7 @@ namespace DevelopKit
                 button.Text = "设置颜色";
                 button.Click += new EventHandler(delegate (object _, EventArgs b)
                 {
-                    FormEvent.SetImageColor(property, textBox);
+                    FormEvent.SetColor(property, textBox);
                 });
             }
             else if (property.OperateType == PropertyOperateType.AlphaWhiteImageSetAlpha)
@@ -198,9 +198,48 @@ namespace DevelopKit
             {
                 CacheImageProperty(property);
             }
+            else if (PropertyOperateType.IsThirdPartType(property.OperateType))
+            {
+                if (property.Type == PropertyType.Color)
+                {
+                    TextBox textBox = CacheThirdPartColorProperty(property, label.Width);
+
+                    panel.Controls.Add(textBox);
+                    panel.Controls.Add(button);
+                    button.Text = "设置颜色";
+
+                    button.Click += new EventHandler(delegate (object _, EventArgs b)
+                    {
+                        FormEvent.SetColor(property, textBox);
+                    });
+
+                    if (index == maxIndex)
+                    {
+                        FormEvent.SetColor(property, textBox);
+                    }
+
+                }
+                else if (property.Type == PropertyType.Int)
+                {
+                    TextBox textBox = CacheThirdPartIntProperty(property, label.Width);
+
+                    panel.Controls.Add(textBox);
+                    panel.Controls.Add(button);
+                    button.Text = "设置";
+
+                    button.Click += new EventHandler(delegate (object _, EventArgs b)
+                    {
+                        FormEvent.SetInt(property, textBox);
+                    });
+
+                    if (index == maxIndex) {
+                        FormEvent.SetInt(property, textBox);
+                    }
+                }
+            }
             else
                 return;
-            
+
             if (property.ShowLabel)
                 tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, rowHeight));
             else if (index == maxIndex && maxIndex == 1)
@@ -272,7 +311,8 @@ namespace DevelopKit
             {
                 textBox.Text = "0";
             }
-            else {
+            else
+            {
                 PngUtil.SetAlphaWhilteImage((Bitmap)image, Convert.ToInt32(property.DefaultValue));
             }
             textBox.Text = property.DefaultValue;
@@ -294,6 +334,61 @@ namespace DevelopKit
             CacheImageProperty(property);
             GlobalConfig.Controller.ShareCache.ShareTrackBar.Set(property.Id, trackBar);
             return trackBar;
+        }
+
+        public static TextBox CacheThirdPartColorProperty(Property property, int width)
+        {
+            TextBox textBox = new TextBox
+            {
+                Width = 35,
+                Location = new Point(width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
+                Height = 20,
+                BorderStyle = BorderStyle.FixedSingle,
+                Margin = new Padding(0, 0, 0, 0),
+                Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+            };
+
+            if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+            {
+                try
+                {
+                    textBox.BackColor = Color.FromArgb(
+                        Convert.ToInt32(property.DefaultValue.Substring(2, 2), 16),
+                        Convert.ToInt32(property.DefaultValue.Substring(4, 2), 16),
+                        Convert.ToInt32(property.DefaultValue.Substring(6, 2), 16));
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+            GlobalConfig.Controller.ShareCache.ShareTextBox.Set(property.Id, textBox);
+            GlobalConfig.Controller.ShareCache.ThirdPartCaller.Register(property.OperateType, property.PropertyLayerIdx,  textBox.BackColor);
+            return textBox;
+        }
+
+        public static TextBox CacheThirdPartIntProperty(Property property, int width)
+        {
+            TextBox textBox = new TextBox
+            {
+                Width = 35,
+                Location = new Point(width + GlobalConfig.UiConfig.PropertyLabelMargin, 0),
+                Height = 20,
+                BorderStyle = BorderStyle.FixedSingle,
+                Margin = new Padding(0, 0, 0, 0),
+                Font = new Font("微软雅黑", 11F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(134))),
+            };
+
+            if (property.DefaultValue != null && property.DefaultValue.Length > 0)
+            {
+                textBox.Text = property.DefaultValue;
+            }
+
+            int value =  Convert.ToInt32(textBox.Text);
+
+            GlobalConfig.Controller.ShareCache.ShareTextBox.Set(property.Id, textBox);
+            GlobalConfig.Controller.ShareCache.ThirdPartCaller.Register(property.OperateType, property.PropertyLayerIdx, value);
+            return textBox;
         }
     }
 }

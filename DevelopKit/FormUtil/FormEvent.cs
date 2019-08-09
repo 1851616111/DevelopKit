@@ -47,7 +47,7 @@ namespace DevelopKit
             { }
         }
 
-        public static void SetImageColor(Property property, TextBox textBox)
+        public static void SetColor(Property property, TextBox textBox)
         {
             ColorDialog dialog = new ColorDialog();
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -68,6 +68,13 @@ namespace DevelopKit
                 textBox.BackColor = dialog.Color;
             }
             dialog.Dispose();
+        }
+
+        public static void SetInt(Property property, TextBox textBox)
+        {
+            int i = Convert.ToInt32(textBox.Text);
+            PropertyEvent Event = new PropertyEvent(property, i);
+            Event.Send();
         }
 
         public static void SetAlphaImageColor(Property property, ref string oldText, string text)
@@ -93,15 +100,14 @@ namespace DevelopKit
 
         public static void FilterImageColor(Property property)
         {
-            try
-            {
-                PropertyEvent Event = new PropertyEvent(property, null);
-                Event.Send();
-            }
-            catch (Exception)
-            { }
+            PropertyEvent Event = new PropertyEvent(property, null);
+            Event.Send();
         }
 
-
+        public static void ThirdPartSetColor(Property property)
+        {
+            PropertyEvent Event = new PropertyEvent(property, null);
+            Event.Send();
+        }
     }
 }

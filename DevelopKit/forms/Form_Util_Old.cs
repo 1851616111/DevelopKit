@@ -213,7 +213,7 @@ namespace DevelopKit
                 };
 
                 GlobalConfig.CenterBoardController.SetPictureBox(property.GetGroupPictureBoxId(), GroupPictureBox);
-                GroupPictureBox.Tag = new ThirdPartApiClient(property.OperateType, GroupPictureBox, maxIndex + 1);
+                //GroupPictureBox.Tag = new ThirdPartApiClient(property.OperateType, GroupPictureBox, maxIndex + 1);
                 panel.Controls.Add(GroupPictureBox);
             }
             tabPanel.RowStyles.Add(new RowStyle(SizeType.Absolute, propertyHeight));
@@ -240,7 +240,7 @@ namespace DevelopKit
                 BorderStyle = BorderStyle.FixedSingle,
                 Tag = property.Type
             };
-            ((ThirdPartApiClient)(GroupPictureBox.Tag)).SetParam(index, text);
+            //((ThirdPartApiClient)(GroupPictureBox.Tag)).AppendParam(index, text);
             panel.Controls.Add(label);
             panel.Controls.Add(text);
 

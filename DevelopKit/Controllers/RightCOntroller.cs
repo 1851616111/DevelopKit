@@ -36,6 +36,13 @@ namespace DevelopKit
         {
             if (scene.children.Count == 0)
                 ShowSceneFlowPanel(scene.Id);
+            else if (controller.ShareCache.OpenedSceneID > 0 )
+            {
+                ScenePanelMapping[controller.ShareCache.OpenedSceneID].Visible = false;
+                controller.ShareCache.OpenedSceneID = 0;
+            }
+                    
+            //隐藏
         }
 
         public void ShowSceneFlowPanel(int sid)

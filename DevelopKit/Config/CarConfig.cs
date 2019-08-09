@@ -357,6 +357,31 @@ namespace DevelopKit
                 return null;
             }
         }
+
+        public Scene SearchScenes(int sid)
+        {
+            foreach (Scene scene in children)
+            {
+                if (scene.Id == sid)
+                    return scene;
+            }
+            return null;
+        }
+
+        public Scene SearchTopScene()
+        {
+            foreach (Scene topScene in GlobalConfig.Project.CarConfig.Scenes)
+            {
+                if (topScene.Id == Id)
+                    return topScene;
+
+                if (topScene.SearchScenes(Id) != null)
+                    return topScene;
+            }
+
+            return this;
+        }
+
     }
 
     [Serializable]
@@ -403,7 +428,7 @@ namespace DevelopKit
             {
                 if (topScene.Id == sceneid)
                     return topScene;
-                if (SearchScenes(topScene.children, sceneid) != null)
+                if (topScene.SearchScenes(sceneid) != null)
                     return topScene;
             }
             return null;

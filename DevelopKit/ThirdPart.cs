@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,53 +9,45 @@ namespace DevelopKit
 {
     public class ThirdPartApiClient
     {
+        PictureBox ImageContainer;
         private string NameSpace;
         private string Class;
         private string Method;
 
-        private Object[] Params;
-        public ThirdPartApiClient(string CallInfo, PictureBox pb, int paramsLength)
+        private List<Object> Params;
+
+        public ThirdPartApiClient(string CallInfo)
         {
+            ImageContainer = new PictureBox
+            {
+                Size = new Size(0, 0),
+                Margin = new Padding(0, 0, 0, 0),
+                Padding = new Padding(0, 0, 0, 0),
+                SizeMode = PictureBoxSizeMode.Zoom,
+                BorderStyle = BorderStyle.FixedSingle,
+                Location = new Point(0, 0),
+                BackColor = Color.Gray,
+                Visible = false,
+            };
+
             string[] infos = CallInfo.Split('.');
             NameSpace = infos[0];
             Class = infos[1];
             Method = infos[2];
 
-            Params = new object[paramsLength];
-            Params[0] = pb;
+            Params = new List<Object>();
+            Params.Add(ImageContainer);
         }
 
-        public void SetParam(int index, Object param)
+        public void AddParam(Object param)
         {
-            Params[index] = param;
+            Params.Add(param);
         }
 
-        public void Call()
+        public Image Call()
         {
-            Object[] callParams = new object[Params.Length];
-            callParams[0] = Params[0];
-
-            TextBox textBox;
-            for (int i = 1; i < Params.Length; i++)
-            {
-                textBox = (TextBox)Params[i];
-
-                try
-                {
-                    if ((string)textBox.Tag == PropertyType.Int)
-                    {
-                        callParams[i] = (int)(Convert.ToInt32(textBox.Text));
-                    }
-                    else if ((string)textBox.Tag == PropertyType.Color)
-                    {
-                        callParams[i] = textBox.BackColor;
-                    }
-                }
-                catch (Exception)
-                { }
-
-            }
-           Call(NameSpace, Class, Method, callParams);
+            Call(NameSpace, Class, Method, Params.ToArray());
+            return ImageContainer.Image;
         }
 
         private void Call(string name_space, string class_name, string method_name, Object[] parameters)
@@ -62,10 +55,14 @@ namespace DevelopKit
             Type type = Type.GetType(name_space + "." + class_name);
             Object obj = System.Activator.CreateInstance(type);
             MethodInfo method = type.GetMethod(method_name);
+
+            foreach (Object obj2 in parameters)
+            {
+                Console.WriteLine("--------------> " + obj2);
+            }
             method.Invoke(obj, parameters);
         }
     }
-  
 }
 
 namespace ThirdPart
@@ -131,7 +128,7 @@ namespace ThirdPart
             }
             //外部扇形
 
-           // Graphics g = pb.CreateGraphics();
+            // Graphics g = pb.CreateGraphics();
             Bitmap bpm = new Bitmap(w, w);
             Graphics g = Graphics.FromImage(bpm);
 
@@ -161,7 +158,7 @@ namespace ThirdPart
 
             pb.Image = (Image)bpm;
         }
-        
+
         private void Draw_PM_P(PictureBox pb, int x, int y, int w, int r_edge, int change_w, int change_angle, int defalut_w, Color FillColor_down, Color FillColor_up)
         {
 

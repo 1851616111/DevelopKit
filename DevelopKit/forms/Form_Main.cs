@@ -309,6 +309,21 @@ namespace DevelopKit
         {
 
         }
+
+        private void PositionToolStripButton_Click(object sender, EventArgs e)
+        {
+            string position = GlobalConfig.FrontCache.GetPosition();
+            if (position == "P")
+            {
+                GlobalConfig.FrontCache.SetPosition("");
+                positionToolStripButton.Checked = false;
+            }
+            else
+            {
+                GlobalConfig.FrontCache.SetPosition("P");
+                positionToolStripButton.Checked = true;
+            }
+        }
     }
 }
 

@@ -66,6 +66,10 @@ namespace DevelopKit
                 Bitmap bmp = PngUtil.RelativeChangeColor((Bitmap)image, trackBar.Value);
                 GlobalConfig.Controller.ShareCache.ShareImage.Set(Event.Prop.Id, (Image)(bmp));
             }
+            else if (PropertyOperateType.IsThirdPartType(Event.Prop.OperateType))
+            {
+                GlobalConfig.Controller.ShareCache.ThirdPartCaller.Draw(Event.Prop.OperateType, Event.Prop.PropertyLayerIdx, Event.Message);
+            }
 
             GlobalConfig.Controller.Center.Refresh();
         }

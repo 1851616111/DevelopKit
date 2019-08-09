@@ -22,6 +22,8 @@ namespace DevelopKit
 
         public void Show(Scene scene)
         {
+            scene = scene.SearchTopScene();
+
             if (scene.children.Count == 0)
             {
                 PictureBox.Image = PngUtil.MergeImageList(ListSceneImageParams(scene), 1920, 720);
@@ -87,16 +89,13 @@ namespace DevelopKit
             SortedDictionary<int, Property> properties = group.GetPropertiesByLayer();
             List<PngUtil.MergeImageParams> mergeParams = new List<PngUtil.MergeImageParams>();
 
-            int index = 0;
             foreach (Property property in properties.Values)
             {
                 if (property.Type == PropertyType.Image || property.OperateType == PropertyOperateType.AlphaWhiteImageSetAlpha
-                    || property.OperateType == PropertyOperateType.AlphaWhiteImageSetColor || property.OperateType == PropertyOperateType.ImageFilterColor || PropertyOperateType.IsThirdPartType(property.OperateType))
+                    || property.OperateType == PropertyOperateType.AlphaWhiteImageSetColor || property.OperateType == PropertyOperateType.ImageFilterColor)
                 {
 
                     Image image = GlobalConfig.Controller.ShareCache.ShareImage.Get(property.Id);
-             
-                    index++;
 
                     mergeParams.Add(new PngUtil.MergeImageParams
                     {
@@ -104,6 +103,18 @@ namespace DevelopKit
                         X = property.GetLocation().X,
                         Y = property.GetLocation().Y,
                     });
+                } else if (PropertyOperateType.IsThirdPartType(property.OperateType))
+                {
+                    Image image = GlobalConfig.Controller.ShareCache.ThirdPartCaller.Get(property.OperateType);
+                    if (image != null)
+                    {
+                        mergeParams.Add(new PngUtil.MergeImageParams
+                        {
+                            Image = image,
+                            X = property.GetLocation().X,
+                            Y = property.GetLocation().Y,
+                        });
+                    }
                 }
             }
             return mergeParams;

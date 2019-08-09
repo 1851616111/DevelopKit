@@ -49,6 +49,7 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.centerBoardPictureBoxSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.centerBoardImageRealSizeLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.centerBoardRGBLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.skinEngine1 = new Sunisoft.IrisSkin.SkinEngine();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -61,11 +62,11 @@
             this.centerBoardToolStrip = new System.Windows.Forms.ToolStrip();
             this.scrollUpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.scrollDownToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.positionToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.centerBoardPictuerBox = new System.Windows.Forms.PictureBox();
             this.CloseProjectPictureBox = new System.Windows.Forms.PictureBox();
             this.LogoPictureBox = new System.Windows.Forms.PictureBox();
-            this.centerBoardRGBLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -204,6 +205,14 @@
             this.centerBoardImageRealSizeLabel.Size = new System.Drawing.Size(196, 17);
             this.centerBoardImageRealSizeLabel.Text = "centerBoardImageRealSizeLabel";
             // 
+            // centerBoardRGBLabel
+            // 
+            this.centerBoardRGBLabel.Image = global::DevelopKit.Properties.Resources.rgb;
+            this.centerBoardRGBLabel.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
+            this.centerBoardRGBLabel.Name = "centerBoardRGBLabel";
+            this.centerBoardRGBLabel.Size = new System.Drawing.Size(152, 17);
+            this.centerBoardRGBLabel.Text = "centerBoardRGBLabel";
+            // 
             // skinEngine1
             // 
             this.skinEngine1.@__DrawButtonFocusRectangle = true;
@@ -314,7 +323,8 @@
             this.centerBoardToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.scrollUpToolStripButton,
             this.scrollDownToolStripButton,
-            this.toolStripButton1});
+            this.toolStripSeparator2,
+            this.positionToolStripButton});
             this.centerBoardToolStrip.Location = new System.Drawing.Point(0, 0);
             this.centerBoardToolStrip.MinimumSize = new System.Drawing.Size(1290, 36);
             this.centerBoardToolStrip.Name = "centerBoardToolStrip";
@@ -351,15 +361,17 @@
             this.scrollDownToolStripButton.ToolTipText = "缩小";
             this.scrollDownToolStripButton.Click += new System.EventHandler(this.ScrollDownToolStripButton_Click);
             // 
-            // toolStripButton1
+            // positionToolStripButton
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = global::DevelopKit.Properties.Resources.P_position;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Transparent;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(44, 44);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "P档";
+            this.positionToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.positionToolStripButton.Image = global::DevelopKit.Properties.Resources.P_position;
+            this.positionToolStripButton.ImageTransparentColor = System.Drawing.Color.Transparent;
+            this.positionToolStripButton.Margin = new System.Windows.Forms.Padding(10, 1, 0, 2);
+            this.positionToolStripButton.Name = "positionToolStripButton";
+            this.positionToolStripButton.Size = new System.Drawing.Size(44, 44);
+            this.positionToolStripButton.Text = "positionToolStripButton";
+            this.positionToolStripButton.ToolTipText = "P档";
+            this.positionToolStripButton.Click += new System.EventHandler(this.PositionToolStripButton_Click);
             // 
             // centerBoardPictuerBox
             // 
@@ -401,13 +413,11 @@
             this.LogoPictureBox.TabIndex = 23;
             this.LogoPictureBox.TabStop = false;
             // 
-            // centerBoardRGBLabel
+            // toolStripSeparator2
             // 
-            this.centerBoardRGBLabel.Image = global::DevelopKit.Properties.Resources.rgb;
-            this.centerBoardRGBLabel.Margin = new System.Windows.Forms.Padding(30, 3, 0, 2);
-            this.centerBoardRGBLabel.Name = "centerBoardRGBLabel";
-            this.centerBoardRGBLabel.Size = new System.Drawing.Size(152, 17);
-            this.centerBoardRGBLabel.Text = "centerBoardRGBLabel";
+            this.toolStripSeparator2.Margin = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 47);
             // 
             // Form_Main
             // 
@@ -488,7 +498,8 @@
         private System.Windows.Forms.ToolStripStatusLabel centerBoardRGBLabel;
         private System.Windows.Forms.ToolStripMenuItem OutputToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem adminToolStripMenuItem;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton positionToolStripButton;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }
 

@@ -27,7 +27,8 @@ namespace DevelopKit
         public void Show(Scene scene)
         {
             Right.Show(scene);
-            Center.Show(scene);
+
+            Center.Show(scene.SearchTopScene());
         }
 
         public void LoadProjectWithProgress(Form_Progress form_Progress)
